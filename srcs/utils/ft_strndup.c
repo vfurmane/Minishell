@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/03/31 14:05:14 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/03/31 14:23:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(void)
+char	*ft_strndup(const char *str, int len)
 {
-	ft_prompt();
-	return (0);
+	int		str_len;
+	char	*new_str;
+
+	str_len = ft_strlen(str);
+	if (len > str_len)
+		len = str_len;
+	if (!(new_str = malloc(sizeof(*new_str) * (len + 1))))
+		return (NULL);
+	new_str = ft_memcpy(new_str, str, sizeof(*new_str) * len);
+	new_str[len] = '\0';
+	return (new_str);
 }

@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/03/31 13:43:54 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/03/31 13:44:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(void)
+char	*ft_strchr(const char *str, int chr)
 {
-	ft_prompt();
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (unsigned char)chr)
+			return ((char*)&str[i]);
+		i++;
+	}
+	if ((unsigned char)chr == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }

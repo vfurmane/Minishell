@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/03/31 12:45:25 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/03/31 14:56:09 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(void)
+void	*ft_lstlast(void *lst)
 {
-	ft_prompt();
-	return (0);
+	if (lst == NULL)
+		return (NULL);
+	while (((t_next*)lst)->next != NULL)
+		lst = ((t_next*)lst)->next;
+	return (lst);
 }

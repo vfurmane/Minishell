@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strinstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/03/31 13:39:42 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/03/31 13:42:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(void)
+char	*ft_strinstr(const char *str, const char *sep)
 {
-	ft_prompt();
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strchr(sep, str[i]) != NULL)
+			return ((char*)&str[i]);
+		i++;
+	}
+	return (NULL);
 }

@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/03/31 12:44:06 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/03/31 15:05:25 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(void)
+void	*ft_lstadd_back(void *lst, void *new)
 {
-	ft_prompt();
-	return (0);
+	if (*(t_next**)lst == NULL)
+		*(t_next**)lst = new;
+	else
+		((t_next*)ft_lstlast(*(t_next**)lst))->next = new;
+	return (new);
 }
