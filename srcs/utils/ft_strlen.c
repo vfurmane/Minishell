@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/30 17:20:06 by earnaud          ###   ########.fr       */
+/*   Created: 2020/11/03 18:07:13 by earnaud           #+#    #+#             */
+/*   Updated: 2021/03/30 16:33:40 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
-# include "minishell.h"
-# include <linux/limits.h>
+#include "../../includes/Minishell.h"
 
+size_t ft_strlen(const char *str)
+{
+	size_t i;
 
-int ft_echo(int n, char *str, int fd);
-
-
-#endif
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+			i++;
+	}
+	return (i);
+}
