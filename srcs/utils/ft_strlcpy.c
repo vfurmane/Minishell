@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/30 17:20:06 by earnaud          ###   ########.fr       */
+/*   Created: 2020/11/03 18:07:03 by earnaud           #+#    #+#             */
+/*   Updated: 2021/03/30 16:20:31 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
-# include "minishell.h"
-# include <linux/limits.h>
+#include "../../includes/Minishell.h"
 
+size_t ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t i;
 
-int ft_echo(int n, char *str, int fd);
-
-
-#endif
+	i = 0;
+	if (!dest)
+		return (0);
+	if (size)
+	{
+		while (src[i] && i < size - 1)
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = 0;
+	}
+	return (ft_strlen(src));
+}
