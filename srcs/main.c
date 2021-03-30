@@ -1,10 +1,6 @@
-#include <linux/limits.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "../includes/libft.h"
+#include "../includes/Minishell.h"
 
-int env_write(char *str)
+int env_write(char *str, int fd)
 {
 	int i = 0;
 	char str2[ARG_MAX];
@@ -14,18 +10,18 @@ int env_write(char *str)
 		i++;
 	}
 	str2[i] = '\0';
-	write(1, getenv(str2), ft_strlen(getenv(str2)));
+	write(fd, getenv(str2), ft_strlen(getenv(str2)));
 	return (i + 1);
 }
 
-void echo(int n, char *str)
+void echo(int n, char *str, int fd)
 {
 	int i = 0;
 	while (str[i] && (!n || i <= ft_strlen(str)))
 	{
 		if (str[i] == '$')
-			i += env_write(str + i + 1);
-		write(STDIN_FILENO, str + i++, 1);
+			i += env_write(str + i + 1, fd);
+		write(fd, str + i++, 1);
 	}
 }
 
@@ -33,9 +29,11 @@ int main()
 {
 	int i;
 	char buf_line[ARG_MAX];
+	int fd = STDOUT_FILENO;
+
 	while (read(STDIN_FILENO, buf_line, ARG_MAX))
 	{
-		echo(1, buf_line);
+		echo(1, buf_line, fd);
 		i = 0;
 		while (i < ARG_MAX)
 		{
