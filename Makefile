@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/03/31 12:22:01 by earnaud          ###   ########.fr        #
+#    Updated: 2021/03/31 13:41:09 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ RM			= rm -f
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $< $(INCLUDES) -o $@ $(LIBS)
+			$(CC) $(CFLAGS) $^ $(INCLUDES) -o $@ $(LIBS)
 
 clean:
 			$(RM) $(OBJS)

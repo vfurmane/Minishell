@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/31 12:17:43 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/03/31 13:37:18 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int ft_echo(int n, char *str, int fd)
 {
 	size_t i = 0;
-	while (str[i] && (!n || i <= ft_strlen(str)))
+	while (str[i])
 	{
+		if (str[i] == '\n' && !str[i + 1] && n)
+			break;
 		write(fd, str + i++, 1);
 	}
 	return (0);
