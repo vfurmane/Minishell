@@ -6,39 +6,35 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/03/30 17:50:55 by earnaud          ###   ########.fr        #
+#    Updated: 2021/03/31 11:55:51 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= Minishell
-CC			= gcc
-CFLAGS		= -g -Wall -Wextra -Werror
-INCLUDES	= -Iincludes/
 SRCS_DIR 	= srcs/
-
-FILES		=  main.c \
-				ft_convert_env.c \
-				ft_echo.c \
-				utils/ft_strjoin.c \
-				utils/ft_strlcpy.c \
-				utils/ft_strlen.c
-
-
+FILES		=  main.c prompt.c
 SRCS		= $(addprefix $(SRCS_DIR), $(FILES))
-OBJ			= $(SRCS:.c=.o)
+OBJS		= $(SRCS:.c=.o)
+NAME		= Minishell
+CC			= clang
+CFLAGS		= -g -Wall -Wextra -Werror
+LIBS		= -lncurses
+INCLUDES	= -Iincludes/
+RM			= rm -f
 
-all: $(NAME)
+%.o:		%.c
+			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME) : $(OBJ)
-		@$(CC) $(CFLAGS) $(OBJ) $(INCLUDES)\
-		-o $(NAME)
+all:		$(NAME)
+
+$(NAME):	$(OBJ)
+			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(NAME) $(LIBS)
 
 clean:
-		rm -f $(OBJ)
+			$(RM) $(OBJ)
 		
-fclean: clean
-		rm -f $(NAME)
+fclean:		clean
+			$(RM) $(NAME)
 
-re: fclean all
+re:			fclean all
 
-.PHONY: clean fclean all re
+.PHONY:		all clean fclean re
