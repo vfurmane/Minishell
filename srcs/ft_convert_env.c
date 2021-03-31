@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/31 12:13:08 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/03/31 15:39:09 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ char *ft_convert_env(char *source)
 		}
 		temp[j] = 0;
 	}
+	result[i] = 0;
 	return (result);
 }

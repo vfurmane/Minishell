@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   div.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/31 17:21:05 by earnaud          ###   ########.fr       */
+/*   Created: 2021/03/31 16:51:35 by earnaud           #+#    #+#             */
+/*   Updated: 2021/03/31 17:27:03 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
-# include "minishell.h"
-# include <linux/limits.h>
+#include "minishell.h"
 
-int ft_sub_echo(int n, char *str, int fd);
-int ft_echo(int n, char *str, int fd);
-char *ft_convert_env(char *source);
-
-#endif
+void nothing()
+{
+}
