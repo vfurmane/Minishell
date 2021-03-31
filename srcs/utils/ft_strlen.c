@@ -6,11 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 18:07:13 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/30 16:33:40 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/03/31 12:11:14 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Minishell.h"
+#include "minishell.h"
 
 size_t ft_strlen(const char *str)
 {

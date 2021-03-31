@@ -6,12 +6,18 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/03/31 11:55:51 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/03/31 12:22:01 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR 	= srcs/
-FILES		=  main.c prompt.c
+FILES		=  main.c \
+				ft_echo.c \
+				ft_convert_env.c \
+				utils/ft_strjoin.c \
+				utils/ft_strlcpy.c \
+				utils/ft_strlen.c \
+				
 SRCS		= $(addprefix $(SRCS_DIR), $(FILES))
 OBJS		= $(SRCS:.c=.o)
 NAME		= Minishell
@@ -26,11 +32,11 @@ RM			= rm -f
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(NAME) $(LIBS)
+$(NAME):	$(OBJS)
+			$(CC) $(CFLAGS) $< $(INCLUDES) -o $@ $(LIBS)
 
 clean:
-			$(RM) $(OBJ)
+			$(RM) $(OBJS)
 		
 fclean:		clean
 			$(RM) $(NAME)

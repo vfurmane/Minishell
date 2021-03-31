@@ -6,11 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 18:07:03 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/30 16:20:31 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/03/31 12:12:59 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Minishell.h"
+#include "minishell.h"
 
 size_t ft_strlcpy(char *dest, const char *src, size_t size)
 {
