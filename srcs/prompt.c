@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/03/31 15:29:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 10:53:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int			ft_init_args_tree(char *const buffer)
 		while (str[i] && ft_strchr(";|<>", str[i]) != NULL)
 			i++;
 	}
+	ft_handle_command(cmd);
 	return (0);
 }
 
@@ -77,6 +78,7 @@ int			ft_prompt(void)
 	int		ret;
 	char	buffer[ARG_MAX + 1];
 
+	write(1, "$ ", 2);
 	ret = read(0, buffer, ARG_MAX);
 	if (ret == -1)
 		return (-1);

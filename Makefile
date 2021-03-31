@@ -6,17 +6,19 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/01 11:10:43 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/01 11:34:38 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_DIR 	= srcs/
+SRCS_DIR 	= srcs
 FILES		=  main.c \
+			   cmd.c \
+			   prompt.c \
 				ft_echo.c \
 				ft_convert_env.c \
-				ft_lstadd_back.c \
-				ft_lstlast.c \
-				utils/ft_memcpy \
+				utils/ft_lstadd_back.c \
+				utils/ft_lstlast.c \
+				utils/ft_memcpy.c \
 				utils/ft_strchr.c \
 				utils/ft_strinstr.c \
 				utils/ft_strjoin.c \
@@ -25,7 +27,7 @@ FILES		=  main.c \
 				utils/ft_strndup.c \
 				utils/div.c
 				
-SRCS		= $(addprefix $(SRCS_DIR), $(FILES))
+SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
 NAME		= Minishell
 CC			= clang
@@ -38,8 +40,8 @@ INCLUDES	= -Iincludes
 
 all: $(NAME)
 
-$(NAME) : $(OBJ)
-		@$(CC) $(CFLAGS) $(OBJ) $(INCLUDES)\
+$(NAME) : $(OBJS)
+		@$(CC) $(CFLAGS) $(OBJS) $(INCLUDES)\
 		-o $(NAME) $(LIBS)
 
 clean:

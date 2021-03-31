@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:12:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 11:30:29 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct		s_cmd
 	struct s_cmd	*next;
 	char			*str;
 	t_separator		separator;
+	int				fd[2];
 }					t_cmd;
 
+int					ft_handle_command(t_cmd *cmd);
 int					ft_prompt(void);
 
 size_t ft_strlen(const char *str);
