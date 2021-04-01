@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 14:52:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 19:05:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_cmd		*ft_new_cmd(char *const buffer)
 	return (cmd);
 }
 
-char		**ft_init_args_tree(char *const buffer)
+int			ft_init_args_tree(char *const buffer)
 {
 	int		i;
 	char	*str;
@@ -63,28 +63,30 @@ char		**ft_init_args_tree(char *const buffer)
 	{
 		cmd = ft_lstadd_back(&initial_cmd, ft_new_cmd(&str[i]));
 		if (cmd == NULL)
-			return (NULL);
+			return (0);
+		if (str[i] == '\0')
+			break ;
 		while (str[i] && ft_strchr(";|<>", str[i]) == NULL)
 			i++;
 		while (str[i] && ft_strchr(";|<>", str[i]) != NULL)
 			i++;
 	}
+	if (cmd == NULL)
+		return (0);
 	return (ft_handle_command(cmd));
 }
 
-char		**ft_prompt(int *quit)
+int			ft_prompt(int *quit)
 {
 	int		ret;
-	char	**args;
 	char	buffer[ARG_MAX + 1];
 
 	write(1, "$ ", 2);
 	ret = read(0, buffer, ARG_MAX);
 	if (ret < 0)
-		return (NULL);
+		return (-1);
 	else if (ret == 0)
 		*quit = 1;
 	buffer[ret - 1] = '\0';
-	args = ft_init_args_tree(buffer);
-	return (args);
+	return (ft_init_args_tree(buffer));
 }

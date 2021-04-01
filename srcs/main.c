@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 15:19:57 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 19:14:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 int	main()
 {
 	int		quit;
-	char	**args;
 
 	quit = 0;
 	while (!quit)
 	{
-		args = ft_prompt(&quit);
-		if (args == NULL)
+		if (ft_prompt(&quit) == -1)
 			return (1);
 	}
 	return (0);
