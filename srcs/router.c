@@ -3,25 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   router.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 12:34:51 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 18:05:07 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_command_not_found(const char *command)
+void ft_command_not_found(const char *command, int fd)
 {
-	printf("minishell: %s: command not found\n", command);
+	write(fd, "minishell: ", 12);
+	write(fd, command, ft_strlen(command));
+	write(fd, ": command not found\n", 21);
 }
 
-int		ft_route_command(const char *command, char **args, int fd[2])
+void ft_exec(const char *command)
 {
-	int	ret;
+	command = 0;
+	execl("/bin/bash", "/bin/bash", "-c", "ls", NULL);
+}
 
+int ft_route_command(const char *command, char **args, int fd[2])
+{
+	int ret;
+	int id;
+
+	id = fork();
 	ret = 0;
+		//can't use exit function because of the redirection of sigint, need to stop the program when receive -42
+
+	if (id)
+	{
+		signal(SIGINT, nothing);
+		wait(NULL);
+		return (ret);
+	}
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, fd[1]);
 	else if (ft_strcmp("cd", command) == 0)
@@ -35,8 +53,9 @@ int		ft_route_command(const char *command, char **args, int fd[2])
 	else if (ft_strcmp("env", command) == 0)
 		ret = ft_env(args, fd[1]);
 	else if (ft_strcmp("exit", command) == 0)
-		ret = ft_exit(args, fd[1]);
+		return (-42);
 	else
-		ft_command_not_found(command);
+	//ft_exec(command);
+		ft_command_not_found(command, fd[1]);
 	return (ret);
 }

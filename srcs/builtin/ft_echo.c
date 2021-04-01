@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 15:24:32 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 16:04:27 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,24 @@ int ft_echo(char **args, int fd)
 {
 	size_t i;
 	int n;
-	int id;
-
-	id = fork();
-	if (id)
-		return (0);
+	char temp;
+	
 	i = 0;
 	n = checkflag(*args);
 	if (n)
 		args++;
-	else
-		write(fd, "\n", 1);
+	//else
+	//	write(fd, "\n", 1);
 	while (*args)
 	{
-		while (*args[i])
+		while ((*args)[i])
 		{
-			if (*args[i] == '\n' && !*args[i + 1] && n)
-				break;
+			temp = (*args)[i];
 			write(fd, *args + i++, 1);
 		}
 		args++;
 	}
+	if (!n)
+	write(fd, "\n", 1);
 	return (0);
 }
