@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 13:39:01 by earnaud          ###   ########.fr       */
+/*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
+/*   Updated: 2021/04/01 13:38:21 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
-# include "minishell.h"
+#include "minishell.h"
 
-int		ft_echo(const char **str, int fd);
-char	*ft_convert_env(char *source);
-int		ft_cd(char **str);
-
-
-#endif
+int ft_cd(char **str)
+{
+	if (str[1])
+	{
+		printf("can't use multi argument with cd\n");
+		return(-1);
+	}
+	return (chdir(*str));
+}

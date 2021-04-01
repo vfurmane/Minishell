@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/01 12:23:41 by earnaud          ###   ########.fr        #
+#    Updated: 2021/04/01 13:39:38 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FILES		=  main.c \
 				utils/ft_strlen.c \
 				utils/ft_strndup.c \
 				utils/div.c \
-				utils/ft_strnstr.c
+				utils/ft_strnstr.c \
+				builtin/ft_cd.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)

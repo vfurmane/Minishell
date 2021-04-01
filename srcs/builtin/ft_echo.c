@@ -6,20 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 12:28:52 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 13:32:04 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-// int ft_sub_echo(int n, char *str, int fd)
-// {
-// 	int id = fork();
-// 	if (!id)
-// 		return ft_echo(n, str, fd);
-// 	else
-// 		return (0);
-// }
 
 int checkflag(const char *str)
 {
