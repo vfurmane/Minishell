@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 10:54:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:35:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,11 @@ int		ft_handle_command(t_cmd *cmd)
 	t_cmd	*cmdi;
 
 	cmdi = cmd;
-	pipe(cmdi->fd);
+	cmdi->fd[0] = 0;
+	cmdi->fd[0] = 1;
+	if (cmdi->separator != EOCMD)
+		pipe(cmdi->fd);
 	args = ft_split_cmd_args(cmdi->str);
+	ft_route_command(args[0], &args[1], cmdi->fd);
 	return (0);
 }

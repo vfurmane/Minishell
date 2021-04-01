@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/01 11:34:38 by earnaud          ###   ########.fr        #
+#    Updated: 2021/04/01 12:34:06 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,20 @@ SRCS_DIR 	= srcs
 FILES		=  main.c \
 			   cmd.c \
 			   prompt.c \
-				ft_echo.c \
+			   router.c \
 				ft_convert_env.c \
+				builtin/ft_echo.c \
+				builtin/ft_cd.c \
+				builtin/ft_pwd.c \
+				builtin/ft_export.c \
+				builtin/ft_unset.c \
+				builtin/ft_env.c \
+				builtin/ft_exit.c \
 				utils/ft_lstadd_back.c \
 				utils/ft_lstlast.c \
 				utils/ft_memcpy.c \
 				utils/ft_strchr.c \
+				utils/ft_strcmp.c \
 				utils/ft_strinstr.c \
 				utils/ft_strjoin.c \
 				utils/ft_strlcpy.c \
