@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/03/31 15:39:09 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 11:39:40 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int ft_ifenv(char *source)
 {
-	char temp[ARG_MAX];
+	char temp[ARG_MAX + 1];
 	int i;
 
 	source++;
@@ -31,11 +31,11 @@ char *ft_convert_env(char *source)
 {
 	int i;
 	int j;
-	char temp[ARG_MAX];
+	char temp[ARG_MAX + 1];
 	char *result;
 
 	i = 0;
-	result = malloc(ARG_MAX);
+	result = malloc(ARG_MAX + 1);
 	while (*source)
 	{
 		j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/03/31 14:52:51 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:22:23 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,8 @@ char				*ft_strchr(const char *str, int chr);
 char				*ft_strinstr(const char *str, const char *sep);
 size_t				ft_strlen(const char *str);
 char				*ft_strndup(const char *str, int len);
+char				*ft_strnstr(const char *big,
+					const char *little, size_t len);
+
 
 #endif

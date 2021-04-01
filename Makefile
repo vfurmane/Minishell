@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/01 11:34:38 by earnaud          ###   ########.fr        #
+#    Updated: 2021/04/01 12:23:41 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS_DIR 	= srcs
 FILES		=  main.c \
 			   cmd.c \
 			   prompt.c \
-				ft_echo.c \
+				builtin/ft_echo.c \
 				ft_convert_env.c \
 				utils/ft_lstadd_back.c \
 				utils/ft_lstlast.c \
@@ -25,7 +25,8 @@ FILES		=  main.c \
 				utils/ft_strlcpy.c \
 				utils/ft_strlen.c \
 				utils/ft_strndup.c \
-				utils/div.c
+				utils/div.c \
+				utils/ft_strnstr.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
