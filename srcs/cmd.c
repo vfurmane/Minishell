@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 12:35:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:50:45 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	**ft_split_cmd_args(const char *str)
 	return (arr);
 }
 
-int		ft_handle_command(t_cmd *cmd)
+char	**ft_handle_command(t_cmd *cmd)
 {
 	char	**args;
 	t_cmd	*cmdi;
@@ -115,5 +115,5 @@ int		ft_handle_command(t_cmd *cmd)
 		pipe(cmdi->fd);
 	args = ft_split_cmd_args(cmdi->str);
 	ft_route_command(args[0], &args[1], cmdi->fd);
-	return (0);
+	return (args);
 }
