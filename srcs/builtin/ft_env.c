@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 13:44:05 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 15:01:01 by earnaud          ###   ########.fr       */
+/*   Created: 2021/04/01 12:09:05 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/04/01 12:30:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
-int ft_pwd(char **str, int fd)
+int	ft_env(char **args, int fd)
 {
-	if (str)
-	{
-		write(fd, "\npwd : too many arguments\n", 27);
-		return (-1);
-	}
-	write(fd, "\n", 1);
-	write(fd, getenv("PWD"), ft_strlen(getenv("PWD")));
+	(void)args;
+	(void)fd;
 	return (0);
 }

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 13:44:05 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 15:01:01 by earnaud          ###   ########.fr       */
+/*   Created: 2021/04/01 12:32:22 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/04/01 12:33:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int ft_pwd(char **str, int fd)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (str)
+	size_t	i;
+
+	i = 0;
+	while (str1[i] || str2[i])
 	{
-		write(fd, "\npwd : too many arguments\n", 27);
-		return (-1);
+		if (str1[i] != str2[i])
+			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+		i++;
 	}
-	write(fd, "\n", 1);
-	write(fd, getenv("PWD"), ft_strlen(getenv("PWD")));
 	return (0);
 }
