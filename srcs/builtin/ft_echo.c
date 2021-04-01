@@ -6,20 +6,20 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 13:32:04 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 15:24:32 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int checkflag(const char *str)
+static int checkflag(char *args)
 {
-	if (!ft_strnstr(str, "-n", ft_strlen(str)))
+	if (!ft_strnstr(args, "-n", ft_strlen(args)))
 		return (0);
 	return (1);
 }
 
-int ft_echo(const char **str, int fd)
+int ft_echo(char **args, int fd)
 {
 	size_t i;
 	int n;
@@ -29,20 +29,20 @@ int ft_echo(const char **str, int fd)
 	if (id)
 		return (0);
 	i = 0;
-	n = checkflag(*str);
+	n = checkflag(*args);
 	if (n)
-		str++;
+		args++;
 	else
 		write(fd, "\n", 1);
-	while (*str)
+	while (*args)
 	{
-		while (*str[i])
+		while (*args[i])
 		{
-			if (*str[i] == '\n' && !*str[i + 1] && n)
+			if (*args[i] == '\n' && !*args[i + 1] && n)
 				break;
-			write(fd, *str + i++, 1);
+			write(fd, *args + i++, 1);
 		}
-		str++;
+		args++;
 	}
 	return (0);
 }

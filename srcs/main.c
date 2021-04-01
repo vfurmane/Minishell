@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 14:57:48 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 15:19:57 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+int	main()
 {
 	int		quit;
 	char	**args;

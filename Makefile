@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/01 15:02:16 by earnaud          ###   ########.fr        #
+#    Updated: 2021/04/01 15:27:16 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ SRCS_DIR 	= srcs
 FILES		=  main.c \
 			   cmd.c \
 			   prompt.c \
-				builtin/ft_echo.c \
 				router.c \
 				ft_convert_env.c \
 				builtin/ft_echo.c \
@@ -35,9 +34,7 @@ FILES		=  main.c \
 				utils/ft_strlen.c \
 				utils/ft_strndup.c \
 				utils/div.c \
-				utils/ft_strnstr.c \
-				builtin/ft_cd.c \
-				builtin/ft_pwd.c
+				utils/ft_strnstr.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
