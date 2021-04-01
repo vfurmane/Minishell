@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:13:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:44:45 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	ft_prompt();
 	return (0);

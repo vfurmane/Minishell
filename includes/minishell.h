@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 11:30:29 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/01 14:21:59 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <termios.h>
 # include "builtin.h"
 # include "utils.h"
+
 
 typedef enum		e_separator
 {

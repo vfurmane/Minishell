@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 14:01:57 by earnaud          ###   ########.fr       */
+/*   Created: 2021/04/01 13:44:05 by earnaud           #+#    #+#             */
+/*   Updated: 2021/04/01 14:29:11 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
-# include "minishell.h"
+#include "minishell.h"
 
-int		ft_echo(const char **str, int fd);
-char	*ft_convert_env(char *source);
-int		ft_cd(char **str);
-int		ft_pwd(char **str, int fd);
-
-
-
-#endif
+int ft_pwd(char **str, int fd)
+{
+	if (str)
+	{
+		write(fd, "\npwd : too many arguments\n", 27);
+		return (-1);
+	}
+	write(fd, "\n", 1);
+	write(fd, getenv("PWD"), ft_strlen(getenv("PWD")));
+	return (0);
+}
