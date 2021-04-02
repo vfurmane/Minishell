@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 19:14:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/02 10:35:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_add_arg_to_arr(const char *str, char chr)
 
 	i = 0;
 	quote = '\0';
-	while (str[i] && (str[i] != chr && quote == '\0'))
+	while (str[i] && (str[i] != chr || quote != '\0'))
 	{
 		if (quote != '\0' && str[i] == quote)
 			quote = '\0';
@@ -70,6 +70,19 @@ int	ft_count_words(const char *str)
 	return (j);
 }
 
+void	ft_print_command(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		printf("|%s|", arr[i]);
+		i++;
+	}
+	printf("\n");
+}
+
 char	**ft_split_cmd_args(const char *str)
 {
 	int		i;
@@ -100,6 +113,7 @@ char	**ft_split_cmd_args(const char *str)
 			i++;
 		}
 	}
+	//ft_print_command(arr);
 	return (arr);
 }
 
