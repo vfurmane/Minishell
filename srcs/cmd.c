@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/02 10:45:39 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:39:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@
 char	*ft_add_arg_to_arr(const char *str, char chr)
 {
 	int		i;
+	int		j;
 	char	quote;
 	char	*new_str;
 
 	i = 0;
+	j = 0;
 	quote = '\0';
+	/* Change that malloc with exact value */
+	if (!(new_str = malloc(sizeof(*new_str) * (ARG_MAX + 1))))
+		return (NULL);
 	while (str[i] && (str[i] != chr || quote != '\0'))
 	{
 		if (quote != '\0' && str[i] == quote)
@@ -30,17 +35,18 @@ char	*ft_add_arg_to_arr(const char *str, char chr)
 			quote = str[i];
 		if (str[i] == '\0' && quote != '\0')
 			return (NULL);
-		i++;
+		if (str[i++] == '$')
+			ft_getenv(&str[i], &new_str[j], &i, &j);
+		else
+			new_str[j++] = str[i - 1];
 	}
-	if (!(new_str = malloc(sizeof(*new_str) * (i + 1))))
-		return (NULL);
 	if (str[0] == '\'' || str[0] == '"')
 	{
 		i -= 2;
 		str++;
 	}
-	new_str = ft_memcpy(new_str, str, sizeof(*new_str) * i);
-	new_str[i] = '\0';
+	//new_str = ft_memcpy(new_str, str, sizeof(*new_str) * i);
+	new_str[j] = '\0';
 	return (new_str);
 }
 

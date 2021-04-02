@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 19:14:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/02 11:27:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_cmd
 
 int					ft_handle_command(t_cmd *cmd);
 int					ft_route_command(const char *command, char **args, int fd[2]);
+char				*ft_getenv(const char *str, char *new_str, int *str_i, int *new_str_i);
 int					ft_prompt(int *quit);
 
 size_t ft_strlen(const char *str);
