@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/02 15:29:58 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/03 14:04:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,19 @@ void add_slash(char **str)
 
 int ft_exec(char **command)
 {
-	char *pathfile;
-	add_slash(command);
-	pathfile = check_in(command[0]);
+	char	*pathfile;
+	char	*slash_command;
+
+	slash_command = ft_strjoin("/", command[0]);
+	//add_slash(command);
+	pathfile = check_in(slash_command);
+	free(slash_command);
 	if (pathfile)
 	{
 		free(command[0]);
 		command[0] = pathfile;
-	execve(command[0], command, NULL);
-	//does execve free param?
+		execve(command[0], command, NULL);
+		//does execve free param ? No, we need to free in the main process
 	}
 	return (0);
 }

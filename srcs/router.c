@@ -6,25 +6,35 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/03 10:30:32 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:26:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_command_not_found(const char *command, int fd)
+void	ft_command_not_found(const char *command, int fd)
 {
 	write(fd, "minishell: ", 12);
 	write(fd, command, ft_strlen(command));
 	write(fd, ": command not found\n", 21);
 }
 
-int ft_route_command(const char *command, char **args, int fd[2], char **line)
+void	ft_kill_child(int id)
 {
-	int ret;
-	int id;
+	kill(id, SIGINT);
+}
+
+int		ft_route_command(const char *command, char **args, int fd[2], char **line)
+{
+	int			ret;
+	static int	id;
+
 	ret = 0;
-	
+	if (id != 0)
+	{
+		kill(id, SIGINT);
+		return (0);
+	}
 	//can't use exit function because of the redirection of sigint, need to stop the program when receive -42
 
 	if (ft_strcmp("echo", command) == 0)
@@ -46,12 +56,15 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line)
 		id = fork();
 		if (id)
 		{
-			signal(SIGINT, nothing);
+			signal(SIGINT, (void*)ft_route_command);
 			wait(NULL);
 			return (ret);
 		}
 		if (!ft_exec(line))
+		{
 			ft_command_not_found(command, fd[1]);
+			exit(0);
+		}
 	}
 	return (ret);
 }
