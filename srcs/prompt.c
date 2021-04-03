@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 19:05:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/03 10:33:16 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int			ft_prompt(int *quit)
 	if (ret < 0)
 		return (-1);
 	else if (ret == 0)
+	{
+		write(1, "exit\n", 5);
 		*quit = 1;
+		return (0);
+	}
 	buffer[ret - 1] = '\0';
 	return (ft_init_args_tree(buffer));
 }

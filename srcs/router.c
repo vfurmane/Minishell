@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/02 15:30:20 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/03 10:30:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,10 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line)
 {
 	int ret;
 	int id;
-
-	id = fork();
 	ret = 0;
 	
 	//can't use exit function because of the redirection of sigint, need to stop the program when receive -42
 
-	if (id)
-	{
-		signal(SIGINT, nothing);
-		wait(NULL);
-		return (ret);
-	}
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, fd[1]);
 	else if (ft_strcmp("cd", command) == 0)
@@ -51,6 +43,13 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line)
 		return (-42);
 	else
 	{
+		id = fork();
+		if (id)
+		{
+			signal(SIGINT, nothing);
+			wait(NULL);
+			return (ret);
+		}
 		if (!ft_exec(line))
 			ft_command_not_found(command, fd[1]);
 	}
