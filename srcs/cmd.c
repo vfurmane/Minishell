@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/02 19:53:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/03 09:22:40 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 // All static here...
 
-/*int		ft_arglen(const char *str, char chr)
+int		ft_arglen(const char *str, char chr)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	quote;
 
 	i = 0;
 	j = 0;
+	quote = '\0';
 	while (str[i] && (str[i] != chr || quote != '\0'))
 	{
 		if (quote != '\0' && str[i] == quote)
@@ -30,12 +32,13 @@
 		else
 		{
 			if (str[i++] == '$' && quote != '\'')
-				ft_getenv(&str[i], &new_str[j], &i, &j);
+				j += ft_strlen(ft_getenv(&str[i], &i));
 			else
-				new_str[j++] = str[i - 1];
+				j++;
 		}
 	}
-}*/
+	return (j);
+}
 
 char	*ft_parse_arg(const char *str, char chr)
 {
@@ -47,7 +50,7 @@ char	*ft_parse_arg(const char *str, char chr)
 	i = 0;
 	j = 0;
 	quote = '\0';
-	if (!(new_str = malloc(sizeof(*new_str) * (ARG_MAX + 1))))
+	if (!(new_str = malloc(sizeof(*new_str) * (ft_arglen(str, chr) + 1))))
 		return (NULL);
 	while (str[i] && (str[i] != chr || quote != '\0'))
 		if (quote != '\0' && str[i] == quote)
