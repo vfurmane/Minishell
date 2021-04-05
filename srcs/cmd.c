@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/03 09:46:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/05 15:38:18 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int		ft_handle_command(t_cmd *cmd)
 		pipe(cmdi->fd);
 	args = ft_split_cmd_args(cmdi->str);
 	if (args[0] != NULL)
-		ft_route_command(args[0], &args[1], cmdi->fd, args);
+		if (ft_route_command(args[0], &args[1], cmdi->fd, args) == -42)
+		return (-1);
 	return (0);
 }

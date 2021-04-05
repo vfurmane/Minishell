@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:09:19 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 12:30:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/05 10:55:10 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	ft_exit(char **args, int fd)
 {
 	(void)args;
 	(void)fd;
+	exit(0);
 	return (0);
 }
