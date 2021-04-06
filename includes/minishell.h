@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/05 15:35:23 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/06 10:38:46 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@
 # include <stdio.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include <term.h>
 # include <ncurses.h>
 # include <termios.h>
 # include "builtin.h"
 # include "utils.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
+# ifndef S_SIGQUITSH
+#  define S_SIGQUITSH 255
+# endif
 
 typedef enum		e_separator
 {

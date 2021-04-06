@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/05 15:38:50 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/06 10:39:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,8 @@ int			ft_prompt(int *quit)
 {
 	int		ret;
 	char	buffer[ARG_MAX + 1];
-// 	int id;
 
-// id = fork();
-// if (id)
-// {
-// 	signal(SIGINT, nothing);
-// 	wait(NULL);
-// 	signal(SIGINT, NULL);
-// 	if (exit_code == -1)
-// 	{
-// 		exit_code = 0;
-// 		*quit = 1;
-// 	}
-// 	return (exit_code);
-// }
+	(void)quit; /* ===== DELETE ===== */
 	write(1, "$ ", 2);
 	ret = read(0, buffer, ARG_MAX);
 	if (ret < 0)
@@ -102,8 +89,7 @@ int			ft_prompt(int *quit)
 	else if (ret == 0)
 	{
 		write(1, "exit\n", 5);
-		*quit = 1;
-		exit(0);
+		exit(S_SIGQUITSH);
 		return (0);
 	}
 	buffer[ret - 1] = '\0';
