@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/06 12:33:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:15:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ int ft_exec(char **command)
 	free(slash_command);
 	if (pathfile)
 	{
-		free(command[0]);
-		command[0] = pathfile;
-		ft_execve(command[0], command, NULL);
+		ft_execve(pathfile, command, NULL);
 		//does execve free param ? No, we need to free in the main process
 	}
 	return (0);
