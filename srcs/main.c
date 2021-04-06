@@ -6,18 +6,22 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 12:22:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:09:50 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	int quit;	
 	int id;
 	int	status;
 
+(void)argc;
+(void)argv;
+
+environement = envp;
 	quit = 0;
 	while (!quit)
 	{

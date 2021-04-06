@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 12:32:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:09:44 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # ifndef S_SIGQUITSH
 #  define S_SIGQUITSH 255
 # endif
+
+char **environement;
 
 typedef enum		e_separator
 {
