@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 10:40:04 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 12:22:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main()
 			wait(&status);
 			if (WIFEXITED(status) && WEXITSTATUS(status) == S_SIGQUITSH)
 				quit = 1;
-			signal(SIGINT, NULL);
+			signal(SIGINT, SIG_DFL);
 		}
 		else
 		{
