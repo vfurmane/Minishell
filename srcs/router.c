@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 12:19:01 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 12:31:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_route_command(const char *command, char **args, int fd[2], char **line)
 	else if (ft_strcmp("exit", command) == 0)
 		ret = ft_exit(args, fd[1]);
 	else if (ft_strchr(command, '/'))
-		execve(line[0], line, NULL);
+		ft_execve(line[0], line, NULL);
 	else
 	{
 		if (!ft_exec(line))

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 10:38:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/06 12:32:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <string.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <term.h>
+# include <errno.h>
 # include <ncurses.h>
 # include <termios.h>
 # include "builtin.h"
@@ -62,6 +64,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
 size_t ft_strcpy(char *dest, const char *src);
 void nothing();
+int	ft_execve(const char *filename, char *const argv[], char *const envp[]);
 int ft_exec(char **command);
 char **ft_split(char const *s, char c);
 
