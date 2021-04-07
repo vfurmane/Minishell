@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/01 12:31:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/07 10:53:53 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	ft_unset(char **args, int fd)
 {
 	(void)args;
 	(void)fd;
+	
 	return (0);
 }

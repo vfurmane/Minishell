@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/03 09:45:38 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/07 14:34:28 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,13 +41,14 @@ FILES		=  main.c \
 				ft_exec.c \
 				utils/ft_split.c \
 				utils/ft_substr.c \
-				utils/ft_strdup.c
+				utils/ft_strdup.c \
+				utils/env_malloc.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
 NAME		= Minishell
 CC			= clang
-CFLAGS		= -g -Wall -Wextra -Werror
+CFLAGS		= -g #-Wall -Wextra -Werror
 LIBS		= -lncurses
 INCLUDES	= -Iincludes
 

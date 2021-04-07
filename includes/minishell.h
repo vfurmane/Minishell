@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 14:09:44 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/07 15:56:24 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@
 #  define S_SIGQUITSH 255
 # endif
 
+// to modfify
 char **environement;
+int pip[2];
 
 typedef enum		e_separator
 {
@@ -60,6 +62,8 @@ char				*ft_getenv(const char *str, int *str_i);
 int					ft_prompt(int *quit);
 
 size_t ft_strlen(const char *str);
+size_t ft_strstrlen(char **str);
+char **ft_env_malloc(char **envp);
 char *ft_strjoin(char const *s1, char const *s2);
 size_t ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
