@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/08 12:14:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/08 12:49:10 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	ft_update_env()
 			i++;
 		i++;
 	}
+	free(environement);
+	environement = new_env;
 }
 
 char **ft_env_malloc(char **envp)
