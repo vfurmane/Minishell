@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/07 16:42:54 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/08 12:14:06 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_fd_to_str(int fd, char **str)
 	char	buffer[ARG_MAX + 1];
 
 	ret = 1;
+	len = 0;
 	*str = NULL;
 	while (ret)
 	{
@@ -45,8 +46,10 @@ int	ft_fd_to_str(int fd, char **str)
 		free(*str);
 		len += ret;
 		*str = tmp;
+		if ((size_t)ret > ft_strlen(buffer))
+			return (len - 1);
 	}
-	return (len);
+	return (len - 1);
 }
 
 void	ft_update_env()
@@ -64,7 +67,15 @@ void	ft_update_env()
 	j = 0;
 	while (i < ret)
 	{
-		new_env[j] = malloc((ft_strlen(str + i + 1 ) * sizeof(**new_env)));
+		while (str[i])
+			i++;
+		i++;
+	}
+	new_env = malloc(sizeof(*new_env) * i);
+	i = 0;
+	while (i < ret)
+	{
+		new_env[j] = malloc((ft_strlen(str + i) * sizeof(**new_env)));
 		ft_strcpy(new_env[j++], str + i);
 		while (str[i])
 			i++;
