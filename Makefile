@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/08 09:33:59 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/09 11:46:48 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ FILES		=  main.c \
 				utils/ft_split.c \
 				utils/ft_substr.c \
 				utils/ft_strdup.c \
-				utils/env_malloc.c
+				utils/env_malloc.c \
+				utils/ft_memset.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)

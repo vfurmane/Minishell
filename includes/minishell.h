@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/08 10:20:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/09 11:46:56 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int					ft_route_command(const char *command, char **args, int fd[2], char **lin
 char				*ft_getenv(const char *str, int *str_i);
 int					ft_prompt(int *quit);
 void				ft_update_env();
+void copy_env(char **new_env, char **args);
 
 size_t ft_strlen(const char *str);
 size_t ft_strstrlen(char **str);
@@ -74,6 +75,7 @@ size_t ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
 size_t ft_strcpy(char *dest, const char *src);
+void	*ft_memset(void *str, int c, size_t n);
 void nothing();
 int	ft_execve(const char *filename, char *const argv[], char *const envp[]);
 int ft_exec(char **command);

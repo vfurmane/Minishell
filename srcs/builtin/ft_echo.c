@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/06 13:34:47 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/09 11:57:50 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int checkflag(char *args)
 {
+	if (!args)
+	return (0);
 	if (!ft_strnstr(args, "-n", ft_strlen(args)))
 		return (0);
 	return (1);

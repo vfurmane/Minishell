@@ -1,42 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/05 17:21:09 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/09 11:58:03 by earnaud          ###   ########.fr       */
+/*   Created: 2020/11/03 18:06:42 by earnaud           #+#    #+#             */
+/*   Updated: 2021/04/09 11:46:24 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	size_t i;
-	size_t j;
-	size_t little_len;
+	size_t	i;
+	char	*pstr;
 
 	i = 0;
-	little_len = ft_strlen(little);
-	if (!*little)
-		return ((char *)big);
-	while (i <= len && big[i])
+	pstr = str;
+	while (i < n)
 	{
-		j = 0;
-		while (j <= little_len && i + j < len)
-		{
-			if (little[j] == big[i + j])
-			{
-				if (j == little_len - 1)
-					return ((char *)(big + i));
-				j++;
-			}
-			else
-				break ;
-		}
+		pstr[i] = (unsigned char)c;
 		i++;
 	}
-	return (0);
+	return (str);
 }

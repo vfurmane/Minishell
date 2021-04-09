@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/08 12:04:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/09 10:35:30 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static void copy_env(char **new_env, char **args)
+void copy_env(char **new_env, char **args)
 {
 	int i;
 	
@@ -24,7 +24,7 @@ static void copy_env(char **new_env, char **args)
 		i++;
 	}
 	i = 0;
-	while (args[i])
+	while (args && args[i])
 	{
 		write(pip[1], args[i], ft_strlen(args[i]) + 1);
 		i++;
@@ -42,7 +42,7 @@ int ft_export(char **args, int fd)
 		return (0);
 	copy_env(new_env, args);
 	free(environement);
-	environement = new_env;
+	//environement = new_env;
 	exit(S_SIGUPENV);
 	return (0);
 }

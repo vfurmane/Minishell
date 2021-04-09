@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/08 10:19:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/09 10:52:40 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ environement = ft_env_malloc(envp);
 	quit = 0;
 	while (!quit)
 	{
-		pipe(pipefd);
+				pipe(pipefd);
 		pip[0] = pipefd[0];
 		pip[1] = pipefd[1];
 		id = fork();
