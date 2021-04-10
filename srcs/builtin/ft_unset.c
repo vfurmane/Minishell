@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/09 10:36:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/09 17:38:51 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int in_it(char *new, char **env)
 	return (0);
 }
 
-int ft_unset(char **args, int fd)
+int ft_unset(char **args, int fd, int need_quit)
 {
 	(void)fd;
 	int count[3];
@@ -51,20 +51,22 @@ int ft_unset(char **args, int fd)
 	{
 		count[1] = 0;
 		count[2] = in_it(args[count[0]], environement);
-		if (!count[2])
-			count[0]++;
-		else
+		if (count[2])
 		{
-			while(count[2] <= (int)ft_strstrlen(environement))
+			while (count[2] <= (int)ft_strstrlen(environement))
 			{
 				environement[count[2]] = environement[count[2] + 1];
 				count[2]++;
 			}
 			free(environement[count[2]]);
 		}
+		count[0]++;
 	}
-	copy_env(environement, NULL);
-	//free all
-	 	exit(S_SIGUPENV);
+	if (need_quit)
+	{
+		copy_env(environement, NULL);
+		//free all
+		exit(S_SIGUPENV);
+	}
 	return (0);
 }

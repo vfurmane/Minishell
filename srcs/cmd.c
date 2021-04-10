@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/06 14:06:44 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/09 13:57:39 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ char	**ft_split_cmd_args(const char *str)
 			i++;
 		}
 	}
+	arr[j] = NULL;
 	//ft_print_command(arr);
 	return (arr);
 }
@@ -153,7 +154,7 @@ int		ft_handle_command(t_cmd *cmd)
 
 	cmdi = cmd;
 	cmdi->fd[0] = 0;
-	cmdi->fd[0] = 1;
+	cmdi->fd[1] = 1;
 	if (cmdi->separator != EOCMD)
 		pipe(cmdi->fd);
 	args = ft_split_cmd_args(cmdi->str);
