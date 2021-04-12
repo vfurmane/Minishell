@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/09 13:41:57 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 13:57:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	int quit;
-	int id;
-	int status;
-	int pipefd[2];
+	int		quit;
+	int		id;
+	int		status;
+	int		pipefd[2];
+	char	**environement;
 
 	(void)argc;
 	(void)argv;
@@ -26,27 +27,25 @@ int main(int argc, char **argv, char **envp)
 	while (!quit)
 	{
 		pipe(pipefd);
-		pip[0] = pipefd[0];
-		pip[1] = pipefd[1];
 		id = fork();
 		if (id)
 		{
 			signal(SIGINT, nothing);
 			wait(&status);
-			close(pip[1]);
+			close(pipefd[1]);
 			if (WEXITSTATUS(status) == S_SIGQUITSH)
 				quit = 1;
 			else if (WEXITSTATUS(status) == S_SIGUPENV)
-				ft_update_env();
+				ft_update_env(pipefd, &environement);
 			signal(SIGINT, SIG_DFL);
-			close(pip[0]);
+			close(pipefd[0]);
 		}
 		else
 		{
-			close(pip[0]);
-			if (ft_prompt(&quit) == -1)
+			close(pipefd[0]);
+			if (ft_prompt(&quit, environement, pipefd) == -1)
 				return (1);
-			close(pip[1]);
+			close(pipefd[1]);
 			exit(0);
 		}
 	}

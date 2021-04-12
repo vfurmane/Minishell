@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/09 17:38:51 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 11:54:18 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int in_it(char *new, char **env)
 	return (0);
 }
 
-int ft_unset(char **args, int fd, int need_quit)
+int ft_unset(char **args, int fd, int need_quit, char **environement, int pipefd[2])
 {
 	(void)fd;
 	int count[3];
@@ -64,7 +64,7 @@ int ft_unset(char **args, int fd, int need_quit)
 	}
 	if (need_quit)
 	{
-		copy_env(environement, NULL);
+		copy_env(environement, NULL, environement, pipefd);
 		//free all
 		exit(S_SIGUPENV);
 	}

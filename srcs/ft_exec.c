@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/07 14:36:38 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 12:31:18 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_execve(const char *filename, char *const argv[], char *const envp[])
 	return (ret);
 }
 
-int ft_exec(char **command)
+int ft_exec(char **command, char **environement)
 {
 	char	*pathfile;
 	char	*slash_command;

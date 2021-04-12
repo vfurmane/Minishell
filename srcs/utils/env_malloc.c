@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/09 11:45:43 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 13:56:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int ft_fd_to_str(int fd, char **str)
 	return (len - 1);
 }
 
-void ft_update_env()
+void ft_update_env(int pipefd[2], char ***environement)
 {
 	int i;
 	int j;
@@ -65,7 +65,7 @@ void ft_update_env()
 	char *str;
 	char **new_env;
 
-	ret = ft_fd_to_str(pip[0], &str);
+	ret = ft_fd_to_str(pipefd[0], &str);
 	if (ret == -1) // The return
 		return;
 	i = 0;
@@ -86,8 +86,8 @@ void ft_update_env()
 			i++;
 		i++;
 	}
-	free(environement);
-	environement = new_env;
+	free(*environement);
+	*environement = new_env;
 }
 
 char **ft_env_malloc(char **envp)

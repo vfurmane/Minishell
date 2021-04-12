@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/09 17:40:01 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 12:40:41 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void copy_env(char **new_env, char **args)
+void copy_env(char **new_env, char **args, char **environement, int pipefd[2])
 {
 	int i;
 
@@ -20,16 +20,16 @@ void copy_env(char **new_env, char **args)
 	i = 0;
 	while (environement[i])
 	{
-		write(pip[1], environement[i], ft_strlen(environement[i]) + 1);
+		write(pipefd[1], environement[i], ft_strlen(environement[i]) + 1);
 		i++;
 	}
 	i = 0;
 	while (args && args[i])
 	{
-		write(pip[1], args[i], ft_strlen(args[i]) + 1);
+		write(pipefd[1], args[i], ft_strlen(args[i]) + 1);
 		i++;
 	}
-	write(pip[1], "\0", 1);
+	write(pipefd[1], "\0", 1);
 }
 
 // static int in_it(char *new, char **env)
@@ -122,7 +122,7 @@ char **fix_args(char **args)
 	return (res);
 }
 
-int ft_export(char **args, int fd)
+int ft_export(char **args, int fd, char **environement, int pipefd[2])
 {
 	char **new_env;
 	char **temp;
@@ -132,13 +132,13 @@ int ft_export(char **args, int fd)
 
 	args_fixed = fix_args(args);
 	temp = to_unset(args_fixed);
-	ft_unset(temp, fd, 0);
+	ft_unset(temp, fd, 0, environement, pipefd);
 	ft_free_neo(temp);
 
 	new_env = malloc(sizeof(char *) * (ft_strstrlen(environement) + ft_strstrlen(args_fixed) + 1));
 	if (!new_env)
 		return (0);
-	copy_env(new_env, args_fixed);
+	copy_env(new_env, args_fixed, environement, pipefd);
 	free(environement);
 	ft_free_neo(args_fixed);
 	//environement = new_env;

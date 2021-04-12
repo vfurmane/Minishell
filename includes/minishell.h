@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/09 11:46:56 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 13:56:51 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@
 #  define S_SIGUPENV 254
 # endif
 
-// to modfify
-char **environement;
-int pip[2];
-
 typedef enum		e_separator
 {
 	EOCMD,
@@ -59,13 +55,13 @@ typedef struct		s_cmd
 	int				fd[2];
 }					t_cmd;
 
-int					ft_handle_command(t_cmd *cmd);
+int					ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2]);
 char				**ft_split_cmd_args(const char *str);
-int					ft_route_command(const char *command, char **args, int fd[2], char **line);
+int					ft_route_command(const char *command, char **args, int fd[2], char **line, char **environement, int pipefd[2]);
 char				*ft_getenv(const char *str, int *str_i);
-int					ft_prompt(int *quit);
-void				ft_update_env();
-void copy_env(char **new_env, char **args);
+int					ft_prompt(int *quit, char **environement, int pipefd[2]);
+void				ft_update_env(int pipefd[2], char ***environement);
+void				copy_env(char **new_env, char **args, char **environement, int pipefd[2]);
 
 size_t ft_strlen(const char *str);
 size_t ft_strstrlen(char **str);
@@ -78,7 +74,7 @@ size_t ft_strcpy(char *dest, const char *src);
 void	*ft_memset(void *str, int c, size_t n);
 void nothing();
 int	ft_execve(const char *filename, char *const argv[], char *const envp[]);
-int ft_exec(char **command);
+int ft_exec(char **command, char **environement);
 char **ft_split(char const *s, char c);
 
 #endif
