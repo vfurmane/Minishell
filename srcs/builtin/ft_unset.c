@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/12 16:48:25 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 16:54:49 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int ft_unset(char **args, int fd, int need_quit, char **environment, int pipefd[
 	if (need_quit)
 	{
 		copy_env(environment, NULL, environment, pipefd);
-		//free all
 		exit(S_SIGUPENV);
 	}
 	return (0);

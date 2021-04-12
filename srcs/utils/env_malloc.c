@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/12 16:48:56 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 16:55:34 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void ft_update_env(int pipefd[2], char ***environment)
 		i++;
 	}
 	new_env[j] = 0;
-	free(environment);
-	environment = new_env;
+	free(*environment);
+	*environment = new_env;
 }
 
 char **ft_env_malloc(char **envp)
