@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/09 11:45:43 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/12 16:10:17 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,20 @@ void ft_update_env()
 		while (str[i])
 			i++;
 		i++;
+		j++;
 	}
-	new_env = malloc(sizeof(*new_env) * i);
+	new_env = malloc(sizeof(*new_env) * j);
 	i = 0;
+	j = 0;
 	while (i < ret)
 	{
-		new_env[j] = malloc((ft_strlen(str + i) * sizeof(**new_env)));
-		ft_strcpy(new_env[j++], str + i);
+		new_env[j] = malloc(((ft_strlen(str + i) + 1) * sizeof(**new_env)));
+		ft_strlcpy(new_env[j++], str + i, ft_strlen(str + i) + 1);
 		while (str[i])
 			i++;
 		i++;
 	}
+	new_env[j] = 0;
 	free(environement);
 	environement = new_env;
 }
