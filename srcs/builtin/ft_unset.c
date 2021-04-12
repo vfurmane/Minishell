@@ -41,7 +41,7 @@ static int in_it(char *new, char **env)
 	return (0);
 }
 
-int ft_unset(char **args, int fd, int need_quit, char **environement, int pipefd[2])
+int ft_unset(char **args, int fd, int need_quit, char **environment, int pipefd[2])
 {
 	(void)fd;
 	int count[3];
@@ -50,21 +50,21 @@ int ft_unset(char **args, int fd, int need_quit, char **environement, int pipefd
 	while (args[count[0]])
 	{
 		count[1] = 0;
-		count[2] = in_it(args[count[0]], environement);
+		count[2] = in_it(args[count[0]], environment);
 		if (count[2])
 		{
-			while (count[2] <= (int)ft_strstrlen(environement))
+			while (count[2] <= (int)ft_strstrlen(environment))
 			{
-				environement[count[2]] = environement[count[2] + 1];
+				environment[count[2]] = environment[count[2] + 1];
 				count[2]++;
 			}
-			free(environement[count[2]]);
+			free(environment[count[2]]);
 		}
 		count[0]++;
 	}
 	if (need_quit)
 	{
-		copy_env(environement, NULL, environement, pipefd);
+		copy_env(environment, NULL, environment, pipefd);
 		//free all
 		exit(S_SIGUPENV);
 	}

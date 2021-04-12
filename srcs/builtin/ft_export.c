@@ -12,15 +12,15 @@
 
 #include "builtin.h"
 
-void copy_env(char **new_env, char **args, char **environement, int pipefd[2])
+void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
 {
 	int i;
 
 	(void)new_env;
 	i = 0;
-	while (environement[i])
+	while (environment[i])
 	{
-		write(pipefd[1], environement[i], ft_strlen(environement[i]) + 1);
+		write(pipefd[1], environment[i], ft_strlen(environment[i]) + 1);
 		i++;
 	}
 	i = 0;
@@ -122,7 +122,7 @@ char **fix_args(char **args)
 	return (res);
 }
 
-int ft_export(char **args, int fd, char **environement, int pipefd[2])
+int ft_export(char **args, int fd, char **environment, int pipefd[2])
 {
 	char **new_env;
 	char **temp;
@@ -132,16 +132,16 @@ int ft_export(char **args, int fd, char **environement, int pipefd[2])
 
 	args_fixed = fix_args(args);
 	temp = to_unset(args_fixed);
-	ft_unset(temp, fd, 0, environement, pipefd);
+	ft_unset(temp, fd, 0, environment, pipefd);
 	ft_free_neo(temp);
 
-	new_env = malloc(sizeof(char *) * (ft_strstrlen(environement) + ft_strstrlen(args_fixed) + 1));
+	new_env = malloc(sizeof(char *) * (ft_strstrlen(environment) + ft_strstrlen(args_fixed) + 1));
 	if (!new_env)
 		return (0);
-	copy_env(new_env, args_fixed, environement, pipefd);
-	free(environement);
+	copy_env(new_env, args_fixed, environment, pipefd);
+	free(environment);
 	ft_free_neo(args_fixed);
-	//environement = new_env;
+	//environment = new_env;
 	exit(S_SIGUPENV);
 	return (0);
 }

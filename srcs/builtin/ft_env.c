@@ -12,7 +12,7 @@
 
 #include "builtin.h"
 
-int ft_env(char **args, int fd, char **environement)
+int ft_env(char **args, int fd, char **environment)
 {
 	int i;
 	i = 0;
@@ -21,9 +21,9 @@ int ft_env(char **args, int fd, char **environement)
 		write(fd, "\n", 1);
 		return (0);
 	}
-	while (environement[i])
+	while (environment[i])
 	{
-		write(fd, environement[i], ft_strlen(environement[i]));
+		write(fd, environment[i], ft_strlen(environment[i]));
 		write(fd, "\n", 1);
 		i++;
 	}

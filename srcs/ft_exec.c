@@ -75,7 +75,7 @@ int	ft_execve(const char *filename, char *const argv[], char *const envp[])
 	return (ret);
 }
 
-int ft_exec(char **command, char **environement)
+int ft_exec(char **command, char **environment)
 {
 	char	*pathfile;
 	char	*slash_command;
@@ -86,7 +86,7 @@ int ft_exec(char **command, char **environement)
 	free(slash_command);
 	if (pathfile)
 	{
-		ft_execve(pathfile, command, environement);
+		ft_execve(pathfile, command, environment);
 		//does execve free param ? No, we need to free in the main process
 	}
 	return (0);

@@ -48,7 +48,7 @@ t_cmd		*ft_new_cmd(char *const buffer)
 	return (cmd);
 }
 
-int			ft_init_args_tree(char *const buffer, char **environement, int pipefd[2])
+int			ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
 {
 	int		i;
 	char	*str;
@@ -73,10 +73,10 @@ int			ft_init_args_tree(char *const buffer, char **environement, int pipefd[2])
 	}
 	if (cmd == NULL)
 		return (0);
-	return (ft_handle_command(cmd, environement, pipefd));
+	return (ft_handle_command(cmd, environment, pipefd));
 }
 
-int			ft_prompt(int *quit, char **environement, int pipefd[2])
+int			ft_prompt(int *quit, char **environment, int pipefd[2])
 {
 	int		ret;
 	char	buffer[ARG_MAX + 1];
@@ -93,5 +93,5 @@ int			ft_prompt(int *quit, char **environement, int pipefd[2])
 		return (0);
 	}
 	buffer[ret - 1] = '\0';
-	return (ft_init_args_tree(buffer, environement, pipefd));
+	return (ft_init_args_tree(buffer, environment, pipefd));
 }

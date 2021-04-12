@@ -18,11 +18,11 @@ int main(int argc, char **argv, char **envp)
 	int		id;
 	int		status;
 	int		pipefd[2];
-	char	**environement;
+	char	**environment;
 
 	(void)argc;
 	(void)argv;
-	environement = ft_env_malloc(envp);
+	environment = ft_env_malloc(envp);
 	quit = 0;
 	while (!quit)
 	{
@@ -36,14 +36,14 @@ int main(int argc, char **argv, char **envp)
 			if (WEXITSTATUS(status) == S_SIGQUITSH)
 				quit = 1;
 			else if (WEXITSTATUS(status) == S_SIGUPENV)
-				ft_update_env(pipefd, &environement);
+				ft_update_env(pipefd, &environment);
 			signal(SIGINT, SIG_DFL);
 			close(pipefd[0]);
 		}
 		else
 		{
 			close(pipefd[0]);
-			if (ft_prompt(&quit, environement, pipefd) == -1)
+			if (ft_prompt(&quit, environment, pipefd) == -1)
 				return (1);
 			close(pipefd[1]);
 			exit(0);

@@ -147,7 +147,7 @@ char	**ft_split_cmd_args(const char *str)
 	return (arr);
 }
 
-int		ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2])
+int		ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
 {
 	char	**args;
 	t_cmd	*cmdi;
@@ -159,7 +159,7 @@ int		ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2])
 		pipe(cmdi->fd);
 	args = ft_split_cmd_args(cmdi->str);
 	if (args[0] != NULL)
-		if (ft_route_command(args[0], &args[1], cmdi->fd, args, environement, pipefd) == -42)
+		if (ft_route_command(args[0], &args[1], cmdi->fd, args, environment, pipefd) == -42)
 		return (-1);
 	return (0);
 }

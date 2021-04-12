@@ -57,7 +57,7 @@ int ft_fd_to_str(int fd, char **str)
 	return (len - 1);
 }
 
-void ft_update_env(int pipefd[2], char ***environement)
+void ft_update_env(int pipefd[2], char ***environment)
 {
 	int i;
 	int j;
@@ -86,8 +86,8 @@ void ft_update_env(int pipefd[2], char ***environement)
 			i++;
 		i++;
 	}
-	free(*environement);
-	*environement = new_env;
+	free(*environment);
+	*environment = new_env;
 }
 
 char **ft_env_malloc(char **envp)
