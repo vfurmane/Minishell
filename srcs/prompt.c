@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/12 12:42:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 16:16:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_separator	ft_set_separator(const char *str)
+t_separator ft_set_separator(const char *str)
 {
 	if (str[0] == ';')
 		return (EOCMD);
@@ -29,10 +29,10 @@ t_separator	ft_set_separator(const char *str)
 		return (EOCMD);
 }
 
-t_cmd		*ft_new_cmd(char *const buffer)
+t_cmd *ft_new_cmd(char *const buffer)
 {
-	t_cmd	*cmd;
-	char	*separator;
+	t_cmd *cmd;
+	char *separator;
 
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
@@ -48,24 +48,45 @@ t_cmd		*ft_new_cmd(char *const buffer)
 	return (cmd);
 }
 
-int			ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
+t_cmd *ft_cmdlast(t_cmd *cmd)
 {
-	int		i;
-	char	*str;
-	t_cmd	*initial_cmd;
-	t_cmd	*cmd;
+	if (!(cmd))
+		return (0);
+	while (cmd->next)
+		cmd = cmd->next;
+	return (cmd);
+}
+
+void ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
+{
+	if (!(*acmd))
+	{
+		*acmd = new;
+		return;
+	}
+	ft_cmdlast(*acmd)->next = new;
+	new->next = 0;
+}
+
+int ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
+{
+	int i;
+	char *str;
+	//t_cmd *initial_cmd;
+	t_cmd *cmd;
 
 	i = 0;
-	initial_cmd = NULL;
+	//initial_cmd = NULL;
 	cmd = NULL;
 	str = buffer;
 	while (str[i])
 	{
-		cmd = ft_lstadd_back(&initial_cmd, ft_new_cmd(&str[i]));
+		//cmd = ft_lstadd_back(&initial_cmd, ft_new_cmd(&str[i]));
+		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
 		if (cmd == NULL)
 			return (0);
 		if (str[i] == '\0')
-			break ;
+			break;
 		while (str[i] && ft_strchr(";|<>", str[i]) == NULL)
 			i++;
 		while (str[i] && ft_strchr(";|<>", str[i]) != NULL)
@@ -76,10 +97,10 @@ int			ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
 	return (ft_handle_command(cmd, environment, pipefd));
 }
 
-int			ft_prompt(int *quit, char **environment, int pipefd[2])
+int ft_prompt(int *quit, char **environment, int pipefd[2])
 {
-	int		ret;
-	char	buffer[ARG_MAX + 1];
+	int ret;
+	char buffer[ARG_MAX + 1];
 
 	(void)quit; /* ===== DELETE ===== */
 	write(1, "$ ", 2);

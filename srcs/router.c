@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/12 12:39:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 17:24:44 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,9 @@ void ft_kill_child(int id)
 int ft_route_command(const char *command, char **args, int fd[2], char **line, char **environment, int pipefd[2])
 {
 	int ret;
-	//static int	id;
+	int id;
 
 	ret = 0;
-	/*if (id != 0)
-	{
-		kill(id, SIGINT);
-		return (0);
-	}*/
-	//can't use exit function because of the redirection of sigint, need to stop the program when receive -42
 
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, fd[1]);
@@ -52,10 +46,19 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, c
 	else if (ft_strcmp("exit", command) == 0)
 		ret = ft_exit(args, fd[1]);
 	else if (ft_strchr(command, '/'))
-		ft_execve(line[0], line, NULL);
+	{
+		id = fork();
+		if (id)
+			wait(0);
+		else
+			ft_execve(line[0], line, NULL);
+	}
 	else
 	{
-		if (!ft_exec(line, environment))
+		id = fork();
+		if (id)
+			wait(0);
+		else if (!ft_exec(line, environment))
 		{
 			ft_command_not_found(command, fd[1]);
 			exit(0);
