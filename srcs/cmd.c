@@ -6,13 +6,18 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/12 12:41:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 10:15:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // All static here...
+
+void ft_unterminated_quote(int fd)
+{
+	write(fd, "minishell: unterminated quote\n", 31);
+}
 
 int		ft_arglen(const char *str, char chr)
 {
@@ -40,7 +45,7 @@ int		ft_arglen(const char *str, char chr)
 	return (j);
 }
 
-char	*ft_parse_arg(const char *str, char chr)
+char	*ft_parse_arg(const char *str, char chr, int fd[2])
 {
 	int		i;
 	int		j;
@@ -65,6 +70,11 @@ char	*ft_parse_arg(const char *str, char chr)
 				new_str[j++] = str[i - 1];
 		}
 	new_str[j] = '\0';
+	if (quote != '\0')
+	{
+		ft_unterminated_quote(fd[1]);
+		return (NULL);
+	}
 	return (new_str);
 }
 
@@ -112,7 +122,7 @@ void	ft_print_command(char **arr)
 	printf("\n");
 }
 
-char	**ft_split_cmd_args(const char *str)
+char	**ft_split_cmd_args(const char *str, int fd[2])
 {
 	int		i;
 	int		j;
@@ -129,7 +139,9 @@ char	**ft_split_cmd_args(const char *str)
 		if (str[i] == '\0')
 			break ;
 		else
-			arr[j++] = ft_parse_arg(&str[i], ' ');
+			arr[j] = ft_parse_arg(&str[i], ' ', fd);
+		if (arr[j++] == NULL) /* leaks possible */
+			return (NULL);
 		quote = '\0';
 		while (str[i] && (quote != '\0' || str[i] != ' '))
 		{
@@ -157,7 +169,9 @@ int		ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
 	cmdi->fd[1] = 1;
 	if (cmdi->separator != EOCMD)
 		pipe(cmdi->fd);
-	args = ft_split_cmd_args(cmdi->str);
+	args = ft_split_cmd_args(cmdi->str, cmdi->fd);
+	if (args == NULL)
+		return (-1);
 	if (args[0] != NULL)
 		if (ft_route_command(args[0], &args[1], cmdi->fd, args, environment, pipefd) == -42)
 		return (-1);
