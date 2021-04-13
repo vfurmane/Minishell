@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 10:15:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 13:27:36 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ typedef struct		s_cmd
 }					t_cmd;
 
 int					ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2]);
-char				**ft_split_cmd_args(const char *str, int fd[2]);
+char				**ft_split_cmd_args(const char *str, int fd[2], char **environment);
 int					ft_route_command(const char *command, char **args, int fd[2], char **line, char **environement, int pipefd[2]);
-char				*ft_getenv(const char *str, int *str_i);
+char				*ft_getenv(char **env, char *str);
+char				*ft_exportenv(const char *str, int *str_i, char **environment);
 int					ft_prompt(int *quit, char **environement, int pipefd[2]);
 void				ft_update_env(int pipefd[2], char ***environement);
 void				copy_env(char **new_env, char **args, char **environement, int pipefd[2]);

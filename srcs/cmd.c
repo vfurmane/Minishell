@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 10:15:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 13:51:37 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void ft_unterminated_quote(int fd)
 	write(fd, "minishell: unterminated quote\n", 31);
 }
 
-int		ft_arglen(const char *str, char chr)
+int ft_arglen(const char *str, char chr, char **environment)
 {
-	int		i;
-	int		j;
-	char	quote;
+	int i;
+	int j;
+	char quote;
 
 	i = 0;
 	j = 0;
@@ -37,7 +37,7 @@ int		ft_arglen(const char *str, char chr)
 		else
 		{
 			if (str[i++] == '$' && quote != '\'')
-				j += ft_strlen(ft_getenv(&str[i], &i));
+				j += ft_strlen(ft_exportenv(&str[i], &i, environment));
 			else
 				j++;
 		}
@@ -45,17 +45,17 @@ int		ft_arglen(const char *str, char chr)
 	return (j);
 }
 
-char	*ft_parse_arg(const char *str, char chr, int fd[2])
+char *ft_parse_arg(const char *str, char chr, int fd[2], char **environment)
 {
-	int		i;
-	int		j;
-	char	quote;
-	char	*new_str;
+	int i;
+	int j;
+	char quote;
+	char *new_str;
 
 	i = 0;
 	j = 0;
 	quote = '\0';
-	if (!(new_str = malloc(sizeof(*new_str) * (ft_arglen(str, chr) + 1))))
+	if (!(new_str = malloc(sizeof(*new_str) * (ft_arglen(str, chr, environment) + 1))))
 		return (NULL);
 	while (str[i] && (str[i] != chr || quote != '\0'))
 		if (quote != '\0' && str[i] == quote)
@@ -65,7 +65,7 @@ char	*ft_parse_arg(const char *str, char chr, int fd[2])
 		else
 		{
 			if (str[i++] == '$' && quote != '\'')
-				j += ft_strcpy(&new_str[j], ft_getenv(&str[i], &i));
+				j += ft_strcpy(&new_str[j], ft_exportenv(&str[i], &i, environment));
 			else
 				new_str[j++] = str[i - 1];
 		}
@@ -78,11 +78,11 @@ char	*ft_parse_arg(const char *str, char chr, int fd[2])
 	return (new_str);
 }
 
-int	ft_count_words(const char *str)
+int ft_count_words(const char *str)
 {
-	int		i;
-	int		j;
-	char	quote;
+	int i;
+	int j;
+	char quote;
 
 	i = 0;
 	j = 0;
@@ -91,7 +91,7 @@ int	ft_count_words(const char *str)
 		while (str[i] == ' ')
 			i++;
 		if (str[i] == '\0')
-			break ;
+			break;
 		else
 			j++;
 		quote = '\0';
@@ -109,9 +109,9 @@ int	ft_count_words(const char *str)
 	return (j);
 }
 
-void	ft_print_command(char **arr)
+void ft_print_command(char **arr)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (arr[i])
@@ -122,24 +122,24 @@ void	ft_print_command(char **arr)
 	printf("\n");
 }
 
-char	**ft_split_cmd_args(const char *str, int fd[2])
+char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 {
-	int		i;
-	int		j;
-	char	quote;
-	char	**arr;
+	int i;
+	int j;
+	char quote;
+	char **arr;
 
 	i = 0;
 	j = 0;
-	arr = malloc(sizeof(*arr) * (ft_count_words(str) + 1));
+	arr = malloc(sizeof(*arr) * (ft_count_words(str) + 1)); //need protec
 	while (str[i])
 	{
 		while (str[i] == ' ')
 			i++;
 		if (str[i] == '\0')
-			break ;
+			break;
 		else
-			arr[j] = ft_parse_arg(&str[i], ' ', fd);
+			arr[j] = ft_parse_arg(&str[i], ' ', fd, environment);
 		if (arr[j++] == NULL) /* leaks possible */
 			return (NULL);
 		quote = '\0';
@@ -159,21 +159,21 @@ char	**ft_split_cmd_args(const char *str, int fd[2])
 	return (arr);
 }
 
-int		ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
+int ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
 {
-	char	**args;
-	t_cmd	*cmdi;
+	char **args;
+	t_cmd *cmdi;
 
 	cmdi = cmd;
 	cmdi->fd[0] = 0;
 	cmdi->fd[1] = 1;
 	if (cmdi->separator != EOCMD)
 		pipe(cmdi->fd);
-	args = ft_split_cmd_args(cmdi->str, cmdi->fd);
+	args = ft_split_cmd_args(cmdi->str, cmdi->fd, environment);
 	if (args == NULL)
 		return (-1);
 	if (args[0] != NULL)
 		if (ft_route_command(args[0], &args[1], cmdi->fd, args, environment, pipefd) == -42)
-		return (-1);
+			return (-1);
 	return (0);
 }

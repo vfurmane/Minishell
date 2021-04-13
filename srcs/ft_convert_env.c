@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/13 10:39:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 14:03:28 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,45 @@ static int ft_ifenv(char *source)
 		return (1);
 }
 
-char *ft_convert_env(char *source)
+static int str_in_str(char *new, char *env)
+{
+	int i;
+	i = 0;
+	while (new[i])
+	{
+		if (!env[i])
+			return (0);
+		if (new[i] != env[i])
+			return (0);
+		i++;
+	}
+	if (env[i] != '=')
+		return (0);
+	return (1);
+}
+
+char *ft_getenv(char **env, char *str)
+{
+	int i;
+
+	i = 0;
+	while (*env)
+	{
+		if (str_in_str(str, *env))
+		{
+			while (*((*env) + i))
+			{
+				if ((*env)[i] == '=')
+					return ((*env) + i + 1);
+				i++;
+			}
+		}
+		env++;
+	}
+	return (0);
+}
+
+char *ft_convert_env(char *source, char **env)
 {
 	int i;
 	int j;
@@ -45,7 +83,7 @@ char *ft_convert_env(char *source)
 			source++;
 			while (*source != ' ' && *source != '\n' && *source)
 				temp[j++] = *source++;
-			i += ft_strlcpy(result + i, getenv(temp), ft_strlen(getenv(temp)) + 1);
+			i += ft_strlcpy(result + i, ft_getenv(env, temp), ft_strlen(ft_getenv(env, temp)) + 1);
 		}
 		else
 		{
@@ -59,11 +97,11 @@ char *ft_convert_env(char *source)
 	return (result);
 }
 
-char	*ft_getenv(const char *str, int *str_i)
+char *ft_exportenv(const char *str, int *str_i, char **environment)
 {
-	int		i;
-	char	*env;
-	char	*env_name;
+	int i;
+	char *env;
+	char *env_name;
 
 	i = 0;
 	while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) || str[i] == '_')
@@ -73,7 +111,7 @@ char	*ft_getenv(const char *str, int *str_i)
 	if (env_name == NULL)
 		return (NULL);
 	ft_strlcpy(env_name, str, i + 1);
-	env = getenv(env_name);
+	env = ft_getenv(environment, env_name);
 	free(env_name);
 	if (env == NULL)
 		env = "";
