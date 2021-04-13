@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/02 20:44:54 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/13 10:39:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ char	*ft_getenv(const char *str, int *str_i)
 	ft_strlcpy(env_name, str, i + 1);
 	env = getenv(env_name);
 	free(env_name);
+	if (env == NULL)
+		env = "";
 	return (env);
 }
