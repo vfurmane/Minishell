@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 15:11:08 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/14 16:05:52 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct		s_cmd
 	t_separator		separator;
 	int				fd[2];
 }					t_cmd;
+
+char **export_list;
+int pipexport[2];
 
 int					ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2]);
 char				**ft_split_cmd_args(const char *str, int fd[2], char **environment);
