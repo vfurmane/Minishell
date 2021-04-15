@@ -6,11 +6,30 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/14 16:21:17 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/15 14:39:39 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void ft_sync_env_exp(char ***exp, char ***env)
+// {
+// int count[2];
+// char **new_exp;
+// 	//if (ft_strstrlen(*env) == ft_strstrlen(*exp))
+// 	//return;
+// 	count[0] = 0;
+// 	while (*env[0])
+// 	{
+// 		if (!exp_in_it(*exp, *env[0]))
+// 		{
+// 			new_exp = malloc(sizeof(char **) * (ft_strstrlen(exp) + 1)); // need to protect the malloc
+// 			*exp = new_exp;
+// 		}
+// 		count[0]++;
+// 	}
+
+// }
 
 int main(int argc, char **argv, char **envp)
 {

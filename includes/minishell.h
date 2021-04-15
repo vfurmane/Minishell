@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/14 16:05:52 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/15 11:42:20 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
 size_t ft_strcpy(char *dest, const char *src);
 void	*ft_memset(void *str, int c, size_t n);
+int exp_in_it(char **exp_list, char *str);
 void nothing();
 int	ft_execve(const char *filename, char *const argv[], char *const envp[]);
 int ft_exec(char **command, char **environement);

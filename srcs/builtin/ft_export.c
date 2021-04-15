@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/14 16:12:53 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/15 14:27:22 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ char **to_unset(char **args)
 		return (NULL);
 	while (args[i])
 	{
-		result[i] = ft_strcdup(args[i], '=');
+		if (ft_strchr(args[i], '='))
+			result[i] = ft_strcdup(args[i], '=');
+		else
+			result[i] = ft_strdup(args[i]);
 		i++;
 	}
 	result[i] = 0;
@@ -110,60 +113,59 @@ char **fix_args(char **args)
 
 //to put in different file
 
-static int exp_in_it(char **exp_list, char *str)
-{
-	int i;
+// int exp_in_it(char **exp_list, char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (exp_list[i])
-	{
-		if (ft_strnstr(exp_list[i], str, ft_strlen(str)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (exp_list[i])
+// 	{
+// 		if (ft_strnstr(exp_list[i], str, ft_strlen(str)))
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-char **fix_args_exportl(char **args)
-{
-	int many_valid;
-	int i;
-	int j;
-	char **res;
+// char **fix_args_exportl(char **args)
+// {
+// 	int many_valid;
+// 	int i;
+// 	int j;
+// 	char **res;
 
-	i = 0;
-	j = 0;
-	many_valid = 0;
-	while (args[i])
-	{
-		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
-			many_valid++;
-		i++;
-	}
-	res = malloc(sizeof(char *) * (many_valid + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (args[i])
-	{
-		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
-			res[j++] = args[i];
-		i++;
-	}
-	res[j] = 0;
-	return (res);
-}
+// 	i = 0;
+// 	j = 0;
+// 	many_valid = 0;
+// 	while (args[i])
+// 	{
+// 		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
+// 			many_valid++;
+// 		i++;
+// 	}
+// 	res = malloc(sizeof(char *) * (many_valid + 1));
+// 	if (!res)
+// 		return (NULL);
+// 	i = 0;
+// 	while (args[i])
+// 	{
+// 		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
+// 			res[j++] = args[i];
+// 		i++;
+// 	}
+// 	res[j] = 0;
+// 	return (res);
+// }
 
-void ft_to_export_list(char **args, int pipefd[2])
-{
-	char **exp_list;
+// void ft_to_export_list(char **args, int pipefd[2])
+// {
+// 	char **exp_list;
 
-	exp_list = fix_args_exportl(args);
-	//ft_unset(exp_list, fd, 0, export_list, pipefd);
-	copy_env(0, exp_list, export_list, pipefd);
-	ft_free_neo(exp_list);
-	//free(export_list);
-}
+// 	exp_list = fix_args_exportl(args);
+// 	copy_env(0, exp_list, export_list, pipefd);
+// 	ft_free_neo(exp_list);
+// 	free(export_list);
+// }
 
 void ft_print_exp_list(char **args, int fd, char **exp_list)
 {
@@ -204,26 +206,21 @@ void ft_print_exp_list(char **args, int fd, char **exp_list)
 
 int ft_export(char **args, int fd, char **environment, int pipefd[2])
 {
-	char **new_env;
 	char **temp;
 	char **args_fixed;
 	//make the error check
 	if (!(*args))
 		ft_print_exp_list(args, fd, export_list);
 
-	ft_to_export_list(args, pipexport);
+	temp = to_unset(args);
 	args_fixed = fix_args(args);
-	temp = to_unset(args_fixed);
 	ft_unset(temp, fd, 0, environment, pipefd);
 	ft_free_neo(temp);
+	copy_env(0, args, export_list, pipexport);
 
-	new_env = malloc(sizeof(char *) * (ft_strstrlen(environment) + ft_strstrlen(args_fixed) + 1)); //protec the malloc
-	if (!new_env)
-		return (0);
-	copy_env(new_env, args_fixed, environment, pipefd);
+	copy_env(0, args_fixed, environment, pipefd);
 	free(environment);
 	ft_free_neo(args_fixed);
-	//environment = new_env;
 	exit(S_SIGUPENV);
 	return (0);
 }
