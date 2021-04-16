@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define ARG_MAX 131072
+
 int	ft_putchar(int chr)
 {
 	write(1, &chr, 1);
@@ -13,6 +15,8 @@ int	main(void)
 {
 	struct termios	termios_c;
 	int				ret;
+	int				i;
+	char			*line;
 	unsigned char	buffer[3];
 	char			*cm, *DO, *UP, *LE, *RI;
 	char			*arrow[4] = {	"UP",
@@ -31,15 +35,18 @@ int	main(void)
 	tcsetattr(0, 0, &termios_c);
 	while (1)
 	{
+		i = 0;
 		ret = 1;
-		while (ret > 0)
+		line = malloc(sizeof(*line) * (ARG_MAX + 1));
+		while (ret > 0 && i < ARG_MAX)
 		{
 			ret = read(0, buffer, 3);
 			if (buffer[0] == 4)
-				return (0);
+				return (0); /* break the while here */
 			if (buffer[0] >= 32 && buffer[0] <= 126)
 			{
 				ft_putchar(buffer[0]);
+				line[i++] = buffer[0];
 				//tputs(tgoto(RI, 0, 1), 1, ft_putchar);
 			}
 			else if (buffer[0] == 127)
@@ -47,6 +54,7 @@ int	main(void)
 				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
 				ft_putchar(' ');
 				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+				buffer[--i] = '\0';
 			}
 			else if (buffer[0] == '\n')
 			{
@@ -55,17 +63,12 @@ int	main(void)
 			}
 			else if (buffer[0] == 27 && buffer[1] == 91)
 			{
-				/*if (buffer[2] == 'A')
-				  ft_putchar('^');
-				  else if (buffer[2] == 'B')
-				  ft_putchar('v');
-				  else if (buffer[2] == 'C')
-				  ft_putchar('>');
-				  else if (buffer[2] == 'D')
-				  ft_putchar('<');*/
 				printf("\nHave you pressed %s key ?\n", arrow[buffer[2] - 'A']);
 			}
 		}
+		line[i] = '\0';
+		printf("The line contains: '%s'\n", line);
+		free(line);
 	}
 	termios_c.c_lflag &= (ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
