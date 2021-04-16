@@ -6,23 +6,39 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/16 14:23:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/16 17:43:29 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int list_already_in(char **exp_list, int index)
+static int list_last(char **exp_list, int index)
 {
 	int i;
+	int ret;
+	int last;
+	char *temp;
+
+	if (ft_strchr(exp_list[index], '='))
+		temp = ft_strcdup(exp_list[index], '=');
+	else
+		temp = ft_strdup(exp_list[index]);
 	i = 0;
-	while (exp_list[i] && i < index)
+	last = -1;
+	while (exp_list[i])
 	{
-		if (ft_strnstr(exp_list[i], exp_list[index], ft_strlen(exp_list[index])))
-			return (1);
+		if (ft_strnstr(exp_list[i], temp, ft_strlen(temp)))
+		{
+			if (last == -1)
+				last = i;
+			if ((ft_strchr(exp_list[last], '=') && ft_strchr(exp_list[i], '=')) || !ft_strchr(exp_list[last], '='))
+				last = i;
+		}
 		i++;
 	}
-	return (0);
+	free(temp);
+	ret = (last == index);
+	return (ret);
 }
 
 void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
@@ -39,7 +55,7 @@ void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
 	i = 0;
 	while (args && args[i])
 	{
-		if (!list_already_in(args, i))
+		if (list_last(args, i))
 			write(pipefd[1], args[i], ft_strlen(args[i]) + 1);
 		i++;
 	}
@@ -125,63 +141,6 @@ char **fix_args(char **args)
 	return (res);
 }
 
-//to put in different file
-
-// char **fix_args2(char **args)
-// {
-// 	int count[2];
-// 	char **result;
-
-// 	count[0] = 0;
-// 	count[1] = 0;
-// 	while (args[count[0]])
-// 	{
-// 		if (!exp_alreadyinit(args, count[0]))
-// 			count[1]++;
-// 		count[0]++;
-// 	}
-// }
-
-// char **fix_args_exportl(char **args)
-// {
-// 	int many_valid;
-// 	int i;
-// 	int j;
-// 	char **res;
-
-// 	i = 0;
-// 	j = 0;
-// 	many_valid = 0;
-// 	while (args[i])
-// 	{
-// 		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
-// 			many_valid++;
-// 		i++;
-// 	}
-// 	res = malloc(sizeof(char *) * (many_valid + 1));
-// 	if (!res)
-// 		return (NULL);
-// 	i = 0;
-// 	while (args[i])
-// 	{
-// 		if (args[i][0] != '=' && !ft_strchr(args[i], '=') && !exp_in_it(export_list, args[i]))
-// 			res[j++] = args[i];
-// 		i++;
-// 	}
-// 	res[j] = 0;
-// 	return (res);
-// }
-
-// void ft_to_export_list(char **args, int pipefd[2])
-// {
-// 	char **exp_list;
-
-// 	exp_list = fix_args_exportl(args);
-// 	copy_env(0, exp_list, export_list, pipefd);
-// 	ft_free_neo(exp_list);
-// 	free(export_list);
-// }
-
 void ft_print_exp_list(char **args, int fd, char **exp_list)
 {
 	int i;
@@ -216,8 +175,6 @@ void ft_print_exp_list(char **args, int fd, char **exp_list)
 	}
 	exit(0);
 }
-
-//
 
 int ft_export(char **args, int fd, char **environment, int pipefd[2])
 {
