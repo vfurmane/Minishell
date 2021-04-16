@@ -6,11 +6,24 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/15 14:27:22 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/16 14:23:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+static int list_already_in(char **exp_list, int index)
+{
+	int i;
+	i = 0;
+	while (exp_list[i] && i < index)
+	{
+		if (ft_strnstr(exp_list[i], exp_list[index], ft_strlen(exp_list[index])))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
 {
@@ -26,7 +39,8 @@ void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
 	i = 0;
 	while (args && args[i])
 	{
-		write(pipefd[1], args[i], ft_strlen(args[i]) + 1);
+		if (!list_already_in(args, i))
+			write(pipefd[1], args[i], ft_strlen(args[i]) + 1);
 		i++;
 	}
 	write(pipefd[1], "\0", 1);
@@ -113,18 +127,19 @@ char **fix_args(char **args)
 
 //to put in different file
 
-// int exp_in_it(char **exp_list, char *str)
+// char **fix_args2(char **args)
 // {
-// 	int i;
+// 	int count[2];
+// 	char **result;
 
-// 	i = 0;
-// 	while (exp_list[i])
+// 	count[0] = 0;
+// 	count[1] = 0;
+// 	while (args[count[0]])
 // 	{
-// 		if (ft_strnstr(exp_list[i], str, ft_strlen(str)))
-// 			return (1);
-// 		i++;
+// 		if (!exp_alreadyinit(args, count[0]))
+// 			count[1]++;
+// 		count[0]++;
 // 	}
-// 	return (0);
 // }
 
 // char **fix_args_exportl(char **args)
@@ -214,10 +229,9 @@ int ft_export(char **args, int fd, char **environment, int pipefd[2])
 
 	temp = to_unset(args);
 	args_fixed = fix_args(args);
-	ft_unset(temp, fd, 0, environment, pipefd);
+	ft_unset(temp, fd, 0, environment, pipefd); //insert here exp_list
 	ft_free_neo(temp);
 	copy_env(0, args, export_list, pipexport);
-
 	copy_env(0, args_fixed, environment, pipefd);
 	free(environment);
 	ft_free_neo(args_fixed);
