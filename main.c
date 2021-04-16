@@ -16,9 +16,9 @@ int	main(void)
 	unsigned char	buffer[3];
 	char			*cm, *DO, *UP, *LE, *RI;
 	char			*arrow[4] = {	"UP",
-									"DOWN",
-									"RIGHT",
-									"LEFT"};
+		"DOWN",
+		"RIGHT",
+		"LEFT"};
 
 	tgetent(NULL, getenv("TERM"));
 	cm = tgetstr("cm", NULL);
@@ -29,32 +29,42 @@ int	main(void)
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
-	ret = 1;
-	while (ret > 0)
+	while (1)
 	{
-		ret = read(0, buffer, 3);
-		if (buffer[0] >= 32 && buffer[0] <= 126)
+		ret = 1;
+		while (ret > 0)
 		{
-			ft_putchar(buffer[0]);
-			//tputs(tgoto(RI, 0, 1), 1, ft_putchar);
-		}
-		else if (buffer[0] == 127)
-		{
-			tputs(tgoto(LE, 0, 1), 1, ft_putchar);
-			ft_putchar(' ');
-			tputs(tgoto(LE, 0, 1), 1, ft_putchar);
-		}
-		else if (buffer[0] == 27 && buffer[1] == 91)
-		{
-			/*if (buffer[2] == 'A')
-				ft_putchar('^');
-			else if (buffer[2] == 'B')
-				ft_putchar('v');
-			else if (buffer[2] == 'C')
-				ft_putchar('>');
-			else if (buffer[2] == 'D')
-				ft_putchar('<');*/
-			printf("\nHave you pressed %s key ?\n", arrow[buffer[2] - 'A']);
+			ret = read(0, buffer, 3);
+			if (buffer[0] == 4)
+				return (0);
+			if (buffer[0] >= 32 && buffer[0] <= 126)
+			{
+				ft_putchar(buffer[0]);
+				//tputs(tgoto(RI, 0, 1), 1, ft_putchar);
+			}
+			else if (buffer[0] == 127)
+			{
+				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+				ft_putchar(' ');
+				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+			}
+			else if (buffer[0] == '\n')
+			{
+				ft_putchar('\n');
+				ret = 0;
+			}
+			else if (buffer[0] == 27 && buffer[1] == 91)
+			{
+				/*if (buffer[2] == 'A')
+				  ft_putchar('^');
+				  else if (buffer[2] == 'B')
+				  ft_putchar('v');
+				  else if (buffer[2] == 'C')
+				  ft_putchar('>');
+				  else if (buffer[2] == 'D')
+				  ft_putchar('<');*/
+				printf("\nHave you pressed %s key ?\n", arrow[buffer[2] - 'A']);
+			}
 		}
 	}
 	termios_c.c_lflag &= (ICANON | ECHO);
