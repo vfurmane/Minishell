@@ -6,13 +6,12 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/15 11:42:20 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/16 08:49:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <linux/limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -29,6 +28,17 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+
+# if __APPLE__
+#  ifndef ARG_MAX
+#   define ARG_MAX 131072
+#  endif
+# else
+#  include <linux/limits.h>
+#  ifndef __APPLE__
+#   define __APPLE__ 0
+#  endif
+# endif
 
 # ifndef S_SIGQUITSH
 #  define S_SIGQUITSH 255
