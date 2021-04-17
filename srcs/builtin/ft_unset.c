@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/15 14:15:11 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/17 14:18:25 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void unset_env(char **args, char **environment, int exp_list)
 		if (count[2])
 		{
 			to_free = environment[count[2]];
-			while (count[2] <= (int)ft_strstrlen(environment))
+			while (count[2] <= (int)ft_arrlen(environment))
 			{
 				environment[count[2]] = environment[count[2] + 1];
 				count[2]++;

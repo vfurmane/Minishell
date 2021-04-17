@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_arrlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/07 15:06:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/17 14:17:48 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/04/17 13:56:59 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/04/17 14:15:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-char	*ft_strdup(const char *str)
+size_t ft_arrlen(void *arr)
 {
-	char *result;
+	size_t i;
 
-	result = malloc(sizeof(*str) * (ft_strlen(str) + 1));
-	ft_strlcpy(result, str, ft_strlen(str) + 1);
-	return (result);
+	i = 0;
+	if (arr)
+	{
+		while (((char**)arr)[i])
+			i++;
+	}
+	return (i);
 }

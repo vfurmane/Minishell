@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/16 08:41:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/17 14:19:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int main(int argc, char **argv, char **envp)
 	}
 	(void)argc;
 	(void)argv;
-	environment = ft_env_malloc(envp);
-	export_list = ft_env_malloc(envp);
+	environment = ft_strarrdup(envp);
+	export_list = ft_strarrdup(envp);
 	quit = 0;
 	while (!quit)
 	{

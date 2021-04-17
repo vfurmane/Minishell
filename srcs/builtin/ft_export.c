@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/16 17:43:29 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/17 14:18:15 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char **to_unset(char **args)
 	int i;
 
 	i = 0;
-	result = malloc(sizeof(char *) * (ft_strstrlen(args) + 1));
+	result = malloc(sizeof(char *) * (ft_arrlen(args) + 1));
 	if (!result)
 		return (NULL);
 	while (args[i])

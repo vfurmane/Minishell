@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/16 17:35:32 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/17 14:02:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_cmd
 	int fd[2];
 } t_cmd;
 
+/* global variables */
 char **export_list;
 int pipexport[2];
 

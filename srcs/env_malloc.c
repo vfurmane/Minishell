@@ -6,24 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 14:32:18 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/12 16:55:34 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/17 14:12:30 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t ft_strstrlen(char **str)
-{
-	size_t i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-			i++;
-	}
-	return (i);
-}
 
 int ft_fd_to_str(int fd, char **str)
 {
@@ -91,22 +78,4 @@ void ft_update_env(int pipefd[2], char ***environment)
 	new_env[j] = 0;
 	free(*environment);
 	*environment = new_env;
-}
-
-char **ft_env_malloc(char **envp)
-{
-	char **result;
-	int i;
-
-	i = 0;
-	result = malloc(sizeof(char *) * (ft_strstrlen(envp) + 1));
-	if (!result)
-		return (NULL);
-	while (envp[i])
-	{
-		result[i] = ft_strdup((const char *)envp[i]);
-		i++;
-	}
-	result[i] = NULL;
-	return (result);
 }
