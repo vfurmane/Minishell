@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 13:06:16 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 15:17:28 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,19 +179,16 @@ void ft_print_exp_list(char **args, int fd, char **exp_list)
 int ft_export(char **args, int fd, t_config *shell_c)
 {
 	int		i;
-	char	control;
 
 	if (*args == NULL)
 		ft_print_exp_list(args, fd, export_list);
 	i = 0;
 	while (args[i])
 	{
-		write(shell_c->fd[1], "aev", 3);
-		control = 31;
-		write(shell_c->fd[1], &control, 1);
+		write(shell_c->fd[1], ADD_ENV, 3);
+		write(shell_c->fd[1], "\x1F", 1);
 		write(shell_c->fd[1], args[i], ft_strlen(args[i]));
-		control = 30;
-		write(shell_c->fd[1], &control, 1);
+		write(shell_c->fd[1], "\x1E", 1);
 		i++;
 	}
 	exit(0);
