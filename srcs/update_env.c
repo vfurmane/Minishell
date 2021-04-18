@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 15:49:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 16:56:46 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ void	*ft_del_env_elm(t_config *shell_c, t_kvpair *elm, t_kvpair *previous)
 
 int		ft_del_env(t_config *shell_c, char *str)
 {
+	char		*tmp;
 	t_kvpair	*previous;
 	t_kvpair	*envp_elm;
 
 	previous = NULL;
 	envp_elm = shell_c->envp_list;
+	tmp = ft_strjoin(str, "=");
 	while (envp_elm)
 	{
-		if (ft_strcmp(str, envp_elm->key) == 0)
+		if (ft_strcmp(tmp, envp_elm->key) == 0)
 			envp_elm = ft_del_env_elm(shell_c, envp_elm, previous);
 		else
 		{
@@ -67,6 +69,7 @@ int		ft_del_env(t_config *shell_c, char *str)
 		}
 	}
 	ft_update_env(shell_c);
+	free(tmp);
 	return (0);
 }
 
