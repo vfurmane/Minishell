@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 16:17:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:17:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,10 @@ void ft_print_exp_list(char **args, int fd, t_kvpair *envp_list)
 		write(fd, "declare -x ", 12);
 		key_len = ft_strlen(envp_elm->key);
 		write(fd, envp_elm->key, key_len);
-		if (envp_elm->key[key_len - 1] == '=')
+		if (envp_elm->value != NULL)
 		{
-			write(fd, "\"", 1);
-			write(fd, envp_elm->value, ft_strlen(envp_elm->value));
+			write(fd, "=\"", 2);
+			write(fd, &envp_elm->value[1], ft_strlen(envp_elm->value) - 1);
 			write(fd, "\"", 1);
 		}
 		write(fd, "\n", 1);

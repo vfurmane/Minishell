@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 17:09:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:33:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,14 @@ void	*ft_del_env_elm(t_config *shell_c, t_kvpair *elm, t_kvpair *previous)
 
 int		ft_del_env(t_config *shell_c, char *str)
 {
-	char		*tmp;
 	t_kvpair	*previous;
 	t_kvpair	*envp_elm;
 
 	previous = NULL;
 	envp_elm = shell_c->envp_list;
-	tmp = ft_strjoin(str, "=");
 	while (envp_elm)
 	{
-		if (ft_strcmp(tmp, envp_elm->key) == 0)
+		if (ft_strcmp(str, envp_elm->key) == 0)
 			envp_elm = ft_del_env_elm(shell_c, envp_elm, previous);
 		else
 		{
@@ -69,23 +67,27 @@ int		ft_del_env(t_config *shell_c, char *str)
 		}
 	}
 	ft_update_env(shell_c);
-	free(tmp);
 	return (0);
 }
 
 int		ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int i)
 {
+	char		*new_key;
 	t_kvpair	*envp_elm;
 
 	envp_elm = envp_list;
+	new_key = ft_strcdup(str, '=');
 	while (envp_elm)
 	{
-		if (ft_strccmp(str, envp_elm->key, '=') == 0)
+		if (ft_strcmp(new_key, envp_elm->key) == 0 &&
+				str[ft_strlen(new_key)] == '=')
 		{
 			free(envp_elm->value);
 			envp_elm->value = ft_strdup(&str[i]);
 			return (1);
 		}
+		else if (ft_strcmp(new_key, envp_elm->key) == 0)
+			return (1);
 		envp_elm = envp_elm->next;
 	}
 	return (0);
@@ -99,14 +101,15 @@ int		ft_add_env(t_config *shell_c, const char *str)
 	j = 0;
 	while (str[j] && str[j] != '=')
 		j++;
-	if (str[j] == '=')
-		j++;
 	if (!ft_check_duplicate_env(shell_c->envp_list, str, j))
 	{
 		envp_elm = malloc(sizeof(*envp_elm));
 		envp_elm->next = NULL;
-		envp_elm->key = ft_strcidup(str, '=');
-		envp_elm->value = ft_strdup(&str[j]);
+		envp_elm->key = ft_strcdup(str, '=');
+		if (str[j] == '\0')
+			envp_elm->value = NULL;
+		else
+			envp_elm->value = ft_strdup(&str[j]);
 		ft_lstadd_back(&shell_c->envp_list, envp_elm);
 	}
 	ft_update_env(shell_c);

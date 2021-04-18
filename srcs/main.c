@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 16:15:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:18:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 	{
 		envp_elm = malloc(sizeof(*envp_elm));
 		envp_elm->next = NULL;
-		envp_elm->key = ft_strcidup(envp[i], '=');
+		envp_elm->key = ft_strcdup(envp[i], '=');
 		j = 0;
 		while (envp[i][j] && envp[i][j] != '=')
 			j++;
 		if (envp[i][j] == '\0')
 			return (-1);
-		envp_elm->value = ft_strdup(&envp[i][j + 1]);
+		envp_elm->value = ft_strdup(&envp[i][j]);
 		ft_lstadd_back(&shell_c->envp_list, envp_elm);
 		i++;
 	}
