@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:02:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 13:09:48 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <ncurses.h>
 #include <termios.h>
 #include "builtin.h"
+#include "define.h"
 #include "utils.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -48,35 +49,52 @@
 #define S_SIGUPENV 254
 #endif
 
-typedef enum e_separator
+typedef enum	e_separator
 {
 	EOCMD,
 	REDIR_LEFT,
 	REDIR_APPEND,
 	REDIR_RIGHT,
 	PIPE
-} t_separator;
+}				t_separator;
 
-typedef struct s_cmd
+typedef struct	s_cmd
 {
 	struct s_cmd *next;
 	char *str;
 	t_separator separator;
 	int fd[2];
-} t_cmd;
+}				t_cmd;
+
+typedef struct	s_kvpair
+{
+	struct s_kvpair	*next;
+	char			*key;
+	char			*value;
+}				t_kvpair;
+
+typedef struct	s_config
+{
+	int			quit;
+	t_kvpair	*envp_list;
+	char		**envp;
+	int			fd[2];
+}				t_config;
 
 /* global variables */
 char **export_list;
 int pipexport[2];
 
-int ft_handle_command(t_cmd *cmd, char **environement, int pipefd[2]);
+int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2]);
 char **ft_split_cmd_args(const char *str, int fd[2], char **environment);
-int ft_route_command(const char *command, char **args, int fd[2], char **line, char **environement, int pipefd[2]);
+int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, int pipefd[2]);
 char *ft_getenv(char **env, char *str);
 char *ft_exportenv(const char *str, int *str_i, char **environment);
-int ft_prompt(int *quit, char **environement, int pipefd[2]);
-void ft_update_env(int pipefd[2], char ***environement);
+int ft_prompt(int *quit, t_config *shell_c, int pipefd[2]);
 void copy_env(char **new_env, char **args, char **environement, int pipefd[2]);
+int	ft_update_shell(t_config *shell_c);
+int	ft_add_env(t_config *shell_c, const char *str);
+int		ft_del_env(t_config *shell_c, char *str);
 
 size_t ft_strlen(const char *str);
 size_t ft_strstrlen(char **str);

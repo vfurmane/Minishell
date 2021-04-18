@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 17:24:44 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/18 13:05:59 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ft_kill_child(int id)
 	kill(id, SIGINT);
 }
 
-int ft_route_command(const char *command, char **args, int fd[2], char **line, char **environment, int pipefd[2])
+int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, int pipefd[2])
 {
 	int ret;
 	int id;
@@ -38,11 +38,11 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, c
 	else if (ft_strcmp("pwd", command) == 0)
 		ret = ft_pwd(args, fd[1]);
 	else if (ft_strcmp("export", command) == 0)
-		ret = ft_export(args, fd[1], environment, pipefd);
+		ret = ft_export(args, fd[1], shell_c);
 	else if (ft_strcmp("unset", command) == 0)
-		ret = ft_unset(args, fd[1], 1, environment, pipefd);
+		ret = ft_unset(args, fd[1], 1, shell_c, pipefd);
 	else if (ft_strcmp("env", command) == 0)
-		ret = ft_env(args, fd[1], environment);
+		ret = ft_env(args, fd[1], shell_c->envp);
 	else if (ft_strcmp("exit", command) == 0)
 		ret = ft_exit(args, fd[1]);
 	else if (ft_strchr(command, '/'))
@@ -58,7 +58,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, c
 		id = fork();
 		if (id)
 			wait(0);
-		else if (!ft_exec(line, environment))
+		else if (!ft_exec(line, shell_c->envp))
 		{
 			ft_command_not_found(command, fd[1]);
 			exit(0);

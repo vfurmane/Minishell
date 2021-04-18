@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:18:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 13:06:16 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char **to_unset(char **args)
 	return (result);
 }
 
-static void ft_free_neo(char **neo)
+/*static void ft_free_neo(char **neo)
 {
 	size_t i;
 
@@ -109,7 +109,7 @@ static void ft_free_neo(char **neo)
 			free(neo[i++]);
 		free(neo);
 	}
-}
+}*/
 
 char **fix_args(char **args)
 {
@@ -176,22 +176,24 @@ void ft_print_exp_list(char **args, int fd, char **exp_list)
 	exit(0);
 }
 
-int ft_export(char **args, int fd, char **environment, int pipefd[2])
+int ft_export(char **args, int fd, t_config *shell_c)
 {
-	char **temp;
-	char **args_fixed;
-	//make the error check
-	if (!(*args))
-		ft_print_exp_list(args, fd, export_list);
+	int		i;
+	char	control;
 
-	temp = to_unset(args);
-	args_fixed = fix_args(args);
-	ft_unset(temp, fd, 0, environment, pipefd); //insert here exp_list
-	ft_free_neo(temp);
-	copy_env(0, args, export_list, pipexport);
-	copy_env(0, args_fixed, environment, pipefd);
-	free(environment);
-	ft_free_neo(args_fixed);
-	exit(S_SIGUPENV);
+	if (*args == NULL)
+		ft_print_exp_list(args, fd, export_list);
+	i = 0;
+	while (args[i])
+	{
+		write(shell_c->fd[1], "aev", 3);
+		control = 31;
+		write(shell_c->fd[1], &control, 1);
+		write(shell_c->fd[1], args[i], ft_strlen(args[i]));
+		control = 30;
+		write(shell_c->fd[1], &control, 1);
+		i++;
+	}
+	exit(0);
 	return (0);
 }

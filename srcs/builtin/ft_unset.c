@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:18:25 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 13:06:52 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ static void unset_env(char **args, char **environment, int exp_list)
 	}
 }
 
-int ft_unset(char **args, int fd, int need_quit, char **environment, int pipefd[2])
+int ft_unset(char **args, int fd, int need_quit, t_config *shell_c, int pipefd[2])
 {
+	char	**environment;
+
+	environment = shell_c->envp; /* ===== DELETE ===== */
 	(void)fd;
 	unset_env(args, environment, 0);
 	unset_env(args, export_list, 1);

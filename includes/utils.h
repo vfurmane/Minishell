@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:17:03 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 13:11:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ typedef struct		s_next
 }					t_next;
 
 size_t				ft_arrlen(void *str);
+void				*ft_bzero(void *str, size_t len);
+void				*ft_calloc(size_t len, size_t size);
 int					ft_isalpha(int chr);
 int					ft_isdigit(int chr);
 void				*ft_lstadd_back(void *lst, void *new);
 void				*ft_lstlast(void *lst);
+int					ft_lstsize(void *lst);
 void				*ft_memcpy(void *dest, const void *src, size_t len);
+int					ft_strccmp(const char *str1, const char *str2, int chr);
 char				*ft_strchr(const char *str, int chr);
 char				**ft_strarrdup(char **arr);
 int					ft_strcmp(const char *str1, const char *str2);

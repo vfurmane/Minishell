@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/17 14:14:11 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/18 13:10:48 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,17 @@ FILES		=  main.c \
 				builtin/ft_env.c \
 				builtin/ft_exit.c \
 				utils/ft_arrlen.c \
+				utils/ft_bzero.c \
+				utils/ft_calloc.c \
 				utils/ft_isalpha.c \
 				utils/ft_isdigit.c \
 				utils/ft_lstadd_back.c \
 				utils/ft_lstlast.c \
+				utils/ft_lstsize.c \
 				utils/ft_memcpy.c \
 				utils/ft_strarrdup.c \
 				utils/ft_strchr.c \
+				utils/ft_strccmp.c \
 				utils/ft_strcpy.c \
 				utils/ft_strcmp.c \
 				utils/ft_strinstr.c \
@@ -41,6 +45,8 @@ FILES		=  main.c \
 				utils/div.c \
 				utils/ft_strnstr.c \
 				ft_exec.c \
+				update_shell.c \
+				update_env.c \
 				utils/ft_split.c \
 				utils/ft_substr.c \
 				utils/ft_strdup.c \

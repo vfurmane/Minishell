@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 17:07:02 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/18 13:00:40 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 	return (arr);
 }
 
-int ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
+int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 {
 	char **args;
 	t_cmd *cmdi;
@@ -172,11 +172,11 @@ int ft_handle_command(t_cmd *cmd, char **environment, int pipefd[2])
 		cmdi->fd[1] = 1;
 		if (cmdi->separator != EOCMD)
 			pipe(cmdi->fd);
-		args = ft_split_cmd_args(cmdi->str, cmdi->fd, environment);
+		args = ft_split_cmd_args(cmdi->str, cmdi->fd, shell_c->envp);
 		if (args == NULL)
 			return (-1);
 		if (args[0] != NULL)
-			if (ft_route_command(args[0], &args[1], cmdi->fd, args, environment, pipefd) == -42) //can't appening let's review that
+			if (ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, pipefd) == -42) //can't appening let's review that
 				return (-1);
 		cmdi = cmdi->next;
 	}

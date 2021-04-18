@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/13 16:16:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/18 13:28:17 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 	new->next = 0;
 }
 
-int ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
+int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 {
 	int i;
 	char *str;
@@ -94,10 +94,10 @@ int ft_init_args_tree(char *const buffer, char **environment, int pipefd[2])
 	}
 	if (cmd == NULL)
 		return (0);
-	return (ft_handle_command(cmd, environment, pipefd));
+	return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
-int ft_prompt(int *quit, char **environment, int pipefd[2])
+int ft_prompt(int *quit, t_config *shell_c, int pipefd[2])
 {
 	int ret;
 	char buffer[ARG_MAX + 1];
@@ -110,9 +110,10 @@ int ft_prompt(int *quit, char **environment, int pipefd[2])
 	else if (ret == 0)
 	{
 		write(1, "exit\n", 5);
-		exit(S_SIGQUITSH);
+		write(shell_c->fd[1], EXIT_SHELL, 3);
+		write(shell_c->fd[1], "\x1F\x1E", 2);
 		return (0);
 	}
 	buffer[ret - 1] = '\0';
-	return (ft_init_args_tree(buffer, environment, pipefd));
+	return (ft_init_args_tree(buffer, shell_c, pipefd));
 }
