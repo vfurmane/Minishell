@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 15:45:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 16:17:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ char **fix_args(char **args)
 	return (res);
 }
 
-void ft_print_exp_list(char **args, int fd, char **exp_list)
+void ft_print_exp_list(char **args, int fd, t_kvpair *envp_list)
 {
-	int i;
+	/*int i;
 	int j;
 	int quote;
 
@@ -158,7 +158,31 @@ void ft_print_exp_list(char **args, int fd, char **exp_list)
 		write(fd, "\n", 1);
 		i++;
 	}
-	exit(0);
+	exit(0);*/
+	int			key_len;
+	t_kvpair	*envp_elm;
+
+	if (*args) // Keeping from old function
+	{
+		write(fd, "\n", 1);
+		exit(0);
+	}
+	envp_elm = envp_list;
+	while (envp_elm)
+	{
+		write(fd, "declare -x ", 12);
+		key_len = ft_strlen(envp_elm->key);
+		write(fd, envp_elm->key, key_len);
+		if (envp_elm->key[key_len - 1] == '=')
+		{
+			write(fd, "\"", 1);
+			write(fd, envp_elm->value, ft_strlen(envp_elm->value));
+			write(fd, "\"", 1);
+		}
+		write(fd, "\n", 1);
+		envp_elm = envp_elm->next;
+	}
+	exit(0); /* ===== DELETE ===== */
 }
 
 int ft_export(char **args, int fd, t_config *shell_c)
@@ -166,7 +190,7 @@ int ft_export(char **args, int fd, t_config *shell_c)
 	int		i;
 
 	if (*args == NULL)
-		ft_print_exp_list(args, fd, export_list);
+		ft_print_exp_list(args, fd, shell_c->envp_list); // Why passing *args if it is NULL ?
 	i = 0;
 	while (args[i])
 	{
