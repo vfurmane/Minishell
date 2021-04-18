@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 15:00:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 17:04:41 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,6 @@ typedef struct	s_config
 	char		**envp;
 	int			fd[2];
 }				t_config;
-
-/* global variables */
-char **export_list;
-int pipexport[2];
 
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2]);
 char **ft_split_cmd_args(const char *str, int fd[2], char **environment);
