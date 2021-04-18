@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 15:17:28 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 15:45:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,6 @@ void copy_env(char **new_env, char **args, char **environment, int pipefd[2])
 		i++;
 	}
 	write(pipefd[1], "\0", 1);
-}
-
-char *ft_strcdup(const char *str, int chr)
-{
-	int str_len;
-	char *new_str;
-	char *first_chr;
-
-	first_chr = ft_strchr(str, chr);
-	str_len = first_chr - str;
-	if (!(new_str = malloc(sizeof(*new_str) * (str_len + 1))))
-		return (NULL);
-	new_str = ft_memcpy(new_str, str, sizeof(*new_str) * str_len);
-	new_str[str_len] = '\0';
-	return (new_str);
 }
 
 char **to_unset(char **args)
