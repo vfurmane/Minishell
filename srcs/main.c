@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 14:16:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 15:00:31 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 		ft_lstadd_back(&shell_c->envp_list, envp_elm);
 		i++;
 	}
+	ft_update_env(shell_c);
 	return (0);
 }
 
