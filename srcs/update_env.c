@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 16:56:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/18 17:09:33 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ int		ft_add_env(t_config *shell_c, const char *str)
 	j = 0;
 	while (str[j] && str[j] != '=')
 		j++;
-	if (str[j] == '\0')
-		return (-1);
-	if (!ft_check_duplicate_env(shell_c->envp_list, str, j + 1))
+	if (str[j] == '=')
+		j++;
+	if (!ft_check_duplicate_env(shell_c->envp_list, str, j))
 	{
 		envp_elm = malloc(sizeof(*envp_elm));
 		envp_elm->next = NULL;
 		envp_elm->key = ft_strcidup(str, '=');
-		envp_elm->value = ft_strdup(&str[j + 1]);
+		envp_elm->value = ft_strdup(&str[j]);
 		ft_lstadd_back(&shell_c->envp_list, envp_elm);
 	}
 	ft_update_env(shell_c);
