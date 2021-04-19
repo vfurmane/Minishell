@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 19:18:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 10:49:05 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ int	main(int argc, char **argv, char **envp)
 		if (fork() != CHILD_PROCESS)
 		{
 			wait(&status);
-			ft_update_shell(&shell_c);
+			if (WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+			else
+				ft_update_shell(&shell_c);
 		}
 		else
 		{
