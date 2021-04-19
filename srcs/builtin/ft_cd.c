@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/01 15:23:59 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/19 13:50:31 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int flag(char *str)
 	return (0);
 }
 
-int ft_cd(char **str, int fd)
+int ft_cd(char **str, int fd, char **envp)
 {
 	fd = 0;
 	if (str[1] && flag(str[1]) && !str[2])
-		return (chdir(getenv("OLDPWD")));
+		return (chdir(ft_getenv(envp, "OLDPWD")));
 	if (!str)
 		return (chdir("~"));
 	return (chdir(*str));

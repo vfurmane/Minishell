@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 15:22:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 14:03:07 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	int id;
 
 	ret = 0;
+	//chdir("..");
 	(void)pipefd; /* ===== DELETE ===== */
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, fd[1]);
 	else if (ft_strcmp("cd", command) == 0)
-		ret = ft_cd(args, fd[1]);
+		ret = ft_cd(args, fd[1], shell_c->envp);
 	else if (ft_strcmp("pwd", command) == 0)
 		ret = ft_pwd(args, fd[1]);
 	else if (ft_strcmp("export", command) == 0)
@@ -44,7 +45,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	else if (ft_strcmp("env", command) == 0)
 		ret = ft_env(args, fd[1], shell_c->envp);
 	else if (ft_strcmp("exit", command) == 0)
-		ret = ft_exit(args, fd[1]);
+		ret = ft_exit(args, fd[1], shell_c);
 	else if (ft_strchr(command, '/'))
 	{
 		id = fork();

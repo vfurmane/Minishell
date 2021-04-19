@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 17:04:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 12:14:31 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 char *ft_getenv(char **env, char *str);
 char *ft_exportenv(const char *str, int *str_i, char **environment);
 int ft_prompt(int *quit, t_config *shell_c, int pipefd[2]);
-void copy_env(char **new_env, char **args, char **environement, int pipefd[2]);
+//void copy_env(char **new_env, char **args, char **environement, int pipefd[2]);
 int	ft_update_shell(t_config *shell_c);
 int	ft_add_env(t_config *shell_c, const char *str);
 int		ft_del_env(t_config *shell_c, char *str);
