@@ -65,6 +65,7 @@ int	main(void)
 		ret = 1;
 		column = 0;
 		line = calloc(sizeof(*line), ARG_MAX + 1); /* forbidden */
+		write(1, "$ ", 2);
 		while (ret > 0 && i < ARG_MAX)
 		{
 			ret = read(0, buffer, 3);
