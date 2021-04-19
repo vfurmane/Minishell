@@ -90,10 +90,8 @@ int	main(void)
 			{
 				i = ft_delete_char(line, column, buffer[0]); /* Can be replaced with a memmove */
 				column--;
+				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 				tputs(clr_eol, 1, ft_putchar);
-				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
-				ft_putchar(' ');
-				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 			}
 			else if (buffer[0] == '\f')
 			{
