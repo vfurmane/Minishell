@@ -54,21 +54,8 @@ int	main(void)
 	int				column;
 	char			*line;
 	unsigned char	buffer[3];
-	char			*cm, *sc, *rc, *ce, *DO, *UP, *LE, *RI;
-	char			*arrow[4] = {	"UP",
-		"DOWN",
-		"RIGHT",
-		"LEFT"};
 
 	tgetent(NULL, getenv("TERM"));
-	cm = tgetstr("cm", NULL);
-	sc = tgetstr("sc", NULL);
-	rc = tgetstr("rc", NULL);
-	ce = tgetstr("ce", NULL);
-	DO = tgetstr("DO", NULL);
-	UP = tgetstr("UP", NULL);
-	LE = tgetstr("LE", NULL);
-	RI = tgetstr("RI", NULL);
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
@@ -93,10 +80,10 @@ int	main(void)
 			{
 				i = ft_delete_char(line, column, buffer[0]); /* Can be replaced with a memmove */
 				column--;
-				tputs(ce, 1, ft_putchar);
-				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+				tputs(clr_eol, 1, ft_putchar);
+				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 				ft_putchar(' ');
-				tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 			}
 			else if (buffer[0] == '\n')
 			{
@@ -108,22 +95,22 @@ int	main(void)
 			{
 				if (buffer[2] == 'D' && column > 0)
 				{
-					tputs(tgoto(LE, 0, 0), 1, ft_putchar);
+					tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 					column--;
 				}
 				else if (buffer[2] == 'C' && column < i)
 				{
-					tputs(tgoto(RI, 0, 0), 1, ft_putchar);
+					tputs(tgoto(cursor_right, 0, 0), 1, ft_putchar);
 					column++;
 				}
 			}
 			j = column;
-			tputs(sc, 1, ft_putchar);
+			tputs(save_cursor, 1, ft_putchar);
 			while (j < i)
 			{
 				ft_putchar(line[j++]);
 			}
-			tputs(rc, 1, ft_putchar);
+			tputs(restore_cursor, 1, ft_putchar);
 		}
 		line[i] = '\0';
 		printf("The line contains: '%s'\n", line);
