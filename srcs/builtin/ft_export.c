@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/19 13:47:20 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/19 18:15:48 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ void ft_print_exp_list(char **args, int fd, t_kvpair *envp_list)
 	exit(0); /* ===== DELETE ===== */
 }
 
-int ft_export(char **args, int fd, t_config *shell_c)
+int ft_export(char **args, int fd, t_config *shell_c, int quit)
 {
 	int	i;
 	
@@ -205,6 +205,7 @@ int ft_export(char **args, int fd, t_config *shell_c)
 		write(shell_c->fd[1], "\x1E", 1);
 		i++;
 	}
-	exit(0);
+	if (quit)
+		exit(0);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 14:22:38 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 13:26:28 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 15:19:17 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 
 # ifndef EXIT_SHELL
 #  define EXIT_SHELL "exs"
+# endif
+
+# ifndef CD_CHANGE
+#  define CD_CHANGE "cdc"
 # endif
 
 #endif

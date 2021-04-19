@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   update_shell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 13:18:52 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 18:18:14 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_read_whole_fd(int fd)
+char *ft_read_whole_fd(int fd)
 {
-	int		ret;
-	char	*str;
-	char	*tmp_str;
-	char	buffer[BUFSIZ + 1];
+	int ret;
+	char *str;
+	char *tmp_str;
+	char buffer[BUFSIZ + 1];
 
 	ret = 1;
 	str = ft_calloc(sizeof(*str), 1);
@@ -38,12 +38,12 @@ char	*ft_read_whole_fd(int fd)
 	return (str);
 }
 
-int		ft_route_updater(t_config *shell_c, char *str)
+int ft_route_updater(t_config *shell_c, char *str)
 {
-	int		i;
-	int		ret;
-	char	key[4];
-	char	*value;
+	int i;
+	int ret;
+	char key[4];
+	char *value;
 
 	i = 0;
 	while (str[i] && str[i] != 31)
@@ -59,19 +59,23 @@ int		ft_route_updater(t_config *shell_c, char *str)
 		ret = ft_del_env(shell_c, value);
 	else if (ft_strcmp(EXIT_SHELL, key) == 0)
 		shell_c->quit = 1;
+	else if (ft_strcmp(CD_CHANGE, key) == 0)
+		chdir(value);
 	if (ret == -1)
 		return (ret);
 	while (str[i] && str[i] != 30)
 		i++;
+	if (str[i])
+		ft_route_updater(shell_c, str + i);
 	return (i + 1);
 }
 
 // Protect return in main
-int		ft_update_shell(t_config *shell_c)
+int ft_update_shell(t_config *shell_c)
 {
-	int		i;
-	int		ret;
-	char	*str;
+	int i;
+	int ret;
+	char *str;
 
 	write(shell_c->fd[1], "\0", 1);
 	str = ft_read_whole_fd(shell_c->fd[0]);
