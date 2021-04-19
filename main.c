@@ -69,6 +69,7 @@ int	main(void)
 		while (ret > 0 && i < ARG_MAX)
 		{
 			ret = read(0, buffer, 3);
+			//printf("%d - %d - %d\n", buffer[0], buffer[1], buffer[2]);
 			if (buffer[0] == 4)
 				return (0); /* break the while here */
 			else if (buffer[0] >= 32 && buffer[0] <= 126)
@@ -85,6 +86,15 @@ int	main(void)
 				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
 				ft_putchar(' ');
 				tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
+			}
+			else if (buffer[0] == '\f')
+			{
+				tputs(save_cursor, 1, ft_putchar);
+				tputs(clear_screen, 1, ft_putchar);
+				write(1, "$ ", 2);
+				write(1, line, ft_strlen(line));
+				tputs(restore_cursor, 1, ft_putchar);
+				tputs(tgoto(row_address, 0, 0), 1, ft_putchar);
 			}
 			else if (buffer[0] == '\n')
 			{
