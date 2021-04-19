@@ -71,7 +71,15 @@ int	main(void)
 			ret = read(0, buffer, 3);
 			//printf("%d - %d - %d\n", buffer[0], buffer[1], buffer[2]);
 			if (buffer[0] == 4)
-				return (0); /* break the while here */
+			{
+				if (i == 0)
+					return (0); /* break the while here */
+				else if (column < i)
+				{
+					i = ft_delete_char(line, column + 1, buffer[0]); /* Can be replaced with a memmove */
+					tputs(clr_eol, 1, ft_putchar);
+				}
+			}
 			else if (buffer[0] >= 32 && buffer[0] <= 126)
 			{
 				i = ft_insert_char(line, column, buffer[0]); /* Can be replaced with a memmove */
