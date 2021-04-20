@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/19 15:50:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/20 09:51:42 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,10 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int			status;
-	int			pipefd[2];
-	t_config	shell_c;
+	int				status;
+	int				pipefd[2];
+	t_config		shell_c;
+	struct termios	termios_backup;
 
 	if (__APPLE__)
 	{
@@ -130,10 +131,12 @@ int	main(int argc, char **argv, char **envp)
 	shell_c.quit = 0;
 	while (!shell_c.quit)
 	{
+		tcgetattr(0, &termios_backup);
 		pipe(pipefd);
 		if (fork() != CHILD_PROCESS)
 		{
 			wait(&status);
+			tcsetattr(0, 0, &termios_backup);
 			if (WTERMSIG(status) == SIGINT)
 				write(1, "\n", 1);
 			else
@@ -142,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			signal(SIGINT, SIG_DFL);
-			if (ft_prompt(&shell_c.quit, &shell_c, pipefd) == -1)
+			if (ft_prompt(&shell_c, pipefd) == -1)
 				return (1);
 			exit(0); /* ===== DELETE ===== */
 		}

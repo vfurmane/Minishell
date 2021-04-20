@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 17:04:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/20 09:18:15 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,22 @@ typedef struct	s_config
 	int			fd[2];
 }				t_config;
 
+typedef struct	s_icanon
+{
+	int				column;
+	int				line_i;
+	char			*line;
+	unsigned char	buffer[3];
+}				t_icanon;
+
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2]);
 char **ft_split_cmd_args(const char *str, int fd[2], char **environment);
 int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, int pipefd[2]);
 char *ft_getenv(char **env, char *str);
 char *ft_exportenv(const char *str, int *str_i, char **environment);
-int ft_prompt(int *quit, t_config *shell_c, int pipefd[2]);
+int ft_prompt(t_config *shell_c, int pipefd[2]);
 void copy_env(char **new_env, char **args, char **environement, int pipefd[2]);
+int	ft_read_icanon(t_config *shell_c, t_icanon *icanon);
 int	ft_update_shell(t_config *shell_c);
 int	ft_add_env(t_config *shell_c, const char *str);
 int		ft_del_env(t_config *shell_c, char *str);

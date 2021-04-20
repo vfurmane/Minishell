@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/18 15:47:44 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/20 09:19:44 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ FILES		=  main.c \
 				utils/ft_lstlast.c \
 				utils/ft_lstsize.c \
 				utils/ft_memcpy.c \
+				utils/ft_putchar.c \
 				utils/ft_strarrdup.c \
 				utils/ft_strcdup.c \
 				utils/ft_strchr.c \
@@ -47,6 +48,7 @@ FILES		=  main.c \
 				utils/div.c \
 				utils/ft_strnstr.c \
 				ft_exec.c \
+				read_icanon.c \
 				update_shell.c \
 				update_env.c \
 				utils/ft_split.c \
