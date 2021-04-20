@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/19 18:18:14 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/20 11:29:23 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,11 @@ int ft_route_updater(t_config *shell_c, char *str)
 	else if (ft_strcmp(EXIT_SHELL, key) == 0)
 		shell_c->quit = 1;
 	else if (ft_strcmp(CD_CHANGE, key) == 0)
-		chdir(value);
+		ret = chdir(value);
 	if (ret == -1)
 		return (ret);
 	while (str[i] && str[i] != 30)
 		i++;
-	if (str[i])
-		ft_route_updater(shell_c, str + i);
 	return (i + 1);
 }
 
