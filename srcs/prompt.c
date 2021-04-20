@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 09:51:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/20 10:53:50 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,12 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	  buffer[ret - 1] = '\0';
 	  return (ft_init_args_tree(buffer, shell_c, pipefd));*/
 	struct termios	termios_c;
+	struct termios	termios_backup;
 	t_icanon		icanon;
 	
 	tgetent(NULL, getenv("TERM"));
 	tcgetattr(0, &termios_c);
+	tcgetattr(0, &termios_backup);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
 	icanon.line_i = 0;
@@ -128,6 +130,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	icanon.line = ft_calloc(sizeof(*icanon.line), ARG_MAX + 1);
 	write(1, "$ ", 2);
 	ft_read_icanon(shell_c, &icanon);
+	tcsetattr(0, 0, &termios_backup);
 	ft_init_args_tree(icanon.line, shell_c, pipefd);
 	free(icanon.line);
 	return (0);
