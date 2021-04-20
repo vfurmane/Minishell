@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 13:00:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/19 14:02:14 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,8 @@ char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 {
-	char **args;
-	t_cmd *cmdi;
+	char	**args;
+	t_cmd	*cmdi;
 
 	cmdi = cmd;
 	// loop
