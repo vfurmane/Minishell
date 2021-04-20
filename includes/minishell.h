@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 15:01:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/20 16:11:42 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 
 char				*ft_exportenv(const char *str, int *str_i,
 					char **environment);
+char				*ft_getenv(char **env, char *str);
+
 
 int					ft_execve(const char *filename, char *const argv[],
 					char *const envp[]);
