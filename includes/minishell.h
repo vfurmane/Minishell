@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 09:18:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/20 09:58:52 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ int	ft_update_shell(t_config *shell_c);
 int	ft_add_env(t_config *shell_c, const char *str);
 int		ft_del_env(t_config *shell_c, char *str);
 int		ft_update_env(t_config *shell_c);
+int	ft_insert_char(t_icanon *icanon);
+int	ft_delete_char(char *str, int column);
+int	ft_rewrite_line(t_icanon *icanon);
 
 size_t ft_strlen(const char *str);
 size_t ft_strstrlen(char **str);

@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/20 09:19:44 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/20 09:59:04 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ FILES		=  main.c \
 				utils/div.c \
 				utils/ft_strnstr.c \
 				ft_exec.c \
+				icanon_put.c \
 				read_icanon.c \
 				update_shell.c \
 				update_env.c \
