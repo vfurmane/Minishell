@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 12:24:35 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/21 09:19:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,16 @@ int	main(int argc, char **argv, char **envp)
 	ft_parse_envp(envp, &shell_c);
 	pipe(shell_c.fd);
 	shell_c.quit = 0;
+	tgetent(NULL, getenv("TERM"));
 	while (!shell_c.quit)
 	{
+		tcgetattr(0, &shell_c.termios_backup);
 		pipe(pipefd);
 		if (fork() != CHILD_PROCESS)
 		{
 			wait(&status);
 			if (WTERMSIG(status) == 42)
-			chdir("..");
+				chdir("..");
 			if (WTERMSIG(status) == SIGINT)
 				write(1, "\n", 1);
 			else

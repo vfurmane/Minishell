@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 16:11:42 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/21 09:01:55 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct		s_config
 	t_kvpair		*envp_list;
 	char			**envp;
 	int				fd[2];
+	struct termios	termios_backup;
 }					t_config;
 
 typedef struct		s_icanon

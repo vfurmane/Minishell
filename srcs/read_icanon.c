@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 09:07:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 09:58:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 10:26:31 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	ft_read_icanon(t_config *shell_c, t_icanon *icanon)
 			ft_escape_code(icanon);
 		else
 			tputs(bell, 1, ft_putchar);
-		ft_rewrite_line(icanon);
+		if (icanon->buffer[0] != '\n')
+			ft_rewrite_line(icanon);
 	}
 	icanon->line[icanon->line_i] = '\0';
 	return (0);
