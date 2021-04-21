@@ -6,19 +6,17 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 09:07:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 10:26:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 10:55:03 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_ctrl_d(int write_pipe, t_icanon *icanon)
+int	ft_ctrl_d(t_config *shell_c, t_icanon *icanon)
 {
 	if (icanon->line_i == 0)
 	{
-		write(1, "exit\n", 5);
-		write(write_pipe, EXIT_SHELL, 3);
-		write(write_pipe, "\x1F\x1E", 2);
+		ft_exit(0, 0, shell_c);
 		return (0);
 	}
 	else if (icanon->column < icanon->line_i)
@@ -75,7 +73,7 @@ int	ft_read_icanon(t_config *shell_c, t_icanon *icanon)
 	{
 		ret = read(0, icanon->buffer, 3);
 		if (icanon->buffer[0] == 4)
-			ret = ft_ctrl_d(shell_c->fd[1], icanon);
+			ret = ft_ctrl_d(shell_c, icanon);
 		else if (icanon->buffer[0] >= 32 && icanon->buffer[0] <= 126)
 			icanon->line_i = ft_insert_char(icanon);
 		else if (icanon->buffer[0] == 127 && icanon->column > 0)
