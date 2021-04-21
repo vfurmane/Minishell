@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 10:29:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 10:40:58 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			wait(&status);
 			tcsetattr(0, 0, &shell_c.termios_backup);
-			if (WTERMSIG(status) == 42)
-				chdir("..");
 			if (WTERMSIG(status) == SIGINT)
 				write(1, "^C\n", 3);
 			else
