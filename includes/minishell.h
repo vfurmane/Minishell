@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 09:01:55 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 11:36:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ typedef struct		s_kvpair
 	char			*value;
 }					t_kvpair;
 
+typedef struct		s_dlist
+{
+	struct s_dlist	*next;
+	struct s_dlist	*previous;
+	void			*content;
+}					t_dlist;
+
 typedef struct		s_config
 {
 	int				quit;
@@ -72,6 +79,8 @@ typedef struct		s_config
 	char			**envp;
 	int				fd[2];
 	struct termios	termios_backup;
+	char			*prompt;
+	t_dlist			*history;
 }					t_config;
 
 typedef struct		s_icanon
@@ -98,6 +107,7 @@ int					ft_insert_char(t_icanon *icanon);
 int					ft_delete_char(char *str, int column);
 int					ft_rewrite_line(t_icanon *icanon);
 
+int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c, int pipefd[2]);
 
 int					ft_read_icanon(t_config *shell_c, t_icanon *icanon);

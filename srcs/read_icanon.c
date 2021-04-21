@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 09:07:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 10:55:03 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 12:02:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ int	ft_backspace(t_icanon *icanon)
 	return (0);
 }
 
-int	ft_ctrl_l(char *line)
+int	ft_ctrl_l(t_config *shell_c, char *line)
 {
 	tputs(save_cursor, 1, ft_putchar);
 	tputs(clear_screen, 1, ft_putchar);
-	write(1, "$ ", 2);
+	ft_display_prompt(shell_c->prompt);
 	write(1, line, ft_strlen(line));
 	tputs(restore_cursor, 1, ft_putchar);
 	tputs(tgoto(row_address, 0, 0), 1, ft_putchar);
 	return (0);
 }
 
-int	ft_escape_code(t_icanon *icanon)
+int	ft_escape_code(t_config *shell_c, t_icanon *icanon)
 {
 	if (icanon->buffer[2] == 'D' && icanon->column > 0)
 	{
@@ -61,6 +61,18 @@ int	ft_escape_code(t_icanon *icanon)
 		tputs(tgoto(cursor_right, 0, 0), 1, ft_putchar);
 		(icanon->column)++;
 	}
+	else if ((icanon->buffer[2] == 'A' && shell_c->history->next != NULL) ||
+			(icanon->buffer[2] == 'B' && shell_c->history->previous != NULL))
+	{
+		tputs(tgoto(column_address, 0, ft_strlen(shell_c->prompt)), 1,
+				ft_putchar);
+		tputs(clr_eol, 1, ft_putchar);
+		icanon->line = shell_c->history->next->content;
+		icanon->line_i = ft_strlen(icanon->line);
+		icanon->column = 0;
+	}
+	else
+		tputs(bell, 1, ft_putchar);
 	return (0);
 }
 
@@ -79,11 +91,11 @@ int	ft_read_icanon(t_config *shell_c, t_icanon *icanon)
 		else if (icanon->buffer[0] == 127 && icanon->column > 0)
 			ft_backspace(icanon);
 		else if (icanon->buffer[0] == '\f')
-			ft_ctrl_l(icanon->line);
+			ft_ctrl_l(shell_c, icanon->line);
 		else if (icanon->buffer[0] == '\n')
 			ret = ft_putchar('\n') * 0;
 		else if (icanon->buffer[0] == 27 && icanon->buffer[1] == 91)
-			ft_escape_code(icanon);
+			ft_escape_code(shell_c, icanon);
 		else
 			tputs(bell, 1, ft_putchar);
 		if (icanon->buffer[0] != '\n')

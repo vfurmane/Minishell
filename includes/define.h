@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 14:22:38 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/19 15:19:17 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/21 12:06:46 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef ADD_ENV
 #  define ADD_ENV "aev"
+# endif
+
+# ifndef ADD_HISTORY
+#  define ADD_HISTORY "ahi"
 # endif
 
 # ifndef BUFSIZ

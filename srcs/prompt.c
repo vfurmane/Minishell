@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 09:19:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:04:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,24 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 	return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
+int	ft_display_prompt(char *prompt)
+{
+	return (write(1, prompt, ft_strlen(prompt)));
+}
+
+t_dlist	*ft_new_history_line(void)
+{
+	t_dlist	*elm;
+
+	elm = malloc(sizeof(*elm));
+	if (elm == NULL)
+		return (NULL);
+	elm->next = NULL;
+	elm->previous = NULL;
+	elm->content = ft_calloc(sizeof(elm), ARG_MAX + 1);
+	return (elm);
+}
+
 int ft_prompt(t_config *shell_c, int pipefd[2])
 {
 	/*int ret;
@@ -124,11 +142,17 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	tcsetattr(0, 0, &termios_c);
 	icanon.line_i = 0;
 	icanon.column = 0;
-	icanon.line = ft_calloc(sizeof(*icanon.line), ARG_MAX + 1);
-	write(1, "$ ", 2);
+	ft_display_prompt(shell_c->prompt);
+	ft_lstadd_front(&shell_c->history, ft_new_history_line());
+	icanon.line = shell_c->history->content;
+	if (shell_c->history->next)
+		shell_c->history->next->previous = shell_c->history;
 	ft_read_icanon(shell_c, &icanon);
 	tcsetattr(0, 0, &shell_c->termios_backup);
+	write(shell_c->fd[1], ADD_HISTORY, 3);
+	write(shell_c->fd[1], "\x1F", 1);
+	write(shell_c->fd[1], icanon.line, ft_strlen(icanon.line));
+	write(shell_c->fd[1], "\x1E", 1);
 	ft_init_args_tree(icanon.line, shell_c, pipefd);
-	free(icanon.line);
 	return (0);
 }

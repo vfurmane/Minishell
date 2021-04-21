@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 11:29:23 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/21 15:29:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ char *ft_read_whole_fd(int fd)
 	return (str);
 }
 
+int	ft_add_history(t_config *shell_c, char *str)
+{
+	t_dlist	*elm;
+
+	elm = malloc(sizeof(*elm));
+	if (elm == NULL)
+		return (-1);
+	elm->next = NULL;
+	elm->previous = NULL;
+	elm->content = str;
+	ft_lstadd_front(&shell_c->history, elm);
+	if (shell_c->history->next)
+		shell_c->history->next->previous = shell_c->history;
+	return (0);
+}
+
 int ft_route_updater(t_config *shell_c, char *str)
 {
 	int i;
@@ -61,6 +77,8 @@ int ft_route_updater(t_config *shell_c, char *str)
 		shell_c->quit = 1;
 	else if (ft_strcmp(CD_CHANGE, key) == 0)
 		ret = chdir(value);
+	else if (ft_strcmp(ADD_HISTORY, key) == 0)
+		ret = ft_add_history(shell_c, value);
 	if (ret == -1)
 		return (ret);
 	while (str[i] && str[i] != 30)
