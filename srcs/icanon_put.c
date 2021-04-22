@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 09:57:56 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 09:58:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/22 10:34:06 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_delete_char(char *str, int column)
 	return (ft_strlen(str));
 }
 
-int	ft_rewrite_line(t_icanon *icanon)
+int	ft_rewrite_line(t_icanon *icanon, int move_cursor)
 {
 	int	i;
 
@@ -45,6 +45,7 @@ int	ft_rewrite_line(t_icanon *icanon)
 	tputs(save_cursor, 1, ft_putchar);
 	while (i < icanon->line_i)
 		ft_putchar(icanon->line[i++]);
-	tputs(restore_cursor, 1, ft_putchar);
+	if (!move_cursor)
+		tputs(restore_cursor, 1, ft_putchar);
 	return (0);
 }

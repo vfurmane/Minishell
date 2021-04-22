@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 11:36:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/22 10:33:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int					ft_exec(char **command, char **environement);
 
 int					ft_insert_char(t_icanon *icanon);
 int					ft_delete_char(char *str, int column);
-int					ft_rewrite_line(t_icanon *icanon);
+int					ft_rewrite_line(t_icanon *icanon, int move_cursor);
 
 int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c, int pipefd[2]);

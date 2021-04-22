@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 09:07:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 12:02:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/22 10:36:28 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,15 @@ int	ft_escape_code(t_config *shell_c, t_icanon *icanon)
 		tputs(tgoto(column_address, 0, ft_strlen(shell_c->prompt)), 1,
 				ft_putchar);
 		tputs(clr_eol, 1, ft_putchar);
-		icanon->line = shell_c->history->next->content;
+		if (icanon->buffer[2] == 'A')
+			shell_c->history = shell_c->history->next;
+		else if (icanon->buffer[2] == 'B')
+			shell_c->history = shell_c->history->previous;
+		icanon->line = shell_c->history->content;
 		icanon->line_i = ft_strlen(icanon->line);
 		icanon->column = 0;
+		ft_rewrite_line(icanon, 1);
+		icanon->column = icanon->line_i;
 	}
 	else
 		tputs(bell, 1, ft_putchar);
@@ -98,8 +104,8 @@ int	ft_read_icanon(t_config *shell_c, t_icanon *icanon)
 			ft_escape_code(shell_c, icanon);
 		else
 			tputs(bell, 1, ft_putchar);
-		if (icanon->buffer[0] != '\n')
-			ft_rewrite_line(icanon);
+		if (icanon->buffer[0] != '\n' && icanon->buffer[0] != 27)
+			ft_rewrite_line(icanon, 0);
 	}
 	icanon->line[icanon->line_i] = '\0';
 	return (0);
