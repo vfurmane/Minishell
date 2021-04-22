@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 12:03:49 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/22 20:59:04 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 {
 	int i;
 	char *str;
-	//t_cmd *initial_cmd;
 	t_cmd *cmd;
-	//int temp;
+
+(void)pipefd;
 
 	i = 0;
 	//initial_cmd = NULL;
@@ -101,7 +101,8 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 	}
 	if (cmd == NULL)
 		return (0);
-	return (ft_handle_command(cmd, shell_c, pipefd));
+		return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO));
+	//return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
 int ft_prompt(t_config *shell_c, int pipefd[2])

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 17:26:40 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/22 20:59:50 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,35 @@ void ft_kill_child(int id)
 	kill(id, SIGINT);
 }
 
-int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, int pipefd[2])
+int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
 {
 	int ret;
-	int id;
+	//int id;
 
+(void)cmd;
 	ret = 0;
-	(void)pipefd; /* ===== DELETE ===== */
+
+	// id = fork();
+	// if (id)
+	// {
+	// 	if (cmd->separator == 42)
+	// 	{
+	// 		close(cmd->fd[0]);
+	// 		dup2(cmd->fd[1], STDOUT_FILENO);
+	// 		close(cmd->fd[1]);
+	// 	}
+	// 	//program here
+	// 	wait(&ret);
+	// 	return (ret);
+	// }
+	// if (cmd->separator == 42)
+	// {
+	// 	close(cmd->fd[1]);
+	// 	dup2(STDIN_FILENO, cmd->fd[0]);
+	// 	close(cmd->fd[0]);
+	// }
+	// //next program here
+
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, fd[1]);
 	else if (ft_strcmp("cd", command) == 0)
@@ -47,18 +69,19 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		ret = ft_exit(args, fd[1], shell_c);
 	else if (ft_strchr(command, '/'))
 	{
-		id = fork();
-		if (id)
-			wait(0);
-		else
-			ft_execve(line[0], line, NULL);
+		// id = fork();
+		// if (id)
+		// 	wait(0);
+		// else
+		ft_execve(line[0], line, NULL);
 	}
 	else
 	{
-		id = fork();
-		if (id)
-			wait(0);
-		else if (!ft_exec(line, shell_c->envp))
+		// id = fork();
+		// if (id)
+		// 	wait(0);
+		// else
+		 if (!ft_exec(line, shell_c->envp))
 		{
 			ft_command_not_found(command, fd[1]);
 			exit(0);

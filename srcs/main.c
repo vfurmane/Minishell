@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 11:31:42 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/22 13:43:59 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 int	main(int argc, char **argv, char **envp)
 {
 	int				status;
-	//int				pipefd[2];
+	int				pipefd[2];
 	t_config		shell_c;
 
 	if (__APPLE__)
@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			signal(SIGINT, SIG_DFL);
-			if (ft_prompt(&shell_c, shell_c.fd) == -1)
+			if (ft_prompt(&shell_c, pipefd) == -1)
 				return (1);
 			exit(0); /* ===== DELETE ===== */
 		}
