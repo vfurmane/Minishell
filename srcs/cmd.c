@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 17:28:48 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/22 11:31:27 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int ft_arglen(const char *str, char chr, char **environment)
 
 char *ft_parse_arg(const char *str, char chr, int fd[2], char **environment)
 {
-	int i;
-	int j;
-	char quote;
-	char *new_str;
+	int		i;
+	int		j;
+	char	quote;
+	char	*new_str;
 
 	i = 0;
 	j = 0;
@@ -169,15 +169,21 @@ int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 	while (cmdi)
 	{
 		cmdi->fd[0] = 0;
-		cmdi->fd[1] = cmd->fd[1];
-		if (cmdi->separator != EOCMD)
-			pipe(cmdi->fd);
-		args = ft_split_cmd_args(cmdi->str, cmdi->fd, shell_c->envp);
+		cmdi->fd[1] = 1;
+		// if (cmdi->separator == 42)
+		// 	pipe(cmdi->fd);
+		// dup2(cmdi->fd[0], STDIN_FILENO);
+		// dup2(cmdi->fd[1], STDOUT_FILENO);
+		// if (cmdi->separator == 42)
+		// {
+		// 	close(cmdi->fd[1]);
+		// 	close(cmdi->fd[0]);
+		// }
+			args = ft_split_cmd_args(cmdi->str, cmdi->fd, shell_c->envp);
 		if (args == NULL)
 			return (-1);
 		if (args[0] != NULL)
-			if (ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, pipefd) == -42) //can't appening let's review that
-				return (-1);
+			ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, pipefd);
 		cmdi = cmdi->next;
 	}
 	return (0);

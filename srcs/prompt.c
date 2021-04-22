@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/20 17:45:18 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/22 12:03:49 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_cmd *ft_cmdlast(t_cmd *cmd)
 	return (cmd);
 }
 
-void ft_cmdadd_back(t_cmd **acmd, t_cmd *new, int fd_stdin)
+void ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 {
 	if (!(*acmd))
 	{
@@ -66,7 +66,6 @@ void ft_cmdadd_back(t_cmd **acmd, t_cmd *new, int fd_stdin)
 	}
 	ft_cmdlast(*acmd)->next = new;
 	new->next = 0;
-	new->fd[1] = fd_stdin;
 }
 
 int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
@@ -75,31 +74,27 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 	char *str;
 	//t_cmd *initial_cmd;
 	t_cmd *cmd;
-	int fd[2];
 	//int temp;
 
 	i = 0;
 	//initial_cmd = NULL;
 	cmd = NULL;
 	str = buffer;
-	pipe(fd);
 	//temp = dup(STDIN_FILENO);
-	dup2(STDIN_FILENO, fd[1]);
 	while (str[i])
 	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]), fd[0]);
-		dup2(STDIN_FILENO, fd[1]);
+		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
 		if (cmd == NULL)
 			return (0);
 		if (str[i] == '\0')
 			break;
-		while (str[i] && str[i] != ';')
+		while (str[i] && !ft_strchr(";|", str[i]))
 			i++;
 		while (str[i] == ';')
 			i++;
 		if (str[i] == '|')
 		{
-			dup2(STDOUT_FILENO, fd[1]);
+			ft_cmdlast(cmd)->separator = 42;
 			while (str[i] == '|')
 				i++;
 		}
