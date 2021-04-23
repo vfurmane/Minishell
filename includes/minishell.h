@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 10:33:54 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/23 11:58:06 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "builtin.h"
 #include "define.h"
 #include "utils.h"
+#include "termcaps.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -109,8 +110,6 @@ int					ft_rewrite_line(t_icanon *icanon, int move_cursor);
 
 int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c, int pipefd[2]);
-
-int					ft_read_icanon(t_config *shell_c, t_icanon *icanon);
 
 int 				ft_route_command(const char *command, char **args,
 					int fd[2], char **line, t_config *shell_c, int pipefd[2]);

@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/21 11:31:24 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/23 12:14:37 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,15 +49,17 @@ FILES		=  main.c \
 				utils/div.c \
 				utils/ft_strnstr.c \
 				exec.c \
-				icanon_put.c \
-				read_icanon.c \
 				update_shell.c \
 				update_env.c \
 				utils/ft_split.c \
 				utils/ft_substr.c \
 				utils/ft_strdup.c \
 				env_malloc.c \
-				utils/ft_memset.c
+				utils/ft_memset.c \
+				termcaps/ctrl.c \
+				termcaps/escape_code.c \
+				termcaps/put.c \
+				termcaps/read.c
 				
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)

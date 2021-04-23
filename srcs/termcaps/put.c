@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   icanon_put.c                                       :+:      :+:    :+:   */
+/*   put.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/20 09:57:56 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 10:34:06 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/04/23 12:12:43 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/04/23 12:13:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "termcaps.h"
 
 int	ft_insert_char(t_icanon *icanon)
 {
@@ -35,6 +35,14 @@ int	ft_delete_char(char *str, int column)
 	while (++i < len)
 		str[column + i] = str[column + i + 1];
 	return (ft_strlen(str));
+}
+
+int	ft_backspace(t_icanon *icanon)
+{
+	icanon->line_i = ft_delete_char(icanon->line, (icanon->column)--);
+	tputs(tgoto(cursor_left, 0, 0), 1, ft_putchar);
+	tputs(clr_eol, 1, ft_putchar);
+	return (0);
 }
 
 int	ft_rewrite_line(t_icanon *icanon, int move_cursor)
