@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 20:59:04 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/23 16:46:57 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 			i++;
 		if (str[i] == '|')
 		{
-			ft_cmdlast(cmd)->separator = 42;
+			ft_cmdlast(cmd)->separator = PIPE;
 			while (str[i] == '|')
 				i++;
 		}
 	}
 	if (cmd == NULL)
 		return (0);
-		return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO));
+		return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO)));
 	//return (ft_handle_command(cmd, shell_c, pipefd));
 }
 

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 20:59:50 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/23 18:15:17 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void ft_kill_child(int id)
 int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
 {
 	int ret;
-	//int id;
+	int id;
 
 (void)cmd;
 	ret = 0;
@@ -54,36 +54,36 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	// //next program here
 
 	if (ft_strcmp("echo", command) == 0)
-		ret = ft_echo(args, fd[1]);
+		ret = ft_echo(args, STDOUT_FILENO);
 	else if (ft_strcmp("cd", command) == 0)
-		ret = ft_cd(args, fd[1], shell_c->envp, shell_c);
+		ret = ft_cd(args, STDOUT_FILENO, shell_c->envp, shell_c);
 	else if (ft_strcmp("pwd", command) == 0)
-		ret = ft_pwd(args, fd[1]);
+		ret = ft_pwd(args, STDOUT_FILENO);
 	else if (ft_strcmp("export", command) == 0)
-		ret = ft_export(args, fd[1], shell_c, 1);
+		ret = ft_export(args, STDOUT_FILENO, shell_c, 1);
 	else if (ft_strcmp("unset", command) == 0)
 		ret = ft_unset(args, shell_c);
 	else if (ft_strcmp("env", command) == 0)
-		ret = ft_env(args, fd[1], shell_c->envp);
+		ret = ft_env(args, STDOUT_FILENO, shell_c->envp);
 	else if (ft_strcmp("exit", command) == 0)
-		ret = ft_exit(args, fd[1], shell_c);
+		ret = ft_exit(args, STDOUT_FILENO, shell_c);
 	else if (ft_strchr(command, '/'))
 	{
-		// id = fork();
-		// if (id)
-		// 	wait(0);
-		// else
-		ft_execve(line[0], line, NULL);
+		id = fork();
+		if (id)
+			wait(0);
+		else
+		ft_execve(line[0], line, NULL); //cas ou existe pas
 	}
 	else
 	{
-		// id = fork();
-		// if (id)
-		// 	wait(0);
-		// else
+		id = fork();
+		if (id)
+			wait(0);
+		else
 		 if (!ft_exec(line, shell_c->envp))
 		{
-			ft_command_not_found(command, fd[1]);
+			ft_command_not_found(command, STDOUT_FILENO);
 			exit(0);
 		}
 	}

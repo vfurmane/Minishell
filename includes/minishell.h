@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 20:56:52 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/23 10:58:49 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct		s_icanon
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 					int pipefd[2]);
-int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in);
+int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out);
 
 
 char				*ft_exportenv(const char *str, int *str_i,

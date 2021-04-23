@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/22 20:58:41 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/23 18:12:46 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,43 +159,56 @@ char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 	return (arr);
 }
 
-int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in)
+int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 {
 	int id;
 	char **args;
 
 	if (!cmd)
+	{
+		close(pipe_in);
+		close(std_out);
 		return (0);
+	}
 	id = fork();
 	if (id)
 	{
+		close(pipe_in);
+		close(std_out); //?
 		wait(&id);
-		return (0);
+		return (id);
 	}
-	else
+	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
+	if (args == NULL)
+		return (-1);
+	if (args[0] != NULL)
 	{
-		args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
-		if (args == NULL)
-			return (-1);
-		if (args[0] != NULL)
-			if (cmd->separator == 42)
-			{
-				pipe(cmd->fd);
-				dup2(cmd->fd[1], STDOUT_FILENO);
-				close(cmd->fd[1]); //close the pipe?
-			}
-		dup2(STDIN_FILENO, pipe_in); //import the next pipe
-		close(pipe_in); //close the pipe?
+		if (cmd->separator == PIPE)
+		{
+			pipe(cmd->fd);
+			dup2(cmd->fd[1], STDOUT_FILENO);
+			close(cmd->fd[1]); //close the pipe?
+		}
+		else
+		{
+			dup2(std_out, STDOUT_FILENO);
+			close(std_out);
+		}
+		dup2(pipe_in, STDIN_FILENO);
+		close(pipe_in);		 //close the pipe?
 		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
-		return (ft_recursiv_command(cmd, shell_c, cmd->fd[0]));
+		//write(STDOUT_FILENO, "okay\n", 6);
+		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));
 	}
+	
+	return (0);
 }
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 {
 	char	**args;
 	t_cmd	*cmdi;
 	//int id;
-	
+
 	(void)pipefd;
 
 	cmdi = cmd;
@@ -206,13 +219,14 @@ int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 		if (args == NULL)
 			return (-1);
 		if (args[0] != NULL)
-		if (cmdi->separator == 42)
 		{
-			pipe(cmdi->fd);
-
-		}
+			// if (cmdi->separator == 42)
+			// {
+			// 	pipe(cmdi->fd);
+			// }
 			ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, cmdi);
-		cmdi = cmdi->next;
+			cmdi = cmdi->next;
+		}
 	}
 	return (0);
 }
