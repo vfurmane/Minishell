@@ -6,61 +6,66 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/23 12:14:37 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/23 12:30:34 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR 	= srcs
-FILES		=  main.c \
-			   cmd.c \
-			   prompt.c \
-				router.c \
-				convert_env.c \
-				builtin/ft_echo.c \
-				builtin/ft_cd.c \
-				builtin/ft_pwd.c \
-				builtin/ft_export.c \
-				builtin/ft_unset.c \
-				builtin/ft_env.c \
-				builtin/ft_exit.c \
-				utils/ft_arrlen.c \
-				utils/ft_bzero.c \
-				utils/ft_calloc.c \
-				utils/ft_isalpha.c \
-				utils/ft_isdigit.c \
-				utils/ft_lstadd_back.c \
-				utils/ft_lstadd_front.c \
-				utils/ft_lstlast.c \
-				utils/ft_lstsize.c \
-				utils/ft_memcpy.c \
-				utils/ft_putchar.c \
-				utils/ft_strarrdup.c \
-				utils/ft_strcdup.c \
-				utils/ft_strchr.c \
-				utils/ft_strcidup.c \
-				utils/ft_strccmp.c \
-				utils/ft_strcpy.c \
-				utils/ft_strcmp.c \
-				utils/ft_strinstr.c \
-				utils/ft_strjoin.c \
-				utils/ft_strlcpy.c \
-				utils/ft_strlen.c \
-				utils/ft_strndup.c \
-				utils/div.c \
-				utils/ft_strnstr.c \
-				exec.c \
-				update_shell.c \
-				update_env.c \
-				utils/ft_split.c \
-				utils/ft_substr.c \
-				utils/ft_strdup.c \
-				env_malloc.c \
-				utils/ft_memset.c \
-				termcaps/ctrl.c \
-				termcaps/escape_code.c \
-				termcaps/put.c \
-				termcaps/read.c
-				
+
+FILES		= cmd.c \
+			  convert_env.c \
+			  env_malloc.c \
+			  exec.c \
+			  main.c \
+			  prompt.c \
+			  read_icanon.c \
+			  router.c \
+			  update_env.c \
+			  update_shell.c \
+			  $(addprefix builtin/, \
+			  ft_cd.c \
+			  ft_echo.c \
+			  ft_env.c \
+			  ft_exit.c \
+			  ft_export.c \
+			  ft_pwd.c \
+			  ft_unset.c) \
+			  $(addprefix termcaps/, \
+			  ctrl.c \
+			  escape_code.c \
+			  put.c \
+			  read.c) \
+			  $(addprefix utils/, \
+			  div.c \
+			  ft_arrlen.c \
+			  ft_bzero.c \
+			  ft_calloc.c \
+			  ft_isalpha.c \
+			  ft_isdigit.c \
+			  ft_lstadd_back.c \
+			  ft_lstadd_front.c \
+			  ft_lstlast.c \
+			  ft_lstsize.c \
+			  ft_memcpy.c \
+			  ft_memset.c \
+			  ft_putchar.c \
+			  ft_split.c \
+			  ft_strarrdup.c \
+			  ft_strccmp.c \
+			  ft_strcdup.c \
+			  ft_strchr.c \
+			  ft_strcidup.c \
+			  ft_strcmp.c \
+			  ft_strcpy.c \
+			  ft_strdup.c \
+			  ft_strinstr.c \
+			  ft_strjoin.c \
+			  ft_strlcpy.c \
+			  ft_strlen.c \
+			  ft_strndup.c \
+			  ft_strnstr.c \
+			  ft_substr.c)
+
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
 NAME		= Minishell
@@ -72,11 +77,10 @@ INCLUDES	= -Iincludes
 %.o:		%.c
 			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-all: $(NAME)
+all:		$(NAME)
 
-$(NAME) : $(OBJS)
-		@$(CC) $(CFLAGS) $(OBJS) $(INCLUDES)\
-		-o $(NAME) $(LIBS)
+$(NAME):	$(OBJS)
+			$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $(NAME) $(LIBS)
 
 clean:
 			$(RM) $(OBJS)
