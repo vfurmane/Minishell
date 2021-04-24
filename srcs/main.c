@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 14:36:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/24 13:00:35 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int				status;
-	int				pipefd[2];
 	t_config		shell_c;
 
 	if (__APPLE__)
@@ -99,7 +98,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv; /* ===== DELETE ===== */
 	signal(SIGINT, SIG_IGN);
 	ft_parse_envp(envp, &shell_c);
-	pipe(shell_c.fd);
+	//pipe(shell_c.fd);
 	shell_c.quit = 0;
 	shell_c.prompt = "$ ";
 	shell_c.history = NULL;
@@ -107,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	while (!shell_c.quit)
 	{
 		tcgetattr(0, &shell_c.termios_backup);
-		pipe(pipefd);
+		pipe(shell_c.fd);
 		if (fork() != CHILD_PROCESS)
 		{
 			wait(&status);
@@ -120,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			signal(SIGINT, SIG_DFL);
-			if (ft_prompt(&shell_c, pipefd) == -1)
+			if (ft_prompt(&shell_c, shell_c.fd) == -1)
 				return (1);
 			exit(0); /* ===== DELETE ===== */
 		}

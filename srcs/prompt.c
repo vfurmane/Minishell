@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 16:04:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/24 12:58:09 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,37 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 {
 	int i;
 	char *str;
-	//t_cmd *initial_cmd;
 	t_cmd *cmd;
+
+(void)pipefd;
 
 	i = 0;
 	//initial_cmd = NULL;
 	cmd = NULL;
 	str = buffer;
+	//temp = dup(STDIN_FILENO);
 	while (str[i])
 	{
-		//cmd = ft_lstadd_back(&initial_cmd, ft_new_cmd(&str[i]));
 		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
 		if (cmd == NULL)
 			return (0);
 		if (str[i] == '\0')
 			break;
-		while (str[i] && ft_strchr(";|<>", str[i]) == NULL)
+		while (str[i] && !ft_strchr(";|", str[i]))
 			i++;
-		while (str[i] && ft_strchr(";|<>", str[i]) != NULL)
+		while (str[i] == ';')
 			i++;
+		if (str[i] == '|')
+		{
+			ft_cmdlast(cmd)->separator = PIPE;
+			while (str[i] == '|')
+				i++;
+		}
 	}
 	if (cmd == NULL)
 		return (0);
-	return (ft_handle_command(cmd, shell_c, pipefd));
+		return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO)));
+	//return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
 int	ft_display_prompt(char *prompt)

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/19 14:02:14 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/24 12:58:55 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int ft_arglen(const char *str, char chr, char **environment)
 
 char *ft_parse_arg(const char *str, char chr, int fd[2], char **environment)
 {
-	int i;
-	int j;
-	char quote;
-	char *new_str;
+	int		i;
+	int		j;
+	char	quote;
+	char	*new_str;
 
 	i = 0;
 	j = 0;
@@ -159,26 +159,74 @@ char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 	return (arr);
 }
 
+int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
+{
+	int		id;
+	char	**args;
+
+	if (!cmd)
+	{
+		close(pipe_in);
+		close(std_out);
+		return (0);
+	}
+	id = fork();
+	if (id)
+	{
+		close(pipe_in);
+		close(std_out);
+		close(STDOUT_FILENO);
+		wait(&id);
+		return (id);
+	}
+	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
+	if (args == NULL)
+		return (-1);
+	if (args[0] != NULL)
+	{
+		if (cmd->separator == PIPE)
+		{
+			pipe(cmd->fd);
+			dup2(cmd->fd[1], STDOUT_FILENO);
+			close(cmd->fd[1]);
+		}
+		else
+		{
+			dup2(std_out, STDOUT_FILENO);
+			close(std_out);
+		}
+		dup2(pipe_in, STDIN_FILENO);
+		close(pipe_in);
+		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
+		close(STDIN_FILENO);
+		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));
+	}
+	return (0);
+}
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 {
 	char	**args;
 	t_cmd	*cmdi;
+	//int id;
+
+	(void)pipefd;
 
 	cmdi = cmd;
 	// loop
 	while (cmdi)
 	{
-		cmdi->fd[0] = 0;
-		cmdi->fd[1] = 1;
-		if (cmdi->separator != EOCMD)
-			pipe(cmdi->fd);
 		args = ft_split_cmd_args(cmdi->str, cmdi->fd, shell_c->envp);
 		if (args == NULL)
 			return (-1);
 		if (args[0] != NULL)
-			if (ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, pipefd) == -42) //can't appening let's review that
-				return (-1);
-		cmdi = cmdi->next;
+		{
+			// if (cmdi->separator == 42)
+			// {
+			// 	pipe(cmdi->fd);
+			// }
+			ft_route_command(args[0], &args[1], cmdi->fd, args, shell_c, cmdi);
+			cmdi = cmdi->next;
+		}
 	}
 	return (0);
 }
