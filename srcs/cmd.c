@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 18:12:46 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/24 12:46:35 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,8 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 	if (id)
 	{
 		close(pipe_in);
-		close(std_out); //?
+		close(std_out);
+		close(STDOUT_FILENO);
 		wait(&id);
 		return (id);
 	}
@@ -187,7 +188,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		{
 			pipe(cmd->fd);
 			dup2(cmd->fd[1], STDOUT_FILENO);
-			close(cmd->fd[1]); //close the pipe?
+			close(cmd->fd[1]);
 		}
 		else
 		{
@@ -195,12 +196,11 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 			close(std_out);
 		}
 		dup2(pipe_in, STDIN_FILENO);
-		close(pipe_in);		 //close the pipe?
+		close(pipe_in);
 		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
-		//write(STDOUT_FILENO, "okay\n", 6);
+		close(STDIN_FILENO);
 		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));
 	}
-	
 	return (0);
 }
 int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])

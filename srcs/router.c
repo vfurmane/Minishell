@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 18:15:17 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/24 11:31:18 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 {
 	int ret;
 	int id;
-
+(void)fd;
 (void)cmd;
 	ret = 0;
 
