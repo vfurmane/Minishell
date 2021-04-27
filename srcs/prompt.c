@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 14:19:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/26 09:52:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,5 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	write(shell_c->fd[1], "\x1F", 1);
 	write(shell_c->fd[1], icanon.line, ft_strlen(icanon.line));
 	write(shell_c->fd[1], "\x1E", 1);
-	ft_init_args_tree(icanon.line, shell_c, pipefd);
-	return (0);
+	return (ft_init_args_tree(icanon.line, shell_c, pipefd));
 }

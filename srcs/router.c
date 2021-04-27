@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 11:31:18 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/26 10:31:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 {
 	int ret;
 	int id;
-(void)fd;
-(void)cmd;
+	int	status;
+
+	(void)fd;
+	(void)cmd;
 	ret = 0;
 
 	// id = fork();
@@ -53,6 +55,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	// }
 	// //next program here
 
+	status = 0;
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, STDOUT_FILENO);
 	else if (ft_strcmp("cd", command) == 0)
@@ -71,21 +74,23 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	{
 		id = fork();
 		if (id)
-			wait(0);
+			wait(&status);
 		else
-		ft_execve(line[0], line, NULL); //cas ou existe pas
+			ft_execve(line[0], line, NULL); //cas ou existe pas
 	}
 	else
 	{
 		id = fork();
 		if (id)
-			wait(0);
+			wait(&status);
 		else
-		 if (!ft_exec(line, shell_c->envp))
-		{
-			ft_command_not_found(command, STDOUT_FILENO);
-			exit(0);
-		}
+			if (!ft_exec(line, shell_c->envp))
+			{
+				ft_command_not_found(command, STDOUT_FILENO);
+				exit(127);
+			}
 	}
+	if (WIFEXITED(status))
+		ret = WEXITSTATUS(status);
 	return (ret);
 }

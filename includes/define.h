@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 14:22:38 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 12:06:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/26 09:21:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 
 # ifndef CD_CHANGE
 #  define CD_CHANGE "cdc"
+# endif
+
+# ifndef S_SIGINT_PROMPT
+#  define S_SIGINT_PROMPT 255
 # endif
 
 #endif

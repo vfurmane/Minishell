@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 13:00:35 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/27 09:46:46 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int				status;
-	t_config		shell_c;
+	int			ret;
+	int			status;
+	t_config	shell_c;
 
 	if (__APPLE__)
 	{
@@ -102,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	shell_c.quit = 0;
 	shell_c.prompt = "$ ";
 	shell_c.history = NULL;
+	shell_c.exit_code = 0;
 	tgetent(NULL, getenv("TERM"));
 	while (!shell_c.quit)
 	{
@@ -111,6 +113,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			wait(&status);
 			tcsetattr(0, 0, &shell_c.termios_backup);
+			if (WEXITSTATUS(status) != S_SIGINT_PROMPT)
+				shell_c.exit_code = WEXITSTATUS(status);
+			printf("%d\n", shell_c.exit_code);
 			if (WTERMSIG(status) == SIGINT)
 				write(1, "^C\n", 3);
 			else
@@ -119,10 +124,11 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			signal(SIGINT, SIG_DFL);
-			if (ft_prompt(&shell_c, shell_c.fd) == -1)
+			ret = ft_prompt(&shell_c, shell_c.fd);
+			if (ret == -1)
 				return (1);
-			exit(0); /* ===== DELETE ===== */
+			exit(ret);
 		}
 	}
-	return (0);
+	return (shell_c.exit_code);
 }

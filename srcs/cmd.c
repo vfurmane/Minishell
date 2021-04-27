@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 12:58:55 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/27 09:44:27 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ char **ft_split_cmd_args(const char *str, int fd[2], char **environment)
 int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 {
 	int		id;
+	int		ret;
+	int		status;
 	char	**args;
 
 	if (!cmd)
@@ -176,8 +178,8 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		close(pipe_in);
 		close(std_out);
 		close(STDOUT_FILENO);
-		wait(&id);
-		return (id);
+		wait(&status);
+		return (WEXITSTATUS(status));
 	}
 	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
 	if (args == NULL)
@@ -197,9 +199,10 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		}
 		dup2(pipe_in, STDIN_FILENO);
 		close(pipe_in);
-		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
+		ret = ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
 		close(STDIN_FILENO);
-		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));
+		ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out);
+		exit(ret);
 	}
 	return (0);
 }

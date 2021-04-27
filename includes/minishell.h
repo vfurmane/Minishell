@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 13:01:26 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/26 09:47:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct		s_config
 	struct termios	termios_backup;
 	char			*prompt;
 	t_dlist			*history;
+	unsigned char	exit_code;
 }					t_config;
 
 typedef struct		s_icanon
