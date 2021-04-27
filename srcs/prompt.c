@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/27 15:06:10 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/27 17:32:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,15 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 			break;
 		if (bracket) //set bracket to 0 after
 		{
-			bracket = 0;
+			if (bracket == 3)
+				ft_cmdlast(cmd)->separator = BRACKET_TO2;
 			if (bracket == 2)
-			ft_cmdlast(cmd)->separator = BRACKET_TO;
+				ft_cmdlast(cmd)->separator = BRACKET_TO;
 			if (bracket == 1)
-			ft_cmdlast(cmd)->separator = BRACKET_FROM;
+				ft_cmdlast(cmd)->separator = BRACKET_FROM;
+			bracket = 0;
 		}
-		while (str[i] && !ft_strchr(";|>", str[i]))
+		while (str[i] && !ft_strchr(";|><", str[i]))
 			i++;
 		if (str[i] == '|')
 		{
@@ -108,15 +110,15 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 		{
 			ft_cmdlast(cmd)->separator = PIPE;
 			bracket = 2;
-			//if str[i + 1] == '>' alors on ajoutera le flag happen au open plus tard
+			if (str[i + 1] == '>')
+				bracket = 3;
 			while (str[i] == '>')
 				i++;
 		}
-		if (str[i] == "<")
+		if (str[i] == '<')
 		{
 			bracket = 1;
-			//if str[i + 1] == '>' alors on ajoutera le flag happen au open plus tard
-			while (str[i] == '>')
+			while (str[i] == '<')
 				i++;
 		}
 	}

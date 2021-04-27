@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/27 15:41:30 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/27 17:41:54 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,41 @@ void ft_kill_child(int id)
 
 int ft_route_file_from(const char *file_name, t_config *shell_c)
 {
-	char *file_name_fix;
+	char	*temp;
+	char	*file_name_fix;
+	char	*final_str;
+	char	*buf_temp;
+	int		fd;
+	int		ret;
 
+	ret = 1;
+	if (file_name[0] != '/' || file_name[0] != '~')
+	{
+		temp = ft_strjoin(ft_getenv(shell_c->envp, "PWD"), "/"); //check if null
+		file_name_fix = ft_strjoin(temp, file_name);			 //check if null
+		free(temp);
+	}
+	else
+		file_name_fix = ft_strdup(file_name);
+	fd = open(file_name_fix, O_RDONLY); //check if error
+	while (ret != -1 && ret)
+	{
+		if (final_str)
+		{
+			buf_temp = ft_strdup(final_str);
+			free(final_str);
+		}
+		else
+			buf_temp = NULL;
+		temp = malloc(sizeof(char) * 421);
+		ret = read(fd, temp, 420);
+		final_str = ft_strjoin(buf_temp, temp);
+		free(temp);
+		free(buf_temp);
+	}
+	if (write(STDOUT_FILENO, final_str, ft_strlen(final_str)) == -1)
+		return (-1);
+	return (0);
 }
 
 int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
@@ -41,9 +74,14 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 
 	ret = 1;
 	final_str = NULL;
-	temp = ft_strjoin(ft_getenv(shell_c->envp, "PWD"), "/"); //check if null
-	file_name_fix = ft_strjoin(temp, file_name);			 //check if null
-	free(temp);
+	if (file_name[0] != '/' || file_name[0] != '~')
+	{
+		temp = ft_strjoin(ft_getenv(shell_c->envp, "PWD"), "/"); //check if null
+		file_name_fix = ft_strjoin(temp, file_name);			 //check if null
+		free(temp);
+	}
+	else
+		file_name_fix = ft_strdup(file_name);
 	if (happen)
 		fd = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666); //check if error
 	else
@@ -65,7 +103,7 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 	}
 	if (write(fd, final_str, ft_strlen(final_str)) == -1)
 		return (-1);
-	return (1);
+	return (0);
 }
 
 int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
