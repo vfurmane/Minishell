@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/24 14:19:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:06:10 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 	int i;
 	char *str;
 	t_cmd *cmd;
+	int bracket;
 
 (void)pipefd;
 
 	i = 0;
-	//initial_cmd = NULL;
+	bracket = 0;
 	cmd = NULL;
 	str = buffer;
-	//temp = dup(STDIN_FILENO);
 	while (str[i])
 	{
 		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
@@ -88,9 +88,15 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 			return (0);
 		if (str[i] == '\0')
 			break;
-		while (str[i] && !ft_strchr(";|", str[i]))
-			i++;
-		while (str[i] == ';')
+		if (bracket) //set bracket to 0 after
+		{
+			bracket = 0;
+			if (bracket == 2)
+			ft_cmdlast(cmd)->separator = BRACKET_TO;
+			if (bracket == 1)
+			ft_cmdlast(cmd)->separator = BRACKET_FROM;
+		}
+		while (str[i] && !ft_strchr(";|>", str[i]))
 			i++;
 		if (str[i] == '|')
 		{
@@ -98,11 +104,25 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 			while (str[i] == '|')
 				i++;
 		}
+		if (str[i] == '>')
+		{
+			ft_cmdlast(cmd)->separator = PIPE;
+			bracket = 2;
+			//if str[i + 1] == '>' alors on ajoutera le flag happen au open plus tard
+			while (str[i] == '>')
+				i++;
+		}
+		if (str[i] == "<")
+		{
+			bracket = 1;
+			//if str[i + 1] == '>' alors on ajoutera le flag happen au open plus tard
+			while (str[i] == '>')
+				i++;
+		}
 	}
 	if (cmd == NULL)
 		return (0);
 	return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO)));
-	//return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
 int	ft_display_prompt(char *prompt)
