@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/27 09:46:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/28 16:33:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	main(int argc, char **argv, char **envp)
 			tcsetattr(0, 0, &shell_c.termios_backup);
 			if (WEXITSTATUS(status) != S_SIGINT_PROMPT)
 				shell_c.exit_code = WEXITSTATUS(status);
-			printf("%d\n", shell_c.exit_code);
 			if (WTERMSIG(status) == SIGINT)
 				write(1, "^C\n", 3);
 			else

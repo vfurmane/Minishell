@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 12:28:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/28 16:17:47 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void				*ft_memcpy(void *dest, const void *src, size_t len);
 void				*ft_memset(void *str, int c, size_t n);
 int					ft_putchar(int chr);
 char				**ft_split(char const *s, char c);
+char				*ft_static_itoa(int nbr);
 char				**ft_strarrdup(char **arr);
 int					ft_strccmp(const char *str1, const char *str2, int chr);
 char				*ft_strcdup(const char *str, int chr);

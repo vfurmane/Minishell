@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 09:25:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/28 14:59:51 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_update_env(t_config *shell_c)
 		envp_elm = envp_elm->next;
 	}
 	shell_c->envp[i] = NULL;
+	__environ = shell_c->envp;
 	return (0);
 }
 

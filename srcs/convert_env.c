@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/13 14:03:28 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/28 16:22:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,25 @@ char *ft_convert_env(char *source, char **env)
 	return (result);
 }
 
-char *ft_exportenv(const char *str, int *str_i, char **environment)
+char *ft_exportenv(t_config *shell_c, const char *str, int *str_i)
 {
 	int i;
 	char *env;
 	char *env_name;
 
 	i = 0;
-	while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) || str[i] == '_')
+	while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) ||
+			str[i] == '_' || (i == 0 && str[i] == '?'))
 		i++;
 	*str_i += i;
 	env_name = malloc(sizeof(*env) * (i + 1));
 	if (env_name == NULL)
 		return (NULL);
 	ft_strlcpy(env_name, str, i + 1);
-	env = ft_getenv(environment, env_name);
+	if (ft_strcmp(env_name, "?") == 0)
+		env = ft_static_itoa(shell_c->exit_code);
+	else
+		env = getenv(env_name);
 	free(env_name);
 	if (env == NULL)
 		env = "";

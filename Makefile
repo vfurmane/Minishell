@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/23 15:29:17 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/04/28 16:29:32 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FILES		= cmd.c \
 			  ft_memset.c \
 			  ft_putchar.c \
 			  ft_split.c \
+			  ft_static_itoa.c \
 			  ft_strarrdup.c \
 			  ft_strccmp.c \
 			  ft_strcdup.c \
