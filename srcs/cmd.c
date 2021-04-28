@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/27 17:46:45 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/28 13:57:58 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		wait(&id);
 		return (id);
 	}
-	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
+	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp); //maybe not usefull
 	if (args == NULL)
 		return (-1);
 	if (args[0] != NULL)
@@ -197,13 +197,13 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		}
 		dup2(pipe_in, STDIN_FILENO);
 		close(pipe_in);
-		if (cmd->separator == BRACKET_TO)
-			ft_route_file_to(args[0], shell_c, 0);
-		else if (cmd->separator == BRACKET_TO2)
-			ft_route_file_to(args[0], shell_c, 1);
-		else if (cmd->separator == BRACKET_FROM)
-			ft_route_file_from(args[0], shell_c);
-		else
+		//if (cmd->separator == BRACKET_TO)
+		//	ft_route_file_to(args[0], shell_c, 0);
+		//else if (cmd->separator == BRACKET_TO2)
+		//	ft_route_file_to(args[0], shell_c, 1);
+		//else if (cmd->separator == BRACKET_FROM)
+		//	ft_route_file_from(args[0], shell_c);
+		//else
 			ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
 		close(STDIN_FILENO);
 		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));

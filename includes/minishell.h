@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/27 17:35:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/28 16:29:36 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef enum		e_separator
 	REDIR_RIGHT,
 	PIPE,
 	BRACKET_TO,
-	BRACKET_TO2,
 	BRACKET_FROM
 }					t_separator;
 
@@ -60,6 +59,8 @@ typedef struct		s_cmd
 	char *str;
 	t_separator separator;
 	int fd[2];
+	int file;
+	//int file_fd[2];
 }					t_cmd;
 
 typedef struct		s_kvpair
@@ -94,6 +95,8 @@ typedef struct		s_icanon
 	char			*line;
 	unsigned char	buffer[3];
 }					t_icanon;
+
+char **envptemp;
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 					int pipefd[2]);
