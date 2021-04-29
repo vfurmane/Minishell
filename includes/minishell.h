@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:29:36 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/29 17:56:48 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct		s_cmd
 	t_separator separator;
 	int fd[2];
 	int file;
+	int	from_to;
 	//int file_fd[2];
 }					t_cmd;
 
