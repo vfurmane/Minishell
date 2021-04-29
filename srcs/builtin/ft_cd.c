@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/20 12:19:05 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/29 14:38:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ void set_oldpwd(int fd, char *pwd, t_config *shell_c)
 	free(big_str[0]);
 }
 
-int ft_cd(char **str, int fd, char **envp, t_config *shell_c)
+int ft_cd(char **str, int fd, t_config *shell_c)
 {
 	fd = 0;
 	if (str[1])
 		return (write(fd, "cd : too much arguments\n", 25));
-	set_oldpwd(shell_c->fd[1], ft_getenv(envp, "PWD"), shell_c);
+	set_oldpwd(shell_c->fd[1], getenv("PWD"), shell_c);
 	if (flag(*str))
-		return (write_cd(shell_c->fd[1], ft_getenv(envp, "OLDPWD"), shell_c));
+		return (write_cd(shell_c->fd[1], getenv("OLDPWD"), shell_c));
 	if (!*str || **str == '~')
-		return (write_cd(shell_c->fd[1], ft_getenv(envp, "HOME"), shell_c));
+		return (write_cd(shell_c->fd[1], getenv("HOME"), shell_c));
 	return (write_cd(shell_c->fd[1], *str, shell_c));
 }

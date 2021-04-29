@@ -6,12 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/28 16:22:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/29 14:46:48 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static int ft_ifenv(char *source)
 {
 	char temp[ARG_MAX + 1];
@@ -25,7 +26,7 @@ static int ft_ifenv(char *source)
 		return (0);
 	else
 		return (1);
-}
+}*/
 
 static int str_in_str(char *new, char *env)
 {
@@ -64,7 +65,7 @@ char *ft_getenv(char **env, char *str)
 	}
 	return (0);
 }
-
+/*
 char *ft_convert_env(char *source, char **env)
 {
 	int i;
@@ -95,18 +96,21 @@ char *ft_convert_env(char *source, char **env)
 	}
 	result[i] = 0;
 	return (result);
-}
+}*/
 
-char *ft_exportenv(t_config *shell_c, const char *str, int *str_i)
+char *ft_replace_with_env(t_config *shell_c, const char *str, int *str_i)
 {
 	int i;
 	char *env;
 	char *env_name;
 
 	i = 0;
-	while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) ||
-			str[i] == '_' || (i == 0 && str[i] == '?'))
+	if (str[0] == '?')
 		i++;
+	else
+		while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) ||
+			str[i] == '_')
+			i++;
 	*str_i += i;
 	env_name = malloc(sizeof(*env) * (i + 1));
 	if (env_name == NULL)

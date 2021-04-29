@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:22:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/29 14:47:46 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out);
 
 
-char				*ft_exportenv(t_config *shell_c, const char *str,
+char				*ft_replace_with_env(t_config *shell_c, const char *str,
 					int *str_i);
 char				*ft_getenv(char **env, char *str);
 int					ft_parse_envp(char **envp, t_config *shell_c);

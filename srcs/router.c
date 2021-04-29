@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/26 10:31:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/29 14:38:24 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, STDOUT_FILENO);
 	else if (ft_strcmp("cd", command) == 0)
-		ret = ft_cd(args, STDOUT_FILENO, shell_c->envp, shell_c);
+		ret = ft_cd(args, STDOUT_FILENO, shell_c);
 	else if (ft_strcmp("pwd", command) == 0)
 		ret = ft_pwd(args, STDOUT_FILENO);
 	else if (ft_strcmp("export", command) == 0)

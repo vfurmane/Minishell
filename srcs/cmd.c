@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:26:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/29 14:47:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int ft_arglen(t_config *shell_c, const char *str, char chr)
 		else
 		{
 			if (str[i++] == '$' && quote != '\'')
-				j += ft_strlen(ft_exportenv(shell_c, &str[i], &i));
+				j += ft_strlen(ft_replace_with_env(shell_c, &str[i], &i));
 			else
 				j++;
 		}
@@ -65,7 +65,7 @@ char *ft_parse_arg(t_config *shell_c, const char *str, char chr, int fd[2])
 		else
 		{
 			if (str[i++] == '$' && quote != '\'')
-				j += ft_strcpy(&new_str[j], ft_exportenv(shell_c, &str[i], &i));
+				j += ft_strcpy(&new_str[j], ft_replace_with_env(shell_c, &str[i], &i));
 			else
 				new_str[j++] = str[i - 1];
 		}
@@ -122,14 +122,13 @@ void ft_print_command(char **arr)
 	printf("\n");
 }
 
-char **ft_split_cmd_args(t_config *shell_c, const char *str, int fd[2], char **environment)
+char **ft_split_cmd_args(t_config *shell_c, const char *str, int fd[2])
 {
 	int i;
 	int j;
 	char quote;
 	char **arr;
 
-	(void)environment; /* ===== DELETE ===== */
 	i = 0;
 	j = 0;
 	arr = malloc(sizeof(*arr) * (ft_count_words(str) + 1)); //need protec
@@ -182,7 +181,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		wait(&status);
 		return (WEXITSTATUS(status));
 	}
-	args = ft_split_cmd_args(shell_c, cmd->str, cmd->fd, shell_c->envp);
+	args = ft_split_cmd_args(shell_c, cmd->str, cmd->fd);
 	if (args == NULL)
 		return (-1);
 	if (args[0] != NULL)
@@ -219,7 +218,7 @@ int ft_handle_command(t_cmd *cmd, t_config *shell_c, int pipefd[2])
 	// loop
 	while (cmdi)
 	{
-		args = ft_split_cmd_args(shell_c, cmdi->str, cmdi->fd, shell_c->envp);
+		args = ft_split_cmd_args(shell_c, cmdi->str, cmdi->fd);
 		if (args == NULL)
 			return (-1);
 		if (args[0] != NULL)
