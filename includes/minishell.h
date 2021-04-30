@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/29 14:47:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/30 18:04:08 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ typedef enum		e_separator
 	REDIR_LEFT,
 	REDIR_APPEND,
 	REDIR_RIGHT,
-	PIPE
+	PIPE,
+	BRACKET_TO,
+	BRACKET_FROM
 }					t_separator;
 
 typedef struct		s_cmd
@@ -57,6 +59,8 @@ typedef struct		s_cmd
 	char *str;
 	t_separator separator;
 	int fd[2];
+	int file;
+	int	from_to;
 }					t_cmd;
 
 typedef struct		s_kvpair
@@ -93,6 +97,8 @@ typedef struct		s_icanon
 	unsigned char	buffer[3];
 }					t_icanon;
 
+char **envptemp;
+
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 					int pipefd[2]);
 int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out);
@@ -119,6 +125,11 @@ int					ft_prompt(t_config *shell_c, int pipefd[2]);
 
 int 				ft_route_command(const char *command, char **args,
 					int fd[2], char **line, t_config *shell_c, t_cmd *cmd);
+int					ft_route_file_to(const char *file_name, t_config *shell_c,
+					int happen);
+int					ft_route_file_from(const char *file_name,
+					t_config *shell_c);
+
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);

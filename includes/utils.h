@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:17:47 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/30 18:03:49 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ char				*ft_strndup(const char *str, int len);
 char				*ft_strnstr(const char *big,
 					const char *little, size_t len);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_strinstr_last(const char *str, const char *sep);
+int					ft_in_str_where(char *str, char c, int last);
+
 
 
 #endif

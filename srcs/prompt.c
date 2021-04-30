@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/26 09:52:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/30 18:05:57 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,138 @@ t_separator ft_set_separator(const char *str)
 {
 	if (str[0] == ';')
 		return (EOCMD);
-	else if (str[0] == '<')
-		return (REDIR_LEFT);
-	else if (str[0] == '>')
-		if (str[1] == '>')
-			return (REDIR_APPEND);
-		else
-			return (REDIR_RIGHT);
+	else if (str[0] == '<') // not useful
+		return (REDIR_LEFT); // not useful
+	else if (str[0] == '>') // not useful
+		if (str[1] == '>') // not useful
+			return (REDIR_APPEND); // not useful
+		else 						// not useful
+			return (REDIR_RIGHT); // not useful
 	else if (str[0] == '|')
 		return (PIPE);
 	else
 		return (EOCMD);
 }
 
+int where_to_cut(char *const buffer)
+{
+	int i;
+
+	i = 0;
+	if (!buffer)
+		return (0);
+	while (buffer[i])
+	{
+		if (ft_strchr(";| ", buffer[i]))
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+char	*buffer_fix(char *const buffer)
+{
+	char *str;
+	int count[2];
+
+	count[0] = 0;
+	count[1] = 0;
+	str = malloc(sizeof(char) * ft_strlen(buffer)); //check if fail
+	if (!str)
+		return (NULL);
+	while (buffer[count[0]] && !ft_strchr(";|", buffer[count[0]]))
+	{
+		if (ft_strchr("<>", buffer[count[0]]))
+		{
+			while (ft_strchr(" <>", buffer[count[0]]))
+				count[0]++;
+			while (buffer[count[0]] && !ft_strchr(" <>|;", buffer[count[0]]))
+				count[0]++;
+		}
+		//else
+			str[count[1]++] = buffer[count[0]++];
+	}
+	str[count[1]] = 0;
+	return (str);
+}
+
+char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd)
+{
+	char *file_name;
+	char *file_name_fix;
+	int i;
+	int happen;
+	char *temp;
+
+	if (!buffer)
+		return (0);
+	i = 0;
+	cmd->file = 0;
+	happen = 0;
+	while (buffer[i] && !ft_strchr("|;", buffer[i]))
+	{
+		if (ft_strchr("<>", buffer[i]))
+		{
+			if (buffer[i] == '<')
+				cmd->from_to = BRACKET_FROM;
+			else if (buffer[i] == '>')
+				cmd->from_to = BRACKET_TO;
+			if (buffer[i + 1] == '>')
+			{
+				happen = 1;
+				i++;
+			}
+			i++;
+			if (cmd->file)
+				close(cmd->file);
+			while (buffer[i] == ' ')
+				i++;
+			file_name = ft_strndup(buffer + i, where_to_cut(buffer + i));
+			if (file_name[0] != '/' || file_name[0] != '~')
+			{
+				temp = ft_strjoin(ft_getenv(envptemp, "PWD"), "/"); //check if null
+				file_name_fix = ft_strjoin(temp, file_name);		//check if null
+				free(temp);
+				free(file_name);
+			}
+			else
+				file_name_fix = file_name;
+			if (happen)
+				cmd->file = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666); //check if error
+			else
+				cmd->file = open(file_name_fix, O_RDWR | O_CREAT, 0666); //check if error
+			free(file_name_fix);
+		}
+		else
+			i++;
+	}
+	if (cmd->file)
+		return (buffer_fix(buffer));
+	return (NULL);
+}
+
 t_cmd *ft_new_cmd(char *const buffer)
 {
-	t_cmd *cmd;
-	char *separator;
+	t_cmd	*cmd;
+	char	*separator;
+	char	*buffer_fix;
 
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
 		return (NULL);
+
+
+	buffer_fix = ft_fix_openfiles(buffer, cmd);
+	//free(buffer);
+
 	cmd->next = NULL;
-	separator = ft_strinstr(buffer, ";|<>");
+	separator = ft_strinstr(buffer, ";|");
 	if (separator == NULL)
 		separator = &buffer[ft_strlen(buffer)];
-	cmd->str = ft_strndup(buffer, separator - buffer);
+	if (buffer_fix)
+		cmd->str = buffer_fix;
+	else
+		cmd->str = ft_strndup(buffer, separator - buffer);
 	if (cmd->str == NULL)
 		return (NULL);
 	cmd->separator = ft_set_separator(separator);
@@ -65,22 +171,90 @@ void ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 		return;
 	}
 	ft_cmdlast(*acmd)->next = new;
-	new->next = 0;
 }
 
-int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
+// int ft_nbr_cmd(char *str)
+// {
+// 	int i;
+// 	int prec_char;
+
+// 	i = 0;
+// 	prec_char = 0;
+// 	if (!str)
+// 		return (i);
+// 	while (*str)
+// 	{
+// 		if (*str == ';')
+// 		{
+// 			i++;
+// 			while (*str == ';')
+// 				str++;
+// 		}
+// 		else
+// 			str++;
+// 	}
+// 	i++;
+// 	return (i);
+// }
+
+int ft_in_str_where(char *str, char c, int last)
+{
+	int i;
+
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+		{
+			if (last)
+				while (str[i] == c)
+					i++;
+			return (i);
+		}
+		i++;
+	}
+	return (0);
+}
+
+// int ft_all_commands(char *const buffer, t_config *shell_c)
+// {
+// 	int i;
+// 	int j;
+// 	char **str;
+// 	char *parsed;
+// 	char *temp;
+
+// 	temp = buffer;
+// 	i = 0;
+// 	j = 0;
+// 	str = malloc(sizeof(char *) * ft_nbr_cmd(temp));
+// 	while (i < ft_nbr_cmd((char*)buffer))
+// 	{
+// 		str[i] = ft_strcdup(temp, ';');
+// 		temp += ft_in_str_where(temp, ';', 1);
+// 		i++;
+// 	}
+// 	return(0); //the function to parse file and after launch init arg tree
+// }
+
+int ft_init_args_tree(char *const buffer, t_config *shell_c)
 {
 	int i;
 	char *str;
 	t_cmd *cmd;
-
-(void)pipefd;
+	int bracket;
+	//int to_from[2];
 
 	i = 0;
-	//initial_cmd = NULL;
+	bracket = 0;
+	//to_from[0] = 0;
+	//to_from[1] = 0;
 	cmd = NULL;
 	str = buffer;
-	//temp = dup(STDIN_FILENO);
+
+	envptemp = shell_c->envp; //temp the time that we can use get_env again
+
 	while (str[i])
 	{
 		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
@@ -88,13 +262,13 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 			return (0);
 		if (str[i] == '\0')
 			break;
-		while (str[i] && !ft_strchr(";|", str[i]))
+		while (str[i] && !ft_strchr("|;", str[i]))
 			i++;
-		while (str[i] == ';')
+		if (str[i] == ';')
 			i++;
 		if (str[i] == '|')
 		{
-			ft_cmdlast(cmd)->separator = PIPE;
+			ft_cmdlast(cmd)->separator = PIPE; //that's not usefull
 			while (str[i] == '|')
 				i++;
 		}
@@ -102,7 +276,6 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c, int pipefd[2])
 	if (cmd == NULL)
 		return (0);
 	return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO)));
-	//return (ft_handle_command(cmd, shell_c, pipefd));
 }
 
 int	ft_display_prompt(char *prompt)
@@ -142,6 +315,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	  }
 	  buffer[ret - 1] = '\0';
 	  return (ft_init_args_tree(buffer, shell_c, pipefd));*/
+	  (void)(pipefd);
 	struct termios	termios_c;
 	t_icanon		icanon;
 	
@@ -161,5 +335,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	write(shell_c->fd[1], "\x1F", 1);
 	write(shell_c->fd[1], icanon.line, ft_strlen(icanon.line));
 	write(shell_c->fd[1], "\x1E", 1);
-	return (ft_init_args_tree(icanon.line, shell_c, pipefd));
+	//ft_all_commands(icanon.line, shell_c);
+	ft_init_args_tree(icanon.line, shell_c);
+	return (0);
 }
