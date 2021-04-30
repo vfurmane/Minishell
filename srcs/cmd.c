@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 18:09:27 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/30 22:02:02 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ char **ft_split_cmd_args(t_config *shell_c, const char *str, int fd[2])
 int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 {
 	int		id;
+	int		ret;
 	int		status;
 	char	**args;
 
@@ -230,9 +231,10 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 			if (pipe_in != STDIN_FILENO)
 				close(pipe_in);
 		}
-		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
+		ret = ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
 		close(STDIN_FILENO);
-		return(ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));	
+		ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out);
+		exit(ret);
 	}
 	return (0);
 }
