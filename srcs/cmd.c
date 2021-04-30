@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 17:50:28 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/30 17:55:44 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 			{
 				dup2(cmd->file, STDOUT_FILENO);
 				close(cmd->file);
+				close(cmd->fd[1]);
 			}
 			else
 			{
