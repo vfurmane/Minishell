@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/20 14:57:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/04/30 11:30:24 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,18 @@ static int	ft_parse_echo_args(t_echo *echo_c, char **args)
 
 	ft_bzero(&tmp_echo_c, sizeof(tmp_echo_c));
 	tmp_echo_c.e_cap_flag = 1;
-	i = -1;
-	while (args[++i][0] == '-')
+	i = 0;
+	while (args[i] && args[i][0] == '-')
 	{
 		j = 0;
 		while (args[i][++j])
 		{
-			if (args[i][j] == 'e' || args[i][j] == 'E')
-			{
-				tmp_echo_c.e_flag = args[i][j] == 'e';
-				tmp_echo_c.e_cap_flag = args[i][j] == 'E';
-			}
-			else if (args[i][j] == 'n')
+			if (args[i][j] == 'n')
 				tmp_echo_c.n_flag = 1;
 			else
 				return (i);
 		}
+		i++;
 	}
 	ft_memcpy(echo_c, &tmp_echo_c, sizeof(tmp_echo_c));
 	return (i);
