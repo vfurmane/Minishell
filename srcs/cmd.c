@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/29 18:04:42 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/30 17:50:28 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,44 +183,51 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		wait(&id);
 		return (id);
 	}
-	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp); //maybe not usefull
+	args = ft_split_cmd_args(cmd->str, cmd->fd, shell_c->envp);
 	if (args == NULL)
 		return (-1);
 	if (args[0] != NULL)
 	{
-		if (cmd->separator == PIPE && cmd->from_to != BRACKET_TO) // case where there is > and pipe don't work
+
+		if (cmd->separator == PIPE) // case where there is > and pipe don't work
 		{
 			pipe(cmd->fd);
-			dup2(cmd->fd[1], STDOUT_FILENO);
-			close(cmd->fd[1]);
-		}
-		else if (cmd->from_to == BRACKET_TO)
-		{
-			dup2(cmd->file, STDOUT_FILENO);
-			close(cmd->file);
+			if (cmd->from_to == BRACKET_TO)
+			{
+				dup2(cmd->file, STDOUT_FILENO);
+				close(cmd->file);
+			}
+			else
+			{
+				dup2(cmd->fd[1], STDOUT_FILENO);
+				close(cmd->fd[1]);
+			}
 		}
 		else
 		{
-			dup2(std_out, STDOUT_FILENO);
-			close(std_out);
+			if (cmd->from_to == BRACKET_TO)
+			{
+				//close(std_out);
+				//std_out = cmd->file;
+				dup2(cmd->file, STDOUT_FILENO);
+				close(cmd->file);
+			}
+			else
+				dup2(std_out, STDOUT_FILENO);
+			//close(std_out);
 		}
 		if (cmd->from_to == BRACKET_FROM)
 		{
 			dup2(cmd->file, STDIN_FILENO);
 			close(cmd->file);
+			//close(pipe_in); //maybe usefull
 		}
 		else
 		{
 			dup2(pipe_in, STDIN_FILENO);
-			close(pipe_in);
+			if (pipe_in != STDIN_FILENO)
+				close(pipe_in);
 		}
-		//if (cmd->separator == BRACKET_TO)
-		//	ft_route_file_to(args[0], shell_c, 0);
-		//else if (cmd->separator == BRACKET_TO2)
-		//	ft_route_file_to(args[0], shell_c, 1);
-		//else if (cmd->separator == BRACKET_FROM)
-		//	ft_route_file_from(args[0], shell_c);
-		//else
 		ft_route_command(args[0], &args[1], cmd->fd, args, shell_c, cmd);
 		close(STDIN_FILENO);
 		return (ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out));

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/29 17:58:32 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/04/30 15:09:04 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*buffer_fix(char *const buffer)
 
 	count[0] = 0;
 	count[1] = 0;
-	str = malloc(sizeof(char) * ft_strlen(buffer));
+	str = malloc(sizeof(char) * ft_strlen(buffer)); //check if fail
 	if (!str)
 		return (NULL);
 	while (buffer[count[0]] && !ft_strchr(";|", buffer[count[0]]))
@@ -268,7 +268,7 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c)
 			i++;
 		if (str[i] == '|')
 		{
-			ft_cmdlast(cmd)->separator = PIPE;
+			ft_cmdlast(cmd)->separator = PIPE; //that's not usefull
 			while (str[i] == '|')
 				i++;
 		}
