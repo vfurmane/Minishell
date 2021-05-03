@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 22:02:02 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/03 11:20:47 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,6 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 
 	if (!cmd)
 	{
-		if (cmd->file)
-			close(cmd->file);
 		close(pipe_in);
 		close(std_out);
 		return (0);
