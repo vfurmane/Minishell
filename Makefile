@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/04/30 18:00:22 by earnaud          ###   ########.fr        #
+#    Updated: 2021/05/03 17:19:26 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FILES		= cmd.c \
 			  exec.c \
 			  main.c \
 			  prompt.c \
+			  put.c \
 			  read_icanon.c \
 			  router.c \
 			  update_env.c \

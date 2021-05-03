@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/21 15:29:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:22:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,23 @@ int ft_route_updater(t_config *shell_c, char *str)
 	while (str[i] && str[i] != 30)
 		i++;
 	return (i + 1);
+}
+
+int	ft_write_pipe(const char *key, const char *value1, const char *value2,
+		int pipefd)
+{
+	char *value;
+
+	value = ft_strjoin(value1, value2);
+	if (value == NULL)
+		return (-1);
+	if (write(pipefd, key, 3) == -1 ||
+			write(pipefd, "\x1F", 1) == -1 ||
+			write(pipefd, value, ft_strlen(value)) == -1 |
+			write(pipefd, "\x1E", 1) == -1)
+		return (-1);
+	free(value);
+	return (0);
 }
 
 // Protect return in main

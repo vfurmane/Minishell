@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 18:04:08 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/03 17:23:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,15 @@ int					ft_rewrite_line(t_icanon *icanon, int move_cursor);
 int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c, int pipefd[2]);
 
+int					ft_stderr_message(const char *str1, const char *str2,
+					int ret);
+
 int 				ft_route_command(const char *command, char **args,
 					int fd[2], char **line, t_config *shell_c, t_cmd *cmd);
 int					ft_route_file_to(const char *file_name, t_config *shell_c,
 					int happen);
+int					ft_write_pipe(const char *key, const char *value1,
+					const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 					t_config *shell_c);
 
@@ -136,6 +141,5 @@ int					ft_del_env(t_config *shell_c, char *str);
 int					ft_add_env(t_config *shell_c, const char *str);
 
 int					ft_update_shell(t_config *shell_c);
-
 
 #endif

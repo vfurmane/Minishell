@@ -6,55 +6,45 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/29 14:38:10 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:22:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int flag(char *str)
-{
-	if (str)
-		if (ft_strchr(str, '-'))
-			return (1);
-	return (0);
-}
-
-static int write_cd(int fd, char *str, t_config *shell_c)
-{
-	char *big_str[2];
-
-	write(fd, CD_CHANGE, 3);
-	write(fd, "\x1F", 1);
-	write(fd, str, ft_strlen(str));
-	write(fd, "\x1E", 1);
-	chdir(str);
-	big_str[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
-	big_str[1] = 0;
-	ft_export(big_str, fd, shell_c, 0);
-	free(big_str[0]);
-	return (1);
-}
-
-void set_oldpwd(int fd, char *pwd, t_config *shell_c)
-{
-	char *big_str[2];
-
-	big_str[0] = ft_strjoin("OLDPWD=", pwd);
-	big_str[1] = 0;
-	ft_export(big_str, fd, shell_c, 0);
-	free(big_str[0]);
-}
-
 int ft_cd(char **str, int fd, t_config *shell_c)
 {
-	fd = 0;
-	if (str[1])
-		return (write(fd, "cd : too much arguments\n", 25));
-	set_oldpwd(shell_c->fd[1], getenv("PWD"), shell_c);
-	if (flag(*str))
-		return (write_cd(shell_c->fd[1], getenv("OLDPWD"), shell_c));
-	if (!*str || **str == '~')
-		return (write_cd(shell_c->fd[1], getenv("HOME"), shell_c));
-	return (write_cd(shell_c->fd[1], *str, shell_c));
+	char	*new_dir;
+	char	*new_pwd;
+	char	*old_pwd;
+
+	(void)fd; /* ===== DELETE ===== */
+	if (str[0] == NULL || ft_strcmp("~", str[0]) == 0)
+	{
+		new_dir = getenv("HOME");
+		if (new_dir == NULL)
+			return (ft_stderr_message("cd: HOME not set", NULL, 1));
+	}
+	else if (ft_strcmp("-", str[0]) == 0)
+	{
+		new_dir = getenv("OLDPWD");
+		if (new_dir == NULL)
+			return (ft_stderr_message("cd: OLDPWD not set", NULL, 1));
+	}
+	else if (str[1] != NULL)
+		return (ft_stderr_message("cd: too many arguments", NULL, 1));
+	else
+		new_dir = str[0];
+	old_pwd = getcwd(NULL, 0);
+	if (old_pwd == NULL)
+		return (ft_stderr_message("cd: ", strerror(errno), 1));
+	if (chdir(new_dir) == -1)
+		return (ft_stderr_message("cd: ", strerror(errno), 1));
+	new_pwd = getcwd(NULL, 0);
+	ft_write_pipe(ADD_ENV, "PWD=", new_pwd, shell_c->fd[1]);
+	ft_write_pipe(ADD_ENV, "OLDPWD=", old_pwd, shell_c->fd[1]);
+	ft_write_pipe(CD_CHANGE, new_dir, NULL, shell_c->fd[1]);
+	free(new_pwd);
+	free(old_pwd);
+	return (0);
 }
