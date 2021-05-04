@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 18:03:49 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/04 18:51:29 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void				*ft_lstadd_back(void *lst, void *new);
 void				*ft_lstlast(void *lst);
 int					ft_lstsize(void *lst);
 void				*ft_memcpy(void *dest, const void *src, size_t len);
+void				*ft_memmove(void *dest, const void *src, size_t len);
 void				*ft_memset(void *str, int c, size_t n);
 int					ft_putchar(int chr);
 char				**ft_split(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:12:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:09:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 19:24:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_rewrite_line(t_icanon *icanon, int move_cursor)
 	int	i;
 
 	i = icanon->column;
+	tputs(clr_eol, 1, ft_putchar);
 	tputs(save_cursor, 1, ft_putchar);
 	while (i < icanon->line_i)
 		ft_putchar(icanon->line[i++]);

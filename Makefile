@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/04 15:03:32 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/04 19:14:50 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ FILES		= cmd.c \
 			  ft_lstlast.c \
 			  ft_lstsize.c \
 			  ft_memcpy.c \
+			  ft_memmove.c \
 			  ft_memset.c \
 			  ft_putchar.c \
 			  ft_split.c \

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:10:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 12:29:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 19:32:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,27 @@ int	ft_ctrl_ae(t_config *shell_c, t_icanon *icanon)
 		icanon->column = icanon->line_i;
 	}
 	return (0);
+}
+
+int	ft_ctrl_ku(t_config *shell_c, t_icanon *icanon)
+{
+	if (icanon->buffer[0] == 11)
+	{
+		ft_bzero(icanon->line + icanon->column,
+				icanon->line_i - icanon->column);
+		icanon->line_i = ft_strlen(icanon->line);
+		icanon->column = icanon->line_i;
+		tputs(tgoto(column_address, 0,
+				ft_strlen(shell_c->prompt)) + icanon->line_i, 1, ft_putchar);
+	}
+	else if (icanon->buffer[0] == 21)
+	{
+		icanon->line_i = ft_strlen(icanon->line + icanon->column);
+		ft_memmove(icanon->line, icanon->line + icanon->column, icanon->line_i);
+		ft_bzero(icanon->line + icanon->column, icanon->line_i);
+		icanon->column = 0;
+		tputs(tgoto(column_address, 0,
+				ft_strlen(shell_c->prompt)), 1, ft_putchar);
+	}
+	return (1);
 }
