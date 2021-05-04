@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 13:44:05 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/04 10:17:34 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/04/01 12:09:19 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/05/04 11:27:28 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 
-int ft_pwd(char **str, int fd)
+int ft_exit(char **args, int fd, t_config *shell_c)
 {
-	char	*pwd;
-
-	(void)str; /* ===== DELETE ===== */
-	pwd = getcwd(NULL, 0);
-	write(fd, pwd, ft_strlen(pwd));
-	write(fd, "\n", 1);
-	free(pwd);
+	(void)args;
+	(void)fd;
+	write(fd, "exit\n", 5);
+	ft_write_pipe(EXIT_SHELL, NULL, NULL, shell_c->fd[1]);
 	return (0);
 }

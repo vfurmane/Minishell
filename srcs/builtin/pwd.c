@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:21:38 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/04/01 13:44:05 by earnaud           #+#    #+#             */
+/*   Updated: 2021/05/04 10:17:34 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "minishell.h"
 
-int ft_unset(char **args, t_config *shell_c)
+int ft_pwd(char **str, int fd)
 {
-	int		i;
+	char	*pwd;
 
-	i = 0;
-	while (args[i])
-		ft_write_pipe(DEL_ENV, args[i++], NULL, shell_c->fd[1]);
+	(void)str; /* ===== DELETE ===== */
+	pwd = getcwd(NULL, 0);
+	write(fd, pwd, ft_strlen(pwd));
+	write(fd, "\n", 1);
+	free(pwd);
 	return (0);
 }

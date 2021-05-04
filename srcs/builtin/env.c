@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 12:09:19 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:27:28 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/04/01 12:09:05 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/05/04 11:56:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int ft_exit(char **args, int fd, t_config *shell_c)
+int ft_env(char **args, int fd, t_config *shell_c)
 {
-	(void)args;
-	(void)fd;
-	write(fd, "exit\n", 5);
-	ft_write_pipe(EXIT_SHELL, NULL, NULL, shell_c->fd[1]);
+	int		i;
+	char	**environment;
+
+	environment = shell_c->envp;
+	i = 0;
+	if (args[0] != NULL)
+		return (ft_stderr_message("env: too many arguments", NULL, NULL, 1));
+	while (environment[i])
+	{
+		if (ft_strchr(environment[i], '='))
+		{
+			write(fd, environment[i], ft_strlen(environment[i]));
+			write(fd, "\n", 1);
+		}
+		i++;
+	}
 	return (0);
 }
