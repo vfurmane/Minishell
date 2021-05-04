@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 20:09:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 20:15:27 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		if (id)
 			wait(&status);
 		else
-			if (!ft_exec(line, shell_c->envp))
+			if (ft_strcmp(".", command) == 0 || !ft_exec(line, shell_c->envp))
 			{
 				ft_command_not_found(command, STDOUT_FILENO);
 				exit(127); // replace with a return
