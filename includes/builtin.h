@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/29 14:38:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:15:05 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include "minishell.h"
 
 typedef struct s_config t_config;
+
+typedef struct	s_echo
+{
+	int			e_flag;
+	int			e_cap_flag;
+	int			n_flag;
+}				t_echo;
 
 int ft_echo(char **args, int fd);
 int ft_cd(char **args, int fd, t_config *shell_c);

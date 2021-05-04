@@ -6,18 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/30 11:30:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:14:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-typedef struct	s_echo
-{
-	int			e_flag;
-	int			e_cap_flag;
-	int			n_flag;
-}				t_echo;
 
 static int	ft_parse_echo_args(t_echo *echo_c, char **args)
 {
