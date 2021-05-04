@@ -6,16 +6,18 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:09:05 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:25:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 11:56:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int ft_env(char **args, int fd, char **environment)
+int ft_env(char **args, int fd, t_config *shell_c)
 {
-	int i;
+	int		i;
+	char	**environment;
 
+	environment = shell_c->envp;
 	i = 0;
 	if (args[0] != NULL)
 		return (ft_stderr_message("env: too many arguments", NULL, NULL, 1));

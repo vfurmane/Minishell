@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 10:46:52 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 11:48:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	else if (ft_strcmp("unset", command) == 0)
 		ret = ft_unset(args, shell_c);
 	else if (ft_strcmp("env", command) == 0)
-		ret = ft_env(args, STDOUT_FILENO, shell_c->envp);
+		ret = ft_env(args, STDOUT_FILENO, shell_c);
 	else if (ft_strcmp("exit", command) == 0)
 		ret = ft_exit(args, STDOUT_FILENO, shell_c);
 	else if (ft_strchr(command, '/'))
