@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 10:30:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 11:09:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct		s_icanon
 	int				column;
 	int				line_i;
 	char			*line;
-	unsigned char	buffer[3];
+	unsigned char	buffer[4];
 }					t_icanon;
 
 char **envptemp;

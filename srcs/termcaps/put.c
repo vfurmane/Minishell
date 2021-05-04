@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:12:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 12:13:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 11:09:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 int	ft_insert_char(t_icanon *icanon)
 {
 	int	i;
+	int	buffer_i;
 
-	i = ft_strlen(&icanon->line[icanon->column]) + 1;
-	while (--i >= 0)
-		icanon->line[icanon->column + i + 1] = icanon->line[icanon->column + i];
-	icanon->line[(icanon->column)++] = icanon->buffer[0];
-	ft_putchar(icanon->buffer[0]);
+	buffer_i = 0;
+	while (icanon->buffer[buffer_i])
+	{
+		i = ft_strlen(&icanon->line[icanon->column]) + 1;
+		while (--i >= 0)
+			icanon->line[icanon->column + i + 1] = icanon->line[icanon->column
+				+ i];
+		icanon->line[(icanon->column)++] = icanon->buffer[buffer_i];
+		ft_putchar(icanon->buffer[buffer_i]);
+		buffer_i++;
+	}
 	return (ft_strlen(icanon->line));
 }
 
