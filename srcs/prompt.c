@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/30 18:05:57 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/04 12:07:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,27 +298,11 @@ t_dlist	*ft_new_history_line(void)
 
 int ft_prompt(t_config *shell_c, int pipefd[2])
 {
-	/*int ret;
-	  char buffer[ARG_MAX + 1];
-
-	  (void)quit; // ===== DELETE =====
-	  write(1, "$ ", 2);
-	  ret = read(0, buffer, ARG_MAX);
-	  if (ret < 0)
-	  return (-1);
-	  else if (ret == 0)
-	  {
-	  write(1, "exit\n", 5);
-	  write(shell_c->fd[1], EXIT_SHELL, 3);
-	  write(shell_c->fd[1], "\x1F\x1E", 2);
-	  return (0);
-	  }
-	  buffer[ret - 1] = '\0';
-	  return (ft_init_args_tree(buffer, shell_c, pipefd));*/
-	  (void)(pipefd);
+	int				ret;
 	struct termios	termios_c;
 	t_icanon		icanon;
 	
+	(void)(pipefd);
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
@@ -336,6 +320,6 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	write(shell_c->fd[1], icanon.line, ft_strlen(icanon.line));
 	write(shell_c->fd[1], "\x1E", 1);
 	//ft_all_commands(icanon.line, shell_c);
-	ft_init_args_tree(icanon.line, shell_c);
-	return (0);
+	ret = ft_init_args_tree(icanon.line, shell_c);
+	return (ret);
 }
