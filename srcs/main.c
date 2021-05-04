@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 15:04:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 15:12:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	ft_parse_envp(envp, &shell_c);
 	//pipe(shell_c.fd);
 	shell_c.quit = 0;
@@ -121,7 +122,9 @@ int	main(int argc, char **argv, char **envp)
 			if (WEXITSTATUS(status) != S_SIGINT_PROMPT)
 				shell_c.exit_code = WEXITSTATUS(status);
 			if (WTERMSIG(status) == SIGINT)
-				write(1, "^C\n", 3);
+				write(1, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+				write(2, "Quit (core dumped)\n", 19);
 			else
 				ft_update_shell(&shell_c);
 		}
