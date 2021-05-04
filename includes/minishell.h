@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/03 17:23:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:30:59 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c, int pipefd[2]);
 
 int					ft_stderr_message(const char *str1, const char *str2,
-					int ret);
+					const char *str3, int ret);
 
 int 				ft_route_command(const char *command, char **args,
 					int fd[2], char **line, t_config *shell_c, t_cmd *cmd);

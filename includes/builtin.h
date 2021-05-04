@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:25:10 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/04 10:15:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 10:45:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int ft_echo(char **args, int fd);
 int ft_cd(char **args, int fd, t_config *shell_c);
 int ft_cd2(char *str);
 int ft_pwd(char **args, int fd);
-int ft_export(char **args, int fd, t_config *shell_c, int quit);
+int ft_export(char **args, int fd, t_config *shell_c);
 int ft_unset(char **args, t_config *shell_c);
 int ft_env(char **args, int fd, char **environment);
 int ft_exit(char **args, int fd, t_config *shell_c);
