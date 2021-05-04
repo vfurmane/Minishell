@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/03 17:19:26 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/04 15:03:32 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,13 @@ FILES		= cmd.c \
 			  update_env.c \
 			  update_shell.c \
 			  $(addprefix builtin/, \
-			  ft_cd.c \
-			  ft_echo.c \
-			  ft_env.c \
-			  ft_exit.c \
-			  ft_export.c \
-			  ft_pwd.c \
-			  ft_unset.c) \
+			  cd.c \
+			  echo.c \
+			  env.c \
+			  exit.c \
+			  export.c \
+			  pwd.c \
+			  unset.c) \
 			  $(addprefix termcaps/, \
 			  ctrl.c \
 			  escape_code.c \

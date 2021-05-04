@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 14:40:48 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 15:04:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc; /* ===== DELETE ===== */
 	(void)argv; /* ===== DELETE ===== */
-	printf("envp[0]=%s\n", envp[0]);
 	if (__APPLE__)
 	{
 		printf("\033[33mYou are using minishell on an Apple platform, "
