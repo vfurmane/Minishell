@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:33:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 14:40:48 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,20 @@ int	main(int argc, char **argv, char **envp)
 	int			status;
 	t_config	shell_c;
 
+	(void)argc; /* ===== DELETE ===== */
+	(void)argv; /* ===== DELETE ===== */
+	printf("envp[0]=%s\n", envp[0]);
 	if (__APPLE__)
 	{
 		printf("\033[33mYou are using minishell on an Apple platform, "
 				"some features may be unreliable.\033[0m\n");
 	}
-	(void)argc; /* ===== DELETE ===== */
-	(void)argv; /* ===== DELETE ===== */
+	if (tgetent(NULL, getenv("TERM")) == -1)
+	{
+		printf("\033[31mA very unforutnate error made the shell unusuable. "
+				"Aborting...\033[0m\n");
+		return (1);
+	}
 	signal(SIGINT, SIG_IGN);
 	ft_parse_envp(envp, &shell_c);
 	//pipe(shell_c.fd);
@@ -104,7 +111,6 @@ int	main(int argc, char **argv, char **envp)
 	shell_c.prompt = "$ ";
 	shell_c.history = NULL;
 	shell_c.exit_code = 0;
-	tgetent(NULL, getenv("TERM"));
 	while (!shell_c.quit)
 	{
 		tcgetattr(0, &shell_c.termios_backup);

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:48:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 14:45:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		if (id)
 			wait(&status);
 		else
-			ft_execve(line[0], line, NULL); //cas ou existe pas
+			ft_execve(line[0], line, shell_c->envp); //cas ou existe pas
 	}
 	else
 	{
