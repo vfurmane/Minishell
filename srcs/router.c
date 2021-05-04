@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 14:45:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/04 20:09:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,35 +108,14 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 
 int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
 {
-	int ret;
-	int id;
-	int	status;
+	int			ret;
+	int			id;
+	int			status;
+	struct stat file_stat;
 
 	(void)fd;
 	(void)cmd;
 	ret = 0;
-
-	// id = fork();
-	// if (id)
-	// {
-	// 	if (cmd->separator == 42)
-	// 	{
-	// 		close(cmd->fd[0]);
-	// 		dup2(cmd->fd[1], STDOUT_FILENO);
-	// 		close(cmd->fd[1]);
-	// 	}
-	// 	//program here
-	// 	wait(&ret);
-	// 	return (ret);
-	// }
-	// if (cmd->separator == 42)
-	// {
-	// 	close(cmd->fd[1]);
-	// 	dup2(STDIN_FILENO, cmd->fd[0]);
-	// 	close(cmd->fd[0]);
-	// }
-	// //next program here
-
 	status = 0;
 	if (ft_strcmp("echo", command) == 0)
 		ret = ft_echo(args, STDOUT_FILENO);
@@ -154,6 +133,12 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		ret = ft_exit(args, STDOUT_FILENO, shell_c);
 	else if (ft_strchr(command, '/'))
 	{
+		if (stat(line[0], &file_stat) == -1)
+			exit(127);
+		if (file_stat.st_mode & 040000)
+		{
+			return (ft_stderr_message(line[0], ": Is a directory", NULL, 126));
+		}
 		id = fork();
 		if (id)
 			wait(&status);
@@ -169,7 +154,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 			if (!ft_exec(line, shell_c->envp))
 			{
 				ft_command_not_found(command, STDOUT_FILENO);
-				exit(127);
+				exit(127); // replace with a return
 			}
 	}
 	if (WIFEXITED(status))
