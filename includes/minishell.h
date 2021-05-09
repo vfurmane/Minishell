@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 12:06:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 15:04:33 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 #define __APPLE__ 0
 #endif
 #endif
+
+typedef int (*t_builtin)(t_config*, char**, int);
 
 typedef enum		e_separator
 {
@@ -135,7 +137,6 @@ int					ft_write_pipe(const char *key, const char *value1,
 					const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 					t_config *shell_c);
-
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);

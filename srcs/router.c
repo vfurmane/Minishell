@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:54:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 15:19:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 		return (-1);
 	return (0);
 }
-
-typedef int (*t_builtin)(t_config*, char**, int);
 
 static int	ft_is_a_builtin(t_config *shell_c, const char *command, char **args,
 		int *ret)
