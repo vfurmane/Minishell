@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:09:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 12:06:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct		s_config
 	char			*prompt;
 	t_dlist			*history;
 	unsigned char	exit_code;
+	int				start_column;
 }					t_config;
 
 typedef struct		s_icanon

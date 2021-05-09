@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:06 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 12:10:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 12:45:49 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	ft_navigate_history(t_config *shell_c, t_icanon *icanon)
 {
-	tputs(tgoto(column_address, 0, ft_strlen(shell_c->prompt)), 1, ft_putchar);
+	tputs(tgoto(column_address, 0, 0), 1, ft_putchar);
 	tputs(clr_eol, 1, ft_putchar);
+	ft_display_prompt(shell_c->prompt);
 	if (icanon->buffer[2] == 'A')
 		shell_c->history = shell_c->history->next;
 	else if (icanon->buffer[2] == 'B')
