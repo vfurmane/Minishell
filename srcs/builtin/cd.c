@@ -6,35 +6,44 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/09 11:47:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 12:04:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_cd(t_config *shell_c, char **args, int output_fd)
+static int	ft_parse_new_dir(char **args, char **new_dir)
 {
+	if (args[0] == NULL || ft_strcmp("~", args[0]) == 0)
+	{
+		*new_dir = getenv("HOME");
+		if (*new_dir == NULL)
+			return (ft_stderr_message("cd: HOME not set", NULL, NULL, -1));
+	}
+	else if (ft_strcmp("-", args[0]) == 0)
+	{
+		*new_dir = getenv("OLDPWD");
+		if (*new_dir == NULL)
+			return (ft_stderr_message("cd: OLDPWD not set", NULL, NULL, -1));
+	}
+	else if (args[1] != NULL)
+		return (ft_stderr_message("cd: too many arguments", NULL, NULL, -1));
+	else
+		*new_dir = args[0];
+	return (0);
+}
+
+int			ft_cd(t_config *shell_c, char **args, int output_fd)
+{
+	int		ret;
 	char	*new_dir;
 	char	*new_pwd;
 	char	*old_pwd;
 
 	(void)output_fd; /* ===== DELETE ===== */
-	if (args[0] == NULL || ft_strcmp("~", args[0]) == 0)
-	{
-		new_dir = getenv("HOME");
-		if (new_dir == NULL)
-			return (ft_stderr_message("cd: HOME not set", NULL, NULL, 1));
-	}
-	else if (ft_strcmp("-", args[0]) == 0)
-	{
-		new_dir = getenv("OLDPWD");
-		if (new_dir == NULL)
-			return (ft_stderr_message("cd: OLDPWD not set", NULL, NULL, 1));
-	}
-	else if (args[1] != NULL)
-		return (ft_stderr_message("cd: too many arguments", NULL, NULL, 1));
-	else
-		new_dir = args[0];
+	ret = ft_parse_new_dir(args, &new_dir);
+	if (ret == -1)
+		return (1);
 	old_pwd = getcwd(NULL, 0);
 	if (old_pwd == NULL)
 		return (ft_stderr_message("cd: ", strerror(errno), NULL, 1));
