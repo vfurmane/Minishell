@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   ft_strarrstr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/01 12:08:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:52:43 by vfurmane         ###   ########.fr       */
+/*   Created: 2021/05/09 11:28:30 by vfurmane          #+#    #+#             */
+/*   Updated: 2021/05/09 11:53:49 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "utils.h"
 
-int ft_unset(t_config *shell_c, char **args, int output_fd)
+char	*ft_strarrstr(const char **arr, const char *str, int *index)
 {
-	int		i;
-
-	(void)output_fd;
-	i = 0;
-	while (args[i])
-		ft_write_pipe(DEL_ENV, args[i++], NULL, shell_c->fd[1]);
-	return (0);
+	*index = 0;
+	while (arr[*index])
+	{
+		if (ft_strcmp(str, arr[*index]) == 0)
+			return (((char**)arr)[*index]);
+		(*index)++;
+	}
+	*index = -1;
+	return (NULL);
 }

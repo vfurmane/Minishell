@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:10:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 19:32:32 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 11:53:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_ctrl_d(t_config *shell_c, t_icanon *icanon)
 {
 	if (icanon->line_i == 0)
 	{
-		ft_exit(0, 0, shell_c);
+		ft_exit(shell_c, NULL, 1);
 		return (0);
 	}
 	else if (icanon->column < icanon->line_i)

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 10:53:00 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 11:49:16 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static int	ft_is_valid_identifier(const char *arg)
 	return ((arg[i] == '\0' || arg[i] == '=') && i > 0);
 }
 
-int			ft_export(char **args, int fd, t_config *shell_c)
+int			ft_export(t_config *shell_c, char **args, int output_fd)
 {
 	int	i;
 	
 	if (args[0] == NULL)
-		return (ft_print_exp_list(fd, shell_c->envp_list));
+		return (ft_print_exp_list(output_fd, shell_c->envp_list));
 	i = 0;
 	while (args[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 20:15:27 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 11:54:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,24 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 	return (0);
 }
 
+typedef int (*t_builtin)(t_config*, char**, int);
+
+static int	ft_is_a_builtin(t_config *shell_c, const char *command, char **args,
+		int *ret)
+{
+	int				builtin_id;
+	const char		*builtins[8] = { "echo", "cd", "pwd", "export", "unset",
+										"env", "exit", NULL };
+	const t_builtin	funcs[7] = { ft_echo, ft_cd, ft_pwd, ft_export, ft_unset,
+									ft_env, ft_exit };
+
+	ft_strarrstr(builtins, command, &builtin_id);
+	if (builtin_id == -1)
+		return (0);
+	*ret = (funcs[builtin_id])(shell_c, args, STDOUT_FILENO);
+	return (1);
+}
+
 int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
 {
 	int			ret;
@@ -117,20 +135,8 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	(void)cmd;
 	ret = 0;
 	status = 0;
-	if (ft_strcmp("echo", command) == 0)
-		ret = ft_echo(args, STDOUT_FILENO);
-	else if (ft_strcmp("cd", command) == 0)
-		ret = ft_cd(args, STDOUT_FILENO, shell_c);
-	else if (ft_strcmp("pwd", command) == 0)
-		ret = ft_pwd(args, STDOUT_FILENO);
-	else if (ft_strcmp("export", command) == 0)
-		ret = ft_export(args, STDOUT_FILENO, shell_c);
-	else if (ft_strcmp("unset", command) == 0)
-		ret = ft_unset(args, shell_c);
-	else if (ft_strcmp("env", command) == 0)
-		ret = ft_env(args, STDOUT_FILENO, shell_c);
-	else if (ft_strcmp("exit", command) == 0)
-		ret = ft_exit(args, STDOUT_FILENO, shell_c);
+	if (ft_is_a_builtin(shell_c, command, args, &ret))
+		return (ret);
 	else if (ft_strchr(command, '/'))
 	{
 		if (stat(line[0], &file_stat) == -1)

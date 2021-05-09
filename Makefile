@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/04 19:14:50 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/09 11:41:34 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ FILES		= cmd.c \
 			  ft_split.c \
 			  ft_static_itoa.c \
 			  ft_strarrdup.c \
+			  ft_strarrstr.c \
 			  ft_strccmp.c \
 			  ft_strcdup.c \
 			  ft_strchr.c \

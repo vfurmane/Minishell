@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 18:51:29 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 11:51:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int					ft_putchar(int chr);
 char				**ft_split(char const *s, char c);
 char				*ft_static_itoa(int nbr);
 char				**ft_strarrdup(char **arr);
+char				*ft_strarrstr(const char **arr, const char *str,
+					int *index);
 int					ft_strccmp(const char *str1, const char *str2, int chr);
 char				*ft_strcdup(const char *str, int chr);
 char				*ft_strchr(const char *str, int chr);

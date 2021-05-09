@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:09:05 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 11:56:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/09 11:48:01 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int ft_env(char **args, int fd, t_config *shell_c)
+int ft_env(t_config *shell_c, char **args, int output_fd)
 {
 	int		i;
 	char	**environment;
@@ -25,8 +25,8 @@ int ft_env(char **args, int fd, t_config *shell_c)
 	{
 		if (ft_strchr(environment[i], '='))
 		{
-			write(fd, environment[i], ft_strlen(environment[i]));
-			write(fd, "\n", 1);
+			write(output_fd, environment[i], ft_strlen(environment[i]));
+			write(output_fd, "\n", 1);
 		}
 		i++;
 	}
