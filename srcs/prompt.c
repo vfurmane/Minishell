@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/10 12:13:58 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/10 15:17:00 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*buffer_fix(char *const buffer)
 	return (str);
 }
 
-char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd)
+char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd, char **envp)
 {
 	char *file_name;
 	char *file_name_fix;
@@ -105,7 +105,7 @@ char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd)
 			file_name = ft_strndup(buffer + i, where_to_cut(buffer + i));
 			if (file_name[0] != '/' || file_name[0] != '~')
 			{
-				temp = ft_strjoin(ft_getenv(envptemp, "PWD"), "/"); //check if null
+				temp = ft_strjoin(ft_getenv(envp, "PWD"), "/"); //check if null
 				file_name_fix = ft_strjoin(temp, file_name);		//check if null
 				free(temp);
 				free(file_name);
@@ -126,7 +126,7 @@ char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd)
 	return (NULL);
 }
 
-t_cmd *ft_new_cmd(char *const buffer)
+t_cmd *ft_new_cmd(char *const buffer, char **envp)
 {
 	t_cmd	*cmd;
 	char	*separator;
@@ -137,7 +137,7 @@ t_cmd *ft_new_cmd(char *const buffer)
 		return (NULL);
 
 
-	buffer_fix = ft_fix_openfiles(buffer, cmd);
+	buffer_fix = ft_fix_openfiles(buffer, cmd, envp);
 	//free(buffer);
 
 	cmd->next = NULL;
@@ -173,30 +173,6 @@ void ft_cmdadd_back(t_cmd **acmd, t_cmd *new)
 	ft_cmdlast(*acmd)->next = new;
 }
 
-// int ft_nbr_cmd(char *str)
-// {
-// 	int i;
-// 	int prec_char;
-
-// 	i = 0;
-// 	prec_char = 0;
-// 	if (!str)
-// 		return (i);
-// 	while (*str)
-// 	{
-// 		if (*str == ';')
-// 		{
-// 			i++;
-// 			while (*str == ';')
-// 				str++;
-// 		}
-// 		else
-// 			str++;
-// 	}
-// 	i++;
-// 	return (i);
-// }
-
 int ft_in_str_where(char *str, char c, int last)
 {
 	int i;
@@ -217,47 +193,21 @@ int ft_in_str_where(char *str, char c, int last)
 	return (0);
 }
 
-// int ft_all_commands(char *const buffer, t_config *shell_c)
-// {
-// 	int i;
-// 	int j;
-// 	char **str;
-// 	char *parsed;
-// 	char *temp;
-
-// 	temp = buffer;
-// 	i = 0;
-// 	j = 0;
-// 	str = malloc(sizeof(char *) * ft_nbr_cmd(temp));
-// 	while (i < ft_nbr_cmd((char*)buffer))
-// 	{
-// 		str[i] = ft_strcdup(temp, ';');
-// 		temp += ft_in_str_where(temp, ';', 1);
-// 		i++;
-// 	}
-// 	return(0); //the function to parse file and after launch init arg tree
-// }
-
 int ft_init_args_tree(char *const buffer, t_config *shell_c)
 {
 	int i;
 	char *str;
 	t_cmd *cmd;
 	int bracket;
-	//int to_from[2];
 
 	i = 0;
 	bracket = 0;
-	//to_from[0] = 0;
-	//to_from[1] = 0;
 	cmd = NULL;
 	str = buffer;
 
-	envptemp = shell_c->envp; //temp the time that we can use get_env again
-
 	while (str[i])
 	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i]));
+		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i], shell_c->envp));
 		if (cmd == NULL)
 			return (0);
 		if (str[i] == '\0')

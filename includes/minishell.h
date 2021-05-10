@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 15:04:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/10 15:17:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ typedef struct		s_icanon
 	char			*line;
 	unsigned char	buffer[4];
 }					t_icanon;
-
-char **envptemp;
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 					int pipefd[2]);
