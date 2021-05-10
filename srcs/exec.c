@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/04 20:01:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:32:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static char		**ft_free_neo(char **neo)
 
 char *check_in(char *program)
 {
-	char **path;
-	char *pathfile;
-	int i;
-	struct stat stats;
+	char		**path;
+	char		*pathfile;
+	int			i;
+	struct stat	stats;
 	
 	i = 0;
 	path = ft_split(getenv("PATH"), ':');

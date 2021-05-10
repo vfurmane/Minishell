@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 15:19:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:35:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,15 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		if (id)
 			wait(&status);
 		else
+		{
+			if (getenv("PATH") == NULL)
+				return (ft_stderr_message(command, ": No such file or directory", NULL, 127));
 			if (ft_strcmp(".", command) == 0 || !ft_exec(line, shell_c->envp))
 			{
-				ft_command_not_found(command, STDOUT_FILENO);
+				ft_command_not_found(command, STDOUT_FILENO); // ft_stderr_message
 				exit(127); // replace with a return
 			}
+		}
 	}
 	if (WIFEXITED(status))
 		ret = WEXITSTATUS(status);
