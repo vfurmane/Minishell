@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 12:07:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/10 12:13:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,10 +315,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 		shell_c->history->next->previous = shell_c->history;
 	ft_read_icanon(shell_c, &icanon);
 	tcsetattr(0, 0, &shell_c->termios_backup);
-	write(shell_c->fd[1], ADD_HISTORY, 3);
-	write(shell_c->fd[1], "\x1F", 1);
-	write(shell_c->fd[1], icanon.line, ft_strlen(icanon.line));
-	write(shell_c->fd[1], "\x1E", 1);
+	ft_write_pipe(ADD_HISTORY, icanon.line, NULL, shell_c->fd[1]);
 	//ft_all_commands(icanon.line, shell_c);
 	ret = ft_init_args_tree(icanon.line, shell_c);
 	return (ret);
