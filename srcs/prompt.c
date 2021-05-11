@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/10 15:17:00 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/11 10:49:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*buffer_fix(char *const buffer)
 	return (str);
 }
 
-char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd, char **envp)
+char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
 {
 	char *file_name;
 	char *file_name_fix;
@@ -105,7 +105,7 @@ char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd, char **envp)
 			file_name = ft_strndup(buffer + i, where_to_cut(buffer + i));
 			if (file_name[0] != '/' || file_name[0] != '~')
 			{
-				temp = ft_strjoin(ft_getenv(envp, "PWD"), "/"); //check if null
+				temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
 				file_name_fix = ft_strjoin(temp, file_name);		//check if null
 				free(temp);
 				free(file_name);
@@ -126,7 +126,7 @@ char	*ft_fix_openfiles(char *const buffer, t_cmd *cmd, char **envp)
 	return (NULL);
 }
 
-t_cmd *ft_new_cmd(char *const buffer, char **envp)
+t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer)
 {
 	t_cmd	*cmd;
 	char	*separator;
@@ -135,11 +135,7 @@ t_cmd *ft_new_cmd(char *const buffer, char **envp)
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
 		return (NULL);
-
-
-	buffer_fix = ft_fix_openfiles(buffer, cmd, envp);
-	//free(buffer);
-
+	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd);
 	cmd->next = NULL;
 	separator = ft_strinstr(buffer, ";|");
 	if (separator == NULL)
@@ -193,7 +189,7 @@ int ft_in_str_where(char *str, char c, int last)
 	return (0);
 }
 
-int ft_init_args_tree(char *const buffer, t_config *shell_c)
+int ft_init_args_tree(t_config *shell_c, char *const buffer)
 {
 	int i;
 	char *str;
@@ -207,7 +203,7 @@ int ft_init_args_tree(char *const buffer, t_config *shell_c)
 
 	while (str[i])
 	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(&str[i], shell_c->envp));
+		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i]));
 		if (cmd == NULL)
 			return (0);
 		if (str[i] == '\0')
@@ -267,6 +263,6 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	tcsetattr(0, 0, &shell_c->termios_backup);
 	ft_write_pipe(ADD_HISTORY, icanon.line, NULL, shell_c->fd[1]);
 	//ft_all_commands(icanon.line, shell_c);
-	ret = ft_init_args_tree(icanon.line, shell_c);
+	ret = ft_init_args_tree(shell_c, icanon.line);
 	return (ret);
 }

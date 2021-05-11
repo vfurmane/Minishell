@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/10 14:32:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/11 10:20:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		**ft_free_neo(char **neo)
 	return (0);
 }
 
-char *check_in(char *program)
+char *ft_get_executable_path(t_config *shell_c, char *program)
 {
 	char		**path;
 	char		*pathfile;
@@ -34,7 +34,7 @@ char *check_in(char *program)
 	struct stat	stats;
 	
 	i = 0;
-	path = ft_split(getenv("PATH"), ':');
+	path = ft_split(ft_getenv(shell_c->envp_list, "PATH"), ':');
 	while (path[i])
 	{
 		pathfile = ft_strjoin(path[i], program);
@@ -45,7 +45,6 @@ char *check_in(char *program)
 		}
 		free(pathfile);
 		i++;
-		//return (path[i]);
 	}
 	ft_free_neo(path);
 	return (0);
@@ -56,7 +55,7 @@ void add_slash(char **str)
 	char *prog;
 	prog = malloc(sizeof(char) * (ft_strlen(*str) + 2));
 	if (!prog)
-	return ;
+		return ;
 	prog[0] = '/';
 	ft_strlcpy(prog + 1, *str, ft_strlen(*str) + 1);
 	free(*str);
@@ -75,19 +74,15 @@ int	ft_execve(const char *filename, char *const argv[], char *const envp[])
 	return (ret);
 }
 
-int ft_exec(char **command, char **environment)
+int ft_exec(t_config *shell_c, char **command)
 {
 	char	*pathfile;
 	char	*slash_command;
 
 	slash_command = ft_strjoin("/", command[0]);
-	//add_slash(command);
-	pathfile = check_in(slash_command);
+	pathfile = ft_get_executable_path(shell_c, slash_command);
 	free(slash_command);
 	if (pathfile)
-	{
-		ft_execve(pathfile, command, environment);
-		//does execve free param ? No, we need to free in the main process
-	}
+		ft_execve(pathfile, command, shell_c->envp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/10 14:35:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/11 10:49:49 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int ft_route_file_from(const char *file_name, t_config *shell_c)
 	ret = 1;
 	if (file_name[0] != '/' || file_name[0] != '~')
 	{
-		temp = ft_strjoin(ft_getenv(shell_c->envp, "PWD"), "/"); //check if null
+		temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
 		file_name_fix = ft_strjoin(temp, file_name);			 //check if null
 		free(temp);
 	}
@@ -76,7 +76,7 @@ int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
 	final_str = NULL;
 	if (file_name[0] != '/' || file_name[0] != '~')
 	{
-		temp = ft_strjoin(ft_getenv(shell_c->envp, "PWD"), "/"); //check if null
+		temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
 		file_name_fix = ft_strjoin(temp, file_name);			 //check if null
 		free(temp);
 	}
@@ -156,9 +156,9 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 			wait(&status);
 		else
 		{
-			if (getenv("PATH") == NULL)
+			if (ft_getenv(shell_c->envp_list, "PATH") == NULL)
 				return (ft_stderr_message(command, ": No such file or directory", NULL, 127));
-			if (ft_strcmp(".", command) == 0 || !ft_exec(line, shell_c->envp))
+			if (ft_strcmp(".", command) == 0 || !ft_exec(shell_c, line))
 			{
 				ft_command_not_found(command, STDOUT_FILENO); // ft_stderr_message
 				exit(127); // replace with a return
@@ -168,5 +168,4 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 	if (WIFEXITED(status))
 		ret = WEXITSTATUS(status);
 	return (ret);
-	//maybe exit (0) here
 }

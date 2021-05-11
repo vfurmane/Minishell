@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/10 15:17:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/11 10:21:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_
 
 char				*ft_replace_with_env(t_config *shell_c, const char *str,
 					int *str_i);
-char				*ft_getenv(char **env, char *str);
+char 				*ft_getenv(t_kvpair *envp_list, const char *name);
 int					ft_parse_envp(char **envp, t_config *shell_c);
 
 
@@ -115,7 +115,7 @@ int					ft_parse_envp(char **envp, t_config *shell_c);
 
 int					ft_execve(const char *filename, char *const argv[],
 					char *const envp[]);
-int					ft_exec(char **command, char **environement);
+int					 ft_exec(t_config *shell_c, char **command);
 
 int					ft_insert_char(t_icanon *icanon);
 int					ft_delete_char(char *str, int column);

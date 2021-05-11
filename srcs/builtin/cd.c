@@ -6,23 +6,23 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/09 12:04:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/11 09:56:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_parse_new_dir(char **args, char **new_dir)
+static int	ft_parse_new_dir(t_config *shell_c, char **args, char **new_dir)
 {
 	if (args[0] == NULL || ft_strcmp("~", args[0]) == 0)
 	{
-		*new_dir = getenv("HOME");
+		*new_dir = ft_getenv(shell_c->envp_list, "HOME");
 		if (*new_dir == NULL)
 			return (ft_stderr_message("cd: HOME not set", NULL, NULL, -1));
 	}
 	else if (ft_strcmp("-", args[0]) == 0)
 	{
-		*new_dir = getenv("OLDPWD");
+		*new_dir = ft_getenv(shell_c->envp_list, "OLDPWD");
 		if (*new_dir == NULL)
 			return (ft_stderr_message("cd: OLDPWD not set", NULL, NULL, -1));
 	}
@@ -41,7 +41,7 @@ int			ft_cd(t_config *shell_c, char **args, int output_fd)
 	char	*old_pwd;
 
 	(void)output_fd; /* ===== DELETE ===== */
-	ret = ft_parse_new_dir(args, &new_dir);
+	ret = ft_parse_new_dir(shell_c, args, &new_dir);
 	if (ret == -1)
 		return (1);
 	old_pwd = getcwd(NULL, 0);
