@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 16:18:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/12 17:09:06 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ft_kill_child(int id)
 	kill(id, SIGINT);
 }
 
-int ft_route_file_from(const char *file_name, t_config *shell_c)
+int ft_route_file_from(const char *file_name, t_config *shell_c) //depreciated
 {
 	char	*temp;
 	char	*file_name_fix;
@@ -63,7 +63,7 @@ int ft_route_file_from(const char *file_name, t_config *shell_c)
 	return (0);
 }
 
-int ft_route_file_to(const char *file_name, t_config *shell_c, int happen)
+int ft_route_file_to(const char *file_name, t_config *shell_c, int happen) //depreciated
 {
 	char	*file_name_fix;
 	char	*temp;

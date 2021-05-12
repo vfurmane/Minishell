@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 16:26:02 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/12 17:24:12 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,29 @@ char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
 				temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
 				file_name_fix = ft_strjoin(temp, file_name);		//check if null
 				free(temp);
-				free(file_name);
+				
 			}
 			else
 				file_name_fix = file_name;
-			if (happen)
-				cmd->file = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666); //check if error
+			if (cmd->from_to == BRACKET_FROM)
+			{
+				cmd->file = open(file_name_fix, O_RDWR);
+				if (cmd->file == -1)
+				ft_stderr_message(file_name, ": No such file or directory", NULL, 0);
+			}
+			else if (happen)
+			{
+				cmd->file = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666);
+				if (cmd->file == -1)
+				ft_stderr_message(file_name, ": can't open this file", NULL, 0);
+			}
 			else
-				cmd->file = open(file_name_fix, O_RDWR | O_CREAT, 0666); //check if error
+			{
+				cmd->file = open(file_name_fix, O_RDWR | O_CREAT, 0666);
+				if (cmd->file == -1)
+				ft_stderr_message(file_name, ": can't open this file", NULL, 0);
+			}
+			free(file_name); //maybe don't here
 			free(file_name_fix);
 		}
 		else
