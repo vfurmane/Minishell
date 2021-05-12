@@ -6,13 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 15:42:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/12 16:41:03 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// All static here...
 
 void ft_unterminated_quote(int fd)
 {
