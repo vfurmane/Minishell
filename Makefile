@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/12 11:30:40 by earnaud          ###   ########.fr        #
+#    Updated: 2021/05/13 14:37:39 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ FILES		= cmd.c \
 			  prompt.c \
 			  put.c \
 			  router.c \
+			  pars_files.c \
+			  pars_command.c \
 			  update_env.c \
 			  update_shell.c \
 			  $(addprefix builtin/, \
