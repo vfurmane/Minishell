@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:34:59 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/13 14:39:46 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/13 16:05:48 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char		*buffer_fix(char *const buffer)
 
 	count[0] = 0;
 	count[1] = 0;
-	str = malloc(sizeof(char) * ft_strlen(buffer)); //check if fail
+	str = malloc(sizeof(char) * ft_strlen(buffer));
 	if (!str)
 		return (NULL);
 	while (buffer[count[0]] && !ft_strchr(";|", buffer[count[0]]))
@@ -31,8 +31,7 @@ char		*buffer_fix(char *const buffer)
 			while (buffer[count[0]] && !ft_strchr(" <>|;", buffer[count[0]]))
 				count[0]++;
 		}
-		//else
-			str[count[1]++] = buffer[count[0]++];
+		str[count[1]++] = buffer[count[0]++];
 	}
 	str[count[1]] = 0;
 	return (str);

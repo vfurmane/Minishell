@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/13 13:43:09 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/13 17:12:38 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ int ft_in_str_where(char *str, char c, int last)
 	return (0);
 }
 
+void	free_all_cmd(t_cmd *cmd)
+{
+	t_cmd *temp;
+	while (cmd)
+	{
+		temp = cmd->next;
+		free(cmd->str);
+		free(cmd);
+		cmd = temp;
+	}
+}
+
 int ft_init_args_tree(t_config *shell_c, char *const buffer)
 {
 	int i;
@@ -129,7 +141,9 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 	}
 	if (cmd == NULL)
 		return (0);
-	return (ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO)));
+	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
+	free_all_cmd(cmd);
+	return (i);
 }
 
 int	ft_display_prompt(char *prompt)
