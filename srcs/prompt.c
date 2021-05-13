@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/13 12:09:10 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/13 13:07:40 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer, int *error)
 		separator = &buffer[ft_strlen(buffer)];
 	if (buffer_fix)
 		cmd->str = buffer_fix;
-	else if (!error)
+	else if (!*error)
 		cmd->str = ft_strndup(buffer, separator - buffer);
 	else
 		return (NULL);
