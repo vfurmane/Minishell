@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 17:24:12 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/13 12:09:10 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,16 @@ char	*buffer_fix(char *const buffer)
 	return (str);
 }
 
-char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
+static char *error_file(char *file_name, char *file_name_fix, int *error)
+{
+	ft_stderr_message(file_name, ": ", strerror(errno), 0);
+	*error = -1;
+	free(file_name);
+	free(file_name_fix);
+	return (NULL);
+}
+
+char		*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd, int *error)
 {
 	char *file_name;
 	char *file_name_fix;
@@ -108,7 +117,6 @@ char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
 				temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
 				file_name_fix = ft_strjoin(temp, file_name);		//check if null
 				free(temp);
-				
 			}
 			else
 				file_name_fix = file_name;
@@ -116,21 +124,21 @@ char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
 			{
 				cmd->file = open(file_name_fix, O_RDWR);
 				if (cmd->file == -1)
-				ft_stderr_message(file_name, ": No such file or directory", NULL, 0);
+					return(error_file(file_name, file_name_fix, error));
 			}
 			else if (happen)
 			{
 				cmd->file = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666);
 				if (cmd->file == -1)
-				ft_stderr_message(file_name, ": can't open this file", NULL, 0);
+					return (error_file(file_name, file_name_fix, error));
 			}
 			else
 			{
 				cmd->file = open(file_name_fix, O_RDWR | O_CREAT, 0666);
 				if (cmd->file == -1)
-				ft_stderr_message(file_name, ": can't open this file", NULL, 0);
+					return (error_file(file_name, file_name_fix, error));
 			}
-			free(file_name); //maybe don't here
+			free(file_name);
 			free(file_name_fix);
 		}
 		else
@@ -141,7 +149,7 @@ char	*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd)
 	return (NULL);
 }
 
-t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer)
+t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer, int *error)
 {
 	t_cmd	*cmd;
 	char	*separator;
@@ -150,16 +158,16 @@ t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer)
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
 		return (NULL);
-	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd);
+	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd, error);
 	cmd->next = NULL;
 	separator = ft_strinstr(buffer, ";|");
 	if (separator == NULL)
 		separator = &buffer[ft_strlen(buffer)];
 	if (buffer_fix)
 		cmd->str = buffer_fix;
-	else
+	else if (!error)
 		cmd->str = ft_strndup(buffer, separator - buffer);
-	if (cmd->str == NULL)
+	else
 		return (NULL);
 	cmd->separator = ft_set_separator(separator);
 	return (cmd);
@@ -210,17 +218,22 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 	char *str;
 	t_cmd *cmd;
 	int bracket;
+	int errorfile;
 
 	i = 0;
+	errorfile = 0;
 	bracket = 0;
 	cmd = NULL;
 	str = buffer;
 
 	while (str[i])
 	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i]));
+		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i], &errorfile));
+		if (errorfile)
+			return (errorfile); //free all cmd before
 		if (cmd == NULL)
 			return (0);
+
 		if (str[i] == '\0')
 			break;
 		while (str[i] && !ft_strchr("|;", str[i]))
