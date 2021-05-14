@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:31:40 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/13 14:37:25 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/14 17:10:01 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ int		open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
 {
 	if (cmd->from_to == BRACKET_FROM)
 	{
-		cmd->file = open(file_name_fix, O_RDWR);
-		if (cmd->file == -1)
+		cmd->file_from = open(file_name_fix, O_RDWR);
+		if (cmd->file_from == -1)
 			return (error_file(file_name, file_name_fix));
 	}
 	else if (happen)
 	{
-		cmd->file = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666);
-		if (cmd->file == -1)
+		cmd->file_to = open(file_name_fix, O_RDWR | O_APPEND | O_CREAT, 0666);
+		if (cmd->file_to == -1)
 			return (error_file(file_name, file_name_fix));
 	}
 	else
 	{
-		cmd->file = open(file_name_fix, O_RDWR | O_CREAT, 0666);
-		if (cmd->file == -1)
+		cmd->file_to = open(file_name_fix, O_RDWR | O_CREAT, 0666);
+		if (cmd->file_to == -1)
 			return (error_file(file_name, file_name_fix));
 	}
 	free(file_name);
@@ -79,23 +79,25 @@ int		pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i)
 
 	happen = 0;
 	if (buffer[*i] == '<')
-				cmd->from_to = BRACKET_FROM;
-			else if (buffer[*i] == '>')
-				cmd->from_to = BRACKET_TO;
-			if (buffer[*i + 1] == '>')
-			{
-				happen = 1;
-				(*i)++;
-			}
-			(*i)++;
-			if (cmd->file)
-				close(cmd->file);
-			while (buffer[*i] == ' ')
-				(*i)++;
-			file_name[0] = ft_strndup(buffer + *i, where_to_cut(buffer + *i));
-			if (file_name[0][0] != '/' || file_name[0][0] != '~')
-				file_name[1] = get_file_name_fix(shell_c, file_name[0]);
-			else
-				file_name[1] = file_name[0];
-			return (open_file(cmd, file_name[1], file_name[0], happen));
+		cmd->from_to = BRACKET_FROM;
+	else if (buffer[*i] == '>')
+		cmd->from_to = BRACKET_TO;
+	if (buffer[*i + 1] == '>')
+	{
+		happen = 1;
+		(*i)++;
+	}
+	(*i)++;
+	if (cmd->file_from && cmd->from_to == BRACKET_FROM)
+		close(cmd->file_from);
+	if (cmd->file_to && cmd->from_to == BRACKET_TO)
+		close(cmd->file_to);
+	while (buffer[*i] == ' ')
+		(*i)++;
+	file_name[0] = ft_strndup(buffer + *i, where_to_cut(buffer + *i));
+	if (file_name[0][0] != '/' || file_name[0][0] != '~')
+		file_name[1] = get_file_name_fix(shell_c, file_name[0]);
+	else
+		file_name[1] = file_name[0];
+	return (open_file(cmd, file_name[1], file_name[0], happen));
 }

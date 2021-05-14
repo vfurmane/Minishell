@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/13 17:13:00 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/14 17:25:25 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,11 @@ char **ft_split_cmd_args(t_config *shell_c, const char *str, int fd[2])
 		}
 	}
 	arr[j] = NULL;
-	//ft_print_command(arr);
 	return (arr);
 }
 
 int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 {
-	int		id;
 	int		ret;
 	int		status;
 	char	**args;
@@ -171,11 +169,13 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		return (0);
 	}
 	signal(SIGQUIT, SIG_DFL);
-	id = fork();
-	if (id)
+	if (fork() != CHILD_PROCESS)
 	{
-		if (cmd->file)
-			close(cmd->file);
+		if (cmd->file_to || cmd->file_from)
+		{
+			close(cmd->file_to);
+			close(cmd->file_from);
+		}
 		close(pipe_in);
 		close(std_out);
 		close(STDOUT_FILENO);
@@ -187,14 +187,13 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		return (-1);
 	if (args[0] != NULL)
 	{
-		
 		if (cmd->separator == PIPE) // case where there is > and pipe don't work
 		{
 			pipe(cmd->fd);
 			if (cmd->from_to == BRACKET_TO)
 			{
-				dup2(cmd->file, STDOUT_FILENO);
-				close(cmd->file);
+				dup2(cmd->file_to, STDOUT_FILENO);
+				close(cmd->file_to);
 				close(cmd->fd[1]);
 			}
 			else
@@ -205,21 +204,21 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		}
 		else
 		{
-			if (cmd->from_to == BRACKET_TO)
+			if (cmd->file_to)
 			{
 				//close(std_out);
 				//std_out = cmd->file;
-				dup2(cmd->file, STDOUT_FILENO);
-				close(cmd->file);
+				dup2(cmd->file_to, STDOUT_FILENO);
+				close(cmd->file_to);
 			}
 			else
 				dup2(std_out, STDOUT_FILENO);
 			//close(std_out);
 		}
-		if (cmd->from_to == BRACKET_FROM)
+		if (cmd->file_from)
 		{
-			dup2(cmd->file, STDIN_FILENO);
-			close(cmd->file);
+			dup2(cmd->file_from, STDIN_FILENO);
+			close(cmd->file_from);
 			//close(pipe_in); //maybe usefull
 		}
 		else
