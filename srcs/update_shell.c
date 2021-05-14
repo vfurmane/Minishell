@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/03 17:22:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:34:26 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_add_history(t_config *shell_c, char *str)
 		return (-1);
 	elm->next = NULL;
 	elm->previous = NULL;
-	elm->content = str;
+	elm->content = ft_strdup(str);
 	ft_lstadd_front(&shell_c->history, elm);
 	if (shell_c->history->next)
 		shell_c->history->next->previous = shell_c->history;
@@ -79,10 +79,12 @@ int ft_route_updater(t_config *shell_c, char *str)
 		ret = chdir(value);
 	else if (ft_strcmp(ADD_HISTORY, key) == 0)
 		ret = ft_add_history(shell_c, value);
+		free(value);
 	if (ret == -1)
 		return (ret);
 	while (str[i] && str[i] != 30)
 		i++;
+
 	return (i + 1);
 }
 

@@ -6,13 +6,41 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 16:22:37 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/14 15:40:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void		free_shell(t_config *shell_c)
+{
+	void		*temp;
+	int			i;
+
+	i = 0;
+	while (shell_c->envp[i])
+		free(shell_c->envp[i++]);
+	free(shell_c->envp);
+	while (shell_c->envp_list)
+	{
+		temp = shell_c->envp_list->next;
+		free(shell_c->envp_list->value);
+		free(shell_c->envp_list->key);
+		free(shell_c->envp_list);
+		shell_c->envp_list = temp;
+	}
+	close(shell_c->fd[0]);
+	close(shell_c->fd[1]);
+	while (shell_c->history)
+	{
+		temp = shell_c->history->next;
+		free(shell_c->history->content);
+		shell_c->history = temp;
+	}
+	//free(shell_c->prompt); maybe yes?
+}
+
+int			main(int argc, char **argv, char **envp)
 {
 	int			ret;
 	int			status;
@@ -66,5 +94,7 @@ int	main(int argc, char **argv, char **envp)
 			exit(ret);
 		}
 	}
-	return (shell_c.exit_code);
+	ret = (int)shell_c.exit_code;
+	free_shell(&shell_c);
+	return (ret);
 }
