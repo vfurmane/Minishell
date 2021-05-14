@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 16:40:41 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/14 21:16:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int					ft_parse_envp(char **envp, t_config *shell_c);
 
 int					ft_execve(const char *filename, char *const argv[],
 					char *const envp[]);
-int					 ft_exec(t_config *shell_c, char **command);
+int					ft_exec(t_config *shell_c, char **command);
 
 int					ft_insert_char(t_icanon *icanon);
 int					ft_delete_char(char *str, int column);
@@ -140,6 +140,8 @@ int					ft_write_pipe(const char *key, const char *value1,
 					const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 					t_config *shell_c);
+
+char				**ft_split_cmd(t_config *shell_c, const char *cmd);
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);

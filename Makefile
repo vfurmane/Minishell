@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/13 14:37:39 by earnaud          ###   ########.fr        #
+#    Updated: 2021/05/14 21:15:53 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FILES		= cmd.c \
 			  router.c \
 			  pars_files.c \
 			  pars_command.c \
+			  split_args.c \
 			  update_env.c \
 			  update_shell.c \
 			  $(addprefix builtin/, \
@@ -73,7 +74,7 @@ FILES		= cmd.c \
 
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
-NAME		= Minishell
+NAME		= minishell
 CC			= clang
 CFLAGS		= -g -Wall -Wextra -Werror
 LIBS		= -lncurses

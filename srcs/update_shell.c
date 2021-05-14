@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 15:34:26 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/14 21:19:03 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int ft_route_updater(t_config *shell_c, char *str)
 		ret = chdir(value);
 	else if (ft_strcmp(ADD_HISTORY, key) == 0)
 		ret = ft_add_history(shell_c, value);
-		free(value);
+	free(value);
 	if (ret == -1)
 		return (ret);
 	while (str[i] && str[i] != 30)
