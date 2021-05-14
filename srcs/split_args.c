@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 11:35:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/14 11:51:09 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 static char	*ft_skip_spaces(const char *cmd, int *i)
 {
 	while (cmd[*i] == ' ')
-		(*i)++;
-	return ((char*)(&cmd[*i]));
-}
-
-static char	*ft_skip_cmd_arg(const char *cmd, int *i)
-{
-	while (cmd[*i] && cmd[*i] != ' ')
 		(*i)++;
 	return ((char*)(&cmd[*i]));
 }
@@ -106,6 +99,32 @@ static char	ft_set_quote(t_cmd_arg *arg, char chr)
 	return (arg->quote);
 }
 
+static char	*ft_skip_cmd_arg(const char *cmd, int *i)
+{
+	t_cmd_arg	arg;
+
+	arg.i = 0;
+	arg.backslash = 0;
+	arg.quote = 0;
+	arg.str = NULL;
+	while (cmd[*i] && (cmd[*i] != ' ' || arg.quote != '\0'))
+	{
+		if (!arg.backslash && cmd[*i] == '\\')
+		{
+			arg.backslash = cmd[(*i)++] == '\\';
+			continue ;
+		}
+		if (arg.backslash)
+			(*i)++;
+		else if (cmd[*i] == '\'' || cmd[*i] == '"')
+			arg.quote = ft_set_quote(&arg, cmd[(*i)++]);
+		else
+			(*i)++;
+		arg.backslash = 0;
+	}
+	return ((char*)&cmd[*i]);
+}
+
 static int	ft_arglen(t_config *shell_c, const char *cmd)
 {
 	int			i;
@@ -116,7 +135,7 @@ static int	ft_arglen(t_config *shell_c, const char *cmd)
 	arg.backslash = 0;
 	arg.quote = 0;
 	arg.str = NULL;
-	while (cmd[i] && cmd[i] != ' ')
+	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
 		if (!arg.backslash && cmd[i] == '\\')
 		{
@@ -148,7 +167,7 @@ static char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
 	arg.quote = '\0';
 	arg.backslash = 0;
 	i = 0;
-	while (cmd[i] && cmd[i] != ' ')
+	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
 		if (!arg.backslash && cmd[i] == '\\')
 		{
