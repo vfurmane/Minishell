@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/11 10:20:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/11 15:26:33 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,25 @@ char *ft_get_executable_path(t_config *shell_c, char *program)
 	char		**path;
 	char		*pathfile;
 	int			i;
-	struct stat	stats;
+	struct stat	file_stat;
 	
 	i = 0;
 	path = ft_split(ft_getenv(shell_c->envp_list, "PATH"), ':');
 	while (path[i])
 	{
 		pathfile = ft_strjoin(path[i], program);
-		if (!stat(pathfile, &stats))
+		if (!stat(pathfile, &file_stat))
 		{
 			ft_free_neo(path);
+			if (file_stat.st_mode & 040000)
+				exit(ft_stderr_message(pathfile, ": Is a directory", NULL, 126));
 			return (pathfile);
 		}
 		free(pathfile);
 		i++;
 	}
 	ft_free_neo(path);
-	return (0);
+	return (NULL);
 }
 
 void add_slash(char **str)

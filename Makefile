@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/09 11:41:34 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/13 14:44:23 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES		= cmd.c \
 			  put.c \
 			  read_icanon.c \
 			  router.c \
+			  split_args.c \
 			  update_env.c \
 			  update_shell.c \
 			  $(addprefix builtin/, \
