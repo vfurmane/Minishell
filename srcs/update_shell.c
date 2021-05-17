@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 21:19:03 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:22:06 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int ft_route_updater(t_config *shell_c, char *str)
 		return (ret);
 	while (str[i] && str[i] != 30)
 		i++;
-
 	return (i + 1);
 }
 
@@ -121,8 +120,12 @@ int ft_update_shell(t_config *shell_c)
 	{
 		ret = ft_route_updater(shell_c, &str[i]);
 		if (ret == -1)
+		{
+			free(str);
 			return (-1);
+		}
 		i += ret;
 	}
+	free(str);
 	return (0);
 }

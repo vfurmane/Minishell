@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 15:40:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/17 16:12:21 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		free_shell(t_config *shell_c)
 	{
 		temp = shell_c->history->next;
 		free(shell_c->history->content);
+		free(shell_c->history);
 		shell_c->history = temp;
 	}
 	//free(shell_c->prompt); maybe yes?
