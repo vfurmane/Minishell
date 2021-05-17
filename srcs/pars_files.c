@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:31:40 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/14 17:10:01 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/17 12:37:13 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int		pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i)
 		close(cmd->file_to);
 	while (buffer[*i] == ' ')
 		(*i)++;
+	if(buffer[*i] == '>' || !buffer[*i])
+		return(ft_stderr_message("syntax error near unexpected token", "`>'", NULL, -1));
 	file_name[0] = ft_strndup(buffer + *i, where_to_cut(buffer + *i));
 	if (file_name[0][0] != '/' || file_name[0][0] != '~')
 		file_name[1] = get_file_name_fix(shell_c, file_name[0]);
