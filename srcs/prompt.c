@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/17 14:44:32 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/17 14:49:25 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,20 +130,16 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 			break;
 		while (str[i] && !ft_strchr("|;", str[i]))
 			i++;
-		if (str[i] == ';')
-			i++;
 		if (str[i] == '|')
-		{
-			ft_cmdlast(cmd)->separator = PIPE; //that's not usefull
-			//while (str[i] == '|')
+			ft_cmdlast(cmd)->separator = PIPE;
+		if(str[i])
 			i++;
-		}
 		while(str[i] == ' ')
 			i++;
 		if (str[i] == ';')
-			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1));
+			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1)); //free all cmd before
 		if (str[i] == '|')
-			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1));
+			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1)); //free all cmd before 
 	}
 	if (cmd == NULL)
 		return (0);

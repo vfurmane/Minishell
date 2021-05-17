@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 21:16:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:19:05 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 
 	if (!cmd)
 	{
-		close(pipe_in);
+		//close(pipe_in); maybe usefull
 		close(std_out);
 		return (0);
 	}
@@ -43,7 +43,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		return (-1);
 	if (args[0] != NULL)
 	{
-		if (cmd->separator == PIPE) // case where there is > and pipe don't work
+		if (cmd->separator == PIPE)
 		{
 			pipe(cmd->fd);
 			if (cmd->from_to == BRACKET_TO)
