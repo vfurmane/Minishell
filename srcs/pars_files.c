@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:31:40 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/17 13:27:48 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/17 13:37:59 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
 	}
 	else
 	{
-		cmd->file_to = open(file_name_fix, O_RDWR | O_CREAT, 0666);
+		cmd->file_to = open(file_name_fix, O_RDWR | O_TRUNC | O_CREAT, 0666);
 		if (cmd->file_to == -1)
 			return (error_file(file_name, file_name_fix));
 	}
