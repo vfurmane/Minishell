@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 21:18:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/17 14:44:32 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,15 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 		if (str[i] == '|')
 		{
 			ft_cmdlast(cmd)->separator = PIPE; //that's not usefull
-			while (str[i] == '|')
-				i++;
+			//while (str[i] == '|')
+			i++;
 		}
+		while(str[i] == ' ')
+			i++;
+		if (str[i] == ';')
+			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1));
+		if (str[i] == '|')
+			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1));
 	}
 	if (cmd == NULL)
 		return (0);
@@ -169,7 +175,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	int				ret;
 	struct termios	termios_c;
 	t_icanon		icanon;
-	
+
 	(void)(pipefd);
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
