@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 21:16:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/18 11:49:45 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,14 @@ typedef struct		s_icanon
 	char			*line;
 	unsigned char	buffer[4];
 }					t_icanon;
+
+typedef struct	s_cmd_arg
+{
+	int			i;
+	int			backslash;
+	char		*str;
+	char		quote;
+}				t_cmd_arg;
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 					int pipefd[2]);
