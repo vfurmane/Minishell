@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 17:09:06 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:17:06 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,9 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 			}
 		}
 	}
-	if (WIFEXITED(status))
+	if (WIFSIGNALED(status))
+		ret += 128 + WTERMSIG(status);
+	else if (WIFEXITED(status))
 		ret = WEXITSTATUS(status);
 	return (ret);
 }
