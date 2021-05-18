@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 11:51:09 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/18 11:45:52 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,14 @@ static char	*ft_skip_cmd_arg(const char *cmd, int *i)
 static int	ft_arglen(t_config *shell_c, const char *cmd)
 {
 	int			i;
+	char		*env_variable;
 	t_cmd_arg	arg;
 
 	i = 0;
 	arg.i = 0;
 	arg.backslash = 0;
 	arg.quote = 0;
-	arg.str = NULL;
+	//arg.str = NULL;
 	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
 		if (!arg.backslash && cmd[i] == '\\')
@@ -143,16 +144,20 @@ static int	ft_arglen(t_config *shell_c, const char *cmd)
 			continue ;
 		}
 		if (arg.backslash)
-			i++;
+			arg.i++;
 		else if (cmd[i] == '\'' || cmd[i] == '"')
-			arg.quote = ft_set_quote(&arg, cmd[i++]);
+			arg.quote = ft_set_quote(&arg, cmd[i]);
 		else if (cmd[i] == '$')
-			i += ft_replace_dollar(shell_c, NULL, &cmd[i + 1]);
+		{
+			i += ft_replace_dollar(shell_c, &env_variable, &cmd[i + 1]) - 1;
+			arg.i += ft_strlen(env_variable);
+		}
 		else
-			i++;
+			arg.i++;
+		i++;
 		arg.backslash = 0;
 	}
-	return (i);
+	return (arg.i);
 }
 
 static char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
@@ -160,7 +165,7 @@ static char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
 	int			i;
 	t_cmd_arg	arg;
 
-	arg.str = ft_calloc(sizeof(*arg.str), (ft_arglen(shell_c, cmd) + 1));
+	arg.str = ft_calloc((ft_arglen(shell_c, cmd) + 1), sizeof(*arg.str));
 	if (arg.str == NULL)
 		return (NULL);
 	arg.i = 0;
