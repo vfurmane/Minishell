@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 11:49:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:43:54 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,7 @@ int					pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i);
 int					ft_stderr_message(const char *str1, const char *str2,
 					const char *str3, int ret);
 
-int 				ft_route_command(const char *command, char **args,
-					int fd[2], char **line, t_config *shell_c, t_cmd *cmd);
+int 				ft_route_command(const char *command, char **args, char **line, t_config *shell_c);
 int					ft_route_file_to(const char *file_name, t_config *shell_c,
 					int happen);
 int					ft_write_pipe(const char *key, const char *value1,
@@ -156,5 +155,9 @@ int					ft_del_env(t_config *shell_c, char *str);
 int					ft_add_env(t_config *shell_c, const char *str);
 
 int					ft_update_shell(t_config *shell_c);
+
+void				free_neo(char **str);
+void				free_shell(t_config *shell_c);
+void				free_all_cmd(t_cmd *cmd);
 
 #endif

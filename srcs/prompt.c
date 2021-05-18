@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/17 14:49:25 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 15:00:21 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int ft_in_str_where(char *str, char c, int last)
 {
 	int i;
 
-
 	i = 0;
 	while (str[i])
 	{
@@ -92,40 +91,32 @@ int ft_in_str_where(char *str, char c, int last)
 	return (0);
 }
 
-void	free_all_cmd(t_cmd *cmd)
-{
-	t_cmd *temp;
-	while (cmd)
-	{
-		temp = cmd->next;
-		free(cmd->str);
-		free(cmd);
-		cmd = temp;
-	}
-}
-
 int ft_init_args_tree(t_config *shell_c, char *const buffer)
 {
-	int i;
-	char *str;
-	t_cmd *cmd;
-	int bracket;
-	int errorfile;
+	int		i;
+	char	*str;
+	t_cmd	*cmd;
+	int		bracket;
+	int		errorfile;
 
 	i = 0;
 	errorfile = 0;
 	bracket = 0;
 	cmd = NULL;
 	str = buffer;
-
 	while (str[i])
 	{
 		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i], &errorfile));
 		if (errorfile)
-			return (errorfile); //free all cmd before
+		{
+			free_all_cmd(cmd);
+			return (errorfile);
+		}
 		if (cmd == NULL)
+		{
+			free_all_cmd(cmd);
 			return (0);
-
+		}
 		if (str[i] == '\0')
 			break;
 		while (str[i] && !ft_strchr("|;", str[i]))
@@ -137,9 +128,15 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 		while(str[i] == ' ')
 			i++;
 		if (str[i] == ';')
-			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1)); //free all cmd before
+		{
+			free_all_cmd(cmd);
+			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1));
+		}
 		if (str[i] == '|')
-			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1)); //free all cmd before 
+		{
+			free_all_cmd(cmd);
+			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1));
+		} 
 	}
 	if (cmd == NULL)
 		return (0);
