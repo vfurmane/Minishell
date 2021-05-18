@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 17:13:18 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:34:32 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		}
 		close(pipe_in);
 		close(std_out);
-		//close(STDOUT_FILENO);
+		close(STDOUT_FILENO);
 		wait(&status);
 		return (WEXITSTATUS(status));
 	}
@@ -89,6 +89,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out);
 		free(cmd->str);
 		free(cmd);
+		free_shell(shell_c);
 		free_neo(args);
 		exit(ret);
 	}

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 17:11:15 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:19:42 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,10 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 			signal(SIGINT, SIG_DFL);
 			ft_execve(line[0], line, shell_c->envp); //cas ou existe pas
 			//free here
+			//free(command); 
+			free_neo(args);
+			free_neo(line);
+			free_shell(shell_c);
 		}
 	}
 	else
@@ -165,6 +169,10 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 				exit(127); // replace with a return
 			}
 			//free here
+			//free(command); // maybe need to
+			free_neo(args);
+			free_neo(line);
+			free_shell(shell_c);
 		}
 	}
 	if (WIFEXITED(status))
