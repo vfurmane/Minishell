@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 14:59:46 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:11:43 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,7 @@ int					pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i);
 int					ft_stderr_message(const char *str1, const char *str2,
 					const char *str3, int ret);
 
-int 				ft_route_command(const char *command, char **args,
-					int fd[2], char **line, t_config *shell_c, t_cmd *cmd);
+int 				ft_route_command(const char *command, char **args, char **line, t_config *shell_c);
 int					ft_route_file_to(const char *file_name, t_config *shell_c,
 					int happen);
 int					ft_write_pipe(const char *key, const char *value1,

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 15:01:33 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:52:59 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			main(int argc, char **argv, char **envp)
 			ret = ft_prompt(&shell_c, shell_c.fd);
 			if (ret == -1)
 				return (1);
+			free_shell(&shell_c);
 			exit(ret);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 17:09:06 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:11:15 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,15 +122,13 @@ static int	ft_is_a_builtin(t_config *shell_c, const char *command, char **args,
 	return (1);
 }
 
-int ft_route_command(const char *command, char **args, int fd[2], char **line, t_config *shell_c, t_cmd *cmd)
+int ft_route_command(const char *command, char **args, char **line, t_config *shell_c)
 {
 	int			ret;
 	int			id;
 	int			status;
 	struct stat file_stat;
 
-	(void)fd;
-	(void)cmd;
 	ret = 0;
 	status = 0;
 	if (ft_is_a_builtin(shell_c, command, args, &ret))
@@ -140,9 +138,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		if (stat(line[0], &file_stat) == -1)
 			exit(127);
 		if (file_stat.st_mode & 040000)
-		{
 			return (ft_stderr_message(line[0], ": Is a directory", NULL, 126));
-		}
 		id = fork();
 		if (id)
 			wait(&status);
@@ -150,6 +146,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 		{
 			signal(SIGINT, SIG_DFL);
 			ft_execve(line[0], line, shell_c->envp); //cas ou existe pas
+			//free here
 		}
 	}
 	else
@@ -167,6 +164,7 @@ int ft_route_command(const char *command, char **args, int fd[2], char **line, t
 				ft_command_not_found(command, STDOUT_FILENO); // ft_stderr_message
 				exit(127); // replace with a return
 			}
+			//free here
 		}
 	}
 	if (WIFEXITED(status))
