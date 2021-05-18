@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/14 21:16:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/18 14:59:46 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,12 @@ int					ft_del_env(t_config *shell_c, char *str);
 int					ft_add_env(t_config *shell_c, const char *str);
 
 int					ft_update_shell(t_config *shell_c);
+
+void				free_neo(char **str);
+void				free_shell(t_config *shell_c);
+void				free_all_cmd(t_cmd *cmd);
+
+
+
 
 #endif

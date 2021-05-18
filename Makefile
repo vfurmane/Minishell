@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/14 21:15:53 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/18 15:01:46 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ FILES		= cmd.c \
 			  split_args.c \
 			  update_env.c \
 			  update_shell.c \
+			  free.c \
 			  $(addprefix builtin/, \
 			  cd.c \
 			  echo.c \
