@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 11:45:52 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/18 12:01:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@ static char	*ft_skip_spaces(const char *cmd, int *i)
 		(*i)++;
 	return ((char*)(&cmd[*i]));
 }
-
-/* ===== DELETE ===== */
-
-typedef struct	s_cmd_arg
-{
-	int			i;
-	int			backslash;
-	char		*str;
-	char		quote;
-}				t_cmd_arg;
-
-/* ===== DELETE ===== */
 
 static int	ft_replace_dollar(t_config *shell_c, char **dest,
 		const char *dollar_str)
@@ -103,10 +91,7 @@ static char	*ft_skip_cmd_arg(const char *cmd, int *i)
 {
 	t_cmd_arg	arg;
 
-	arg.i = 0;
-	arg.backslash = 0;
-	arg.quote = 0;
-	arg.str = NULL;
+	ft_bzero(&arg, sizeof(arg));
 	while (cmd[*i] && (cmd[*i] != ' ' || arg.quote != '\0'))
 	{
 		if (!arg.backslash && cmd[*i] == '\\')
@@ -125,17 +110,33 @@ static char	*ft_skip_cmd_arg(const char *cmd, int *i)
 	return ((char*)&cmd[*i]);
 }
 
+static int	ft_route_argchr(t_config *shell_c, t_cmd_arg *arg, const char *cmd)
+{
+	int		i;
+	char	*env_variable;
+
+	i = 0;
+	if (arg->backslash)
+		(arg->i)++;
+	else if (cmd[0] == '\'' || cmd[0] == '"')
+		arg->quote = ft_set_quote(arg, cmd[0]);
+	else if (cmd[0] == '$')
+	{
+		i += ft_replace_dollar(shell_c, &env_variable, &cmd[1]) - 1;
+		arg->i += ft_strlen(env_variable);
+	}
+	else
+		(arg->i)++;
+	return (i);
+}
+
 static int	ft_arglen(t_config *shell_c, const char *cmd)
 {
 	int			i;
-	char		*env_variable;
 	t_cmd_arg	arg;
 
 	i = 0;
-	arg.i = 0;
-	arg.backslash = 0;
-	arg.quote = 0;
-	//arg.str = NULL;
+	ft_bzero(&arg, sizeof(arg));
 	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
 		if (!arg.backslash && cmd[i] == '\\')
@@ -143,17 +144,7 @@ static int	ft_arglen(t_config *shell_c, const char *cmd)
 			arg.backslash = cmd[i++] == '\\';
 			continue ;
 		}
-		if (arg.backslash)
-			arg.i++;
-		else if (cmd[i] == '\'' || cmd[i] == '"')
-			arg.quote = ft_set_quote(&arg, cmd[i]);
-		else if (cmd[i] == '$')
-		{
-			i += ft_replace_dollar(shell_c, &env_variable, &cmd[i + 1]) - 1;
-			arg.i += ft_strlen(env_variable);
-		}
-		else
-			arg.i++;
+		i += ft_route_argchr(shell_c, &arg, &cmd[i]);
 		i++;
 		arg.backslash = 0;
 	}
@@ -223,13 +214,13 @@ char		**ft_split_cmd(t_config *shell_c, const char *cmd)
 	j = 0;
 	while (cmd[i])
 	{
-		ft_skip_spaces(cmd, &i); //
+		ft_skip_spaces(cmd, &i);
 		if (cmd[i] == '\0')
 			break ;
 		argv[j] = ft_cmd_argdup(shell_c, &cmd[i]);
 		if (argv[j] == NULL)
 			return (NULL);
-		ft_skip_cmd_arg(cmd, &i); //
+		ft_skip_cmd_arg(cmd, &i);
 		j++;
 	}
 	argv[j] = NULL;
