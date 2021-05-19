@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 15:00:21 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/19 15:05:03 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,14 @@ t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer, int *error)
 	cmd = malloc(sizeof(*cmd));
 	if (cmd == NULL)
 		return (NULL);
-	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd, error);
 	cmd->next = NULL;
+	cmd->file = 0;
+	cmd->file_from = 0;
+	cmd->file_to = 0;
+	cmd->from_to = 0;
+	cmd->fd[0] = 0;
+	cmd->fd[1] = 0;
+	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd, error);
 	separator = ft_strinstr(buffer, ";|");
 	if (separator == NULL)
 		separator = &buffer[ft_strlen(buffer)];
