@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 12:01:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/19 11:09:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static int	ft_replace_dollar(t_config *shell_c, char **dest,
 	if (env_name == NULL)
 		return (-1);
 	ft_strlcpy(env_name, dollar_str, i + 1);
-	if (ft_strcmp(env_name, "?") == 0)
+	if (env_name[0] == '\0')
+		env = "$";
+	else if (ft_strcmp(env_name, "?") == 0)
 		env = ft_static_itoa(shell_c->exit_code);
 	else
 		env = ft_getenv(shell_c->envp_list, env_name);
@@ -122,7 +124,7 @@ static int	ft_route_argchr(t_config *shell_c, t_cmd_arg *arg, const char *cmd)
 		arg->quote = ft_set_quote(arg, cmd[0]);
 	else if (cmd[0] == '$')
 	{
-		i += ft_replace_dollar(shell_c, &env_variable, &cmd[1]) - 1;
+		i += ft_replace_dollar(shell_c, &env_variable, &cmd[1]);
 		arg->i += ft_strlen(env_variable);
 	}
 	else
