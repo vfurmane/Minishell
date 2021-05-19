@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/18 16:52:59 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/19 09:43:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int			main(int argc, char **argv, char **envp)
 			tcsetattr(0, 0, &shell_c.termios_backup);
 			if (WEXITSTATUS(status) != S_SIGINT_PROMPT && WEXITSTATUS(status) != S_SIGIGN)
 				shell_c.exit_code = WEXITSTATUS(status);
+			if (shell_c.exit_code >= 134)
+				ft_stderr_message("got signal ", ft_static_itoa(shell_c.exit_code - 128), NULL, 0);
 			ft_update_shell(&shell_c);
 			if (WTERMSIG(status) == SIGINT)
 			{
