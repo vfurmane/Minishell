@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/19 11:09:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/20 16:26:06 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ static int	ft_arglen(t_config *shell_c, const char *cmd)
 	return (arg.i);
 }
 
-static char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
+char		*ft_cmd_argdup(t_config *shell_c, const char *cmd)
 {
 	int			i;
 	t_cmd_arg	arg;
