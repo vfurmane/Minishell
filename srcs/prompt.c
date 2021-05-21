@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/19 15:05:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 09:15:45 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,12 @@ t_dlist	*ft_new_history_line(void)
 	return (elm);
 }
 
+static void	ft_sigint_prompt(int code)
+{
+	if (code == SIGINT)
+		exit(S_SIGINT_PROMPT);
+}
+
 int ft_prompt(t_config *shell_c, int pipefd[2])
 {
 	int				ret;
@@ -176,6 +182,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	t_icanon		icanon;
 
 	(void)(pipefd);
+	signal(SIGINT, ft_sigint_prompt);
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, 0, &termios_c);
