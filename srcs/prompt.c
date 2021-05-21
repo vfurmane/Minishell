@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 14:19:13 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 17:54:45 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ t_separator ft_set_separator(const char *str)
 		return (EOCMD);
 }
 
+char	*ft_strinstr_quotes(const char *str, const char *sep)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"')
+			while(str[++i] && str[i] != '\"');
+		if (str[i] == '\'')
+			while(str[++i] && str[i] != '\'');
+		if (ft_strchr(sep, str[i]) != NULL)
+			return ((char*)&str[i]);
+		if (str[i])
+			i++;
+	}
+	return (NULL);
+}
+
+
 t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer, int *error)
 {
 	t_cmd	*cmd;
@@ -46,7 +66,7 @@ t_cmd *ft_new_cmd(t_config *shell_c, char *const buffer, int *error)
 	cmd->fd[0] = 0;
 	cmd->fd[1] = 0;
 	buffer_fix = ft_fix_openfiles(shell_c, buffer, cmd, error);
-	separator = ft_strinstr(buffer, ";|");
+	separator = ft_strinstr_quotes(buffer, ";|");
 	if (separator == NULL)
 		separator = &buffer[ft_strlen(buffer)];
 	if (buffer_fix)
