@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 12:28:25 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 14:20:31 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,8 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 		else
 		{
 			signal(SIGINT, SIG_DFL);
-			ft_execve(line[0], line, shell_c->envp); //cas ou existe pas
-			
-			//free here
-			//free(command); 
+			signal(SIGQUIT, SIG_DFL);
+			ft_execve(line[0], line, shell_c->envp); 
 			free_neo(args);
 			free_neo(line);
 			free_shell(shell_c);
@@ -162,6 +160,7 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 		else
 		{
 			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (ft_getenv(shell_c->envp_list, "PATH") == NULL)
 				return (ft_stderr_message(command, ": No such file or directory", NULL, 127));
 			if (ft_strcmp(".", command) == 0 || !ft_exec(shell_c, line))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 14:36:19 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/23 14:37:27 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/21 13:59:05 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 
 	i = 0;
 	shell_c->envp = ft_calloc(sizeof(*shell_c->envp), 1);
+	if (shell_c->envp == NULL)
+		return (-1);
 	shell_c->envp_list = NULL;
 	while (envp[i])
 	{
@@ -29,8 +31,9 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 		j = 0;
 		while (envp[i][j] && envp[i][j] != '=')
 			j++;
-		if (envp[i][j++] == '\0')
+		if (envp[i][j] == '\0' || envp[i][j + 1] == '\0')
 			return (-1);
+		j++;
 		envp_elm->value = ft_strdup(&envp[i][j]);
 		ft_lstadd_back(&shell_c->envp_list, envp_elm);
 		i++;

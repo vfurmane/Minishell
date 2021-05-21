@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 13:12:30 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 14:19:13 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,64 +96,6 @@ int ft_in_str_where(char *str, char c, int last)
 	}
 	return (0);
 }
-
-/* ===== DELETE ===== */
-
-/*int ft_init_args_tree(t_config *shell_c, char *const buffer)
-{
-	int		i;
-	char	*str;
-	t_cmd	*cmd;
-	int		bracket;
-	int		errorfile;
-
-	i = 0;
-	errorfile = 0;
-	bracket = 0;
-	cmd = NULL;
-	str = buffer;
-	while (str[i])
-	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i], &errorfile));
-		if (errorfile)
-		{
-			free_all_cmd(cmd);
-			return (errorfile);
-		}
-		if (cmd == NULL)
-		{
-			free_all_cmd(cmd);
-			return (0);
-		}
-		if (str[i] == '\0')
-			break;
-		while (str[i] && !ft_strchr("|;", str[i]))
-			i++;
-		if (str[i] == '|')
-			ft_cmdlast(cmd)->separator = PIPE;
-		if(str[i])
-			i++;
-		while(str[i] == ' ')
-			i++;
-		if (str[i] == ';')
-		{
-			free_all_cmd(cmd);
-			return (ft_stderr_message("syntax error near unexpected token", "`;'", NULL, -1));
-		}
-		if (str[i] == '|')
-		{
-			free_all_cmd(cmd);
-			return (ft_stderr_message("syntax error near unexpected token", "`|'", NULL, -1));
-		} 
-	}
-	if (cmd == NULL)
-		return (0);
-	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
-	free_all_cmd(cmd);
-	return (i);
-}*/
-
-/* ===== DELETE ===== */
 
 static char	ft_set_quote(t_cmd_arg *arg, char chr)
 {
@@ -264,13 +206,12 @@ static void	ft_sigint_prompt(int code)
 		exit(S_SIGINT_PROMPT);
 }
 
-int ft_prompt(t_config *shell_c, int pipefd[2])
+int ft_prompt(t_config *shell_c)
 {
 	int				ret;
 	struct termios	termios_c;
 	t_icanon		icanon;
 
-	(void)(pipefd);
 	signal(SIGINT, ft_sigint_prompt);
 	tcgetattr(0, &termios_c);
 	termios_c.c_lflag &= ~(ICANON | ECHO);
@@ -280,11 +221,11 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 	ft_display_prompt(shell_c->prompt);
 	ft_lstadd_front(&shell_c->history, ft_new_history_line());
 	icanon.line = shell_c->history->content;
-	if (shell_c->history->next)
+	if (shell_c->history->next != NULL)
 		shell_c->history->next->previous = shell_c->history;
 	ft_read_icanon(shell_c, &icanon);
 	tcsetattr(0, 0, &shell_c->termios_backup);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (icanon.line[0] == '\0')
 		return (S_SIGIGN);
 	ft_write_pipe(ADD_HISTORY, icanon.line, NULL, shell_c->fd[1]);
