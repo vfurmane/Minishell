@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 14:20:31 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 21:36:03 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,15 +146,18 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			ft_execve(line[0], line, shell_c->envp); 
+			ft_execve(line[0], line, shell_c->envp);
 			free_neo(args);
 			free_neo(line);
 			free_shell(shell_c);
+			exit(127);
 		}
 	}
 	else
 	{
 		id = fork();
+		if (id == -1)
+			return (ft_stderr_message("error can't fork", NULL, NULL, -1));
 		if (id)
 			wait(&status);
 		else
@@ -166,8 +169,7 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 			if (ft_strcmp(".", command) == 0 || !ft_exec(shell_c, line))
 			{
 				ft_command_not_found(command, STDOUT_FILENO); // ft_stderr_message
-				if (args)
-					free_neo(args);
+				free_neo(args);
 				free_neo(line);
 				free_shell(shell_c);
 				exit(127); // replace with a return

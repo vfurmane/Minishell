@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:34:59 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/21 18:32:13 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 21:06:07 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,13 @@ char		*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd, int *
 	 i = 0;
 	 while (buffer[i] && !ft_strchr("|;", buffer[i]))
 	 {
-		 if (skip_quotes(buffer, &i)) // maybe free all before exit
-		 	exit (-1);
+		 if (skip_quotes(buffer, &i))
+		 {
+			 free(buffer);
+			 free_shell(shell_c);
+			 free_all_cmd(cmd);
+			 exit(-1);
+		 }
 		 if (ft_strchr("<>", buffer[i]))
 		 {
 			 if (pars_files(buffer, shell_c, cmd, &i) == -1)

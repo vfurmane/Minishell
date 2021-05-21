@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 17:54:45 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 21:26:36 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ t_separator ft_set_separator(const char *str)
 {
 	if (str[0] == ';')
 		return (EOCMD);
-	//else if (str[0] == '<') // not useful
-	//	return (REDIR_LEFT); // not useful
-	//else if (str[0] == '>') // not useful
-	//	if (str[1] == '>') // not useful
-	//		return (REDIR_APPEND); // not useful
-	//	else 						// not useful
-	//		return (REDIR_RIGHT); // not useful
 	else if (str[0] == '|')
 		return (PIPE);
 	else
@@ -196,7 +189,6 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 		ft_skip_cmd(str, &i);
 		ft_skip_spaces(str, &i);
 	}
-	// why i ?
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
 	free_all_cmd(cmd);
 	return (i);

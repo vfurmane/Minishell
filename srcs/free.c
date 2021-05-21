@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/21 12:27:16 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 21:39:11 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void free_neo(char **str)
 	int i;
 
 	i = 0;
-	if (str)
 	while (str[i])
 		free(str[i++]);
 	free(str);
