@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 09:15:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:50:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ int ft_in_str_where(char *str, char c, int last)
 	return (0);
 }
 
-int ft_init_args_tree(t_config *shell_c, char *const buffer)
+/* ===== DELETE ===== */
+
+/*int ft_init_args_tree(t_config *shell_c, char *const buffer)
 {
 	int		i;
 	char	*str;
@@ -149,6 +151,93 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
 	free_all_cmd(cmd);
 	return (i);
+}*/
+
+/* ===== DELETE ===== */
+
+static char	ft_set_quote(t_cmd_arg *arg, char chr)
+{
+	if (arg->quote != '\0' && arg->quote == chr)
+		arg->quote = '\0';
+	else if (arg->quote == '\0' && (chr == '"' || chr == '\''))
+		arg->quote = chr;
+	else
+	{
+		if (arg->str != NULL)
+			arg->str[arg->i] = chr;
+		arg->i++;
+	}
+	return (arg->quote);
+}
+
+static char	*ft_skip_spaces(const char *cmd, int *i)
+{
+	while (cmd[*i] == ' ')
+		(*i)++;
+	return ((char*)(&cmd[*i]));
+}
+
+static char *ft_skip_cmd(const char *cmd, int *i)
+{
+	int			j;
+	t_cmd_arg	arg;
+
+	ft_bzero(&arg, sizeof(arg));
+	j = 0;
+	while (cmd[*i] && ((cmd[*i] != ';' && cmd[*i] != '|') || arg.quote != '\0'))
+	{
+		if (!arg.backslash && cmd[*i] == '\\')
+		{
+			arg.backslash = cmd[(*i)++] == '\\';
+			continue ;
+		}
+		if (arg.backslash)
+			(*i)++;
+		else if (cmd[*i] == '\'' || cmd[*i] == '"')
+			arg.quote = ft_set_quote(&arg, cmd[(*i)++]);
+		else
+			(*i)++;
+		arg.backslash = 0;
+	}
+	(*i)++;
+	return ((char*)&cmd[*i]);
+}
+
+int ft_init_args_tree(t_config *shell_c, char *const buffer)
+{
+	int		i;
+	char	*str;
+	t_cmd	*cmd;
+	int		bracket;
+	int		errorfile;
+
+	i = 0;
+	errorfile = 0;
+	bracket = 0;
+	cmd = NULL;
+	str = buffer;
+	while (str[i])
+	{
+		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i], &errorfile));
+		if (errorfile)
+		{
+			free_all_cmd(cmd);
+			return (errorfile);
+		}
+		if (cmd == NULL)
+		{
+			free_all_cmd(cmd);
+			return (0);
+		}
+		if (str[i] == '\0')
+			break ;
+		ft_skip_cmd(str, &i);
+		ft_skip_spaces(str, &i);
+	}
+	// why i ?
+	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
+	free_all_cmd(cmd);
+	return (i);
 }
 
 int	ft_display_prompt(char *prompt)
@@ -195,7 +284,7 @@ int ft_prompt(t_config *shell_c, int pipefd[2])
 		shell_c->history->next->previous = shell_c->history;
 	ft_read_icanon(shell_c, &icanon);
 	tcsetattr(0, 0, &shell_c->termios_backup);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, SIG_DFL);
 	if (icanon.line[0] == '\0')
 		exit(S_SIGIGN);
 	ft_write_pipe(ADD_HISTORY, icanon.line, NULL, shell_c->fd[1]);
