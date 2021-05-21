@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/20 16:33:29 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/21 13:16:25 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,6 @@ int					ft_prompt(t_config *shell_c, int pipefd[2]);
 char				*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd, int *error);
 int					pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i);
 char				*ft_cmd_argdup(t_config *shell_c, const char *cmd);
-
-
-
 
 int					ft_stderr_message(const char *str1, const char *str2,
 					const char *str3, int ret);

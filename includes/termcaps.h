@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 11:57:40 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/04 18:47:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/21 13:18:10 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMCAPS_H
 # define TERMCAPS_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef struct s_icanon	t_icanon;
 typedef struct s_config	t_config;
