@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/11 15:26:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/21 09:09:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ int	ft_execve(const char *filename, char *const argv[], char *const envp[])
 
 	ret = execve(filename, argv, envp);
 	if (ret == -1)
-	{
-		printf("minishell: %s: %s\n", filename, strerror(errno));
-	}
+		ft_stderr_message(filename, ": ", strerror(errno), -1);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/19 09:43:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:46:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int			main(int argc, char **argv, char **envp)
 			ft_update_shell(&shell_c);
 			if (WTERMSIG(status) == SIGINT)
 			{
-				write(STDOUT_FILENO, "^C", 2);
-				write(1, "\n", 1);
+				write(STDOUT_FILENO, "\n", 1);
 			}
 			else if (WTERMSIG(status) == SIGQUIT)
 				write(2, "Quit (core dumped)\n", 19);
