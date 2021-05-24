@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 17:55:48 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 11:30:33 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,11 @@ int					ft_execve(const char *filename, char *const argv[],
 					char *const envp[]);
 int					ft_exec(t_config *shell_c, char **command);
 
+void				free_shell(t_config *shell_c);
+void				free_neo(char **str);
+void				free_neo_content(char **str);
+void				free_all_cmd(t_cmd *cmd);
+
 int					ft_insert_char(t_icanon *icanon);
 int					ft_delete_char(char *str, int column);
 int					ft_rewrite_line(t_icanon *icanon, int move_cursor);
@@ -136,8 +141,6 @@ int					ft_prompt(t_config *shell_c);
 char				*ft_fix_openfiles(t_config *shell_c, char *const buffer, t_cmd *cmd, int *error);
 int					pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i);
 char				*ft_cmd_argdup(t_config *shell_c, const char *cmd);
-
-
 
 int					ft_stderr_message(const char *str1, const char *str2,
 					const char *str3, int ret);
@@ -157,9 +160,5 @@ int					ft_del_env(t_config *shell_c, char *str);
 int					ft_add_env(t_config *shell_c, const char *str);
 
 int					ft_update_shell(t_config *shell_c);
-
-void				free_neo(char **str);
-void				free_shell(t_config *shell_c);
-void				free_all_cmd(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 21:36:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 11:29:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 			if (ft_strcmp(".", command) == 0 || !ft_exec(shell_c, line))
 			{
 				ft_command_not_found(command, STDOUT_FILENO); // ft_stderr_message
-				free_neo(args);
+				free_neo_content(args);
 				free_neo(line);
 				free_shell(shell_c);
 				exit(127); // replace with a return
