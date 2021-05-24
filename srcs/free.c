@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/24 14:23:06 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 17:05:02 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_all_cmd(t_cmd *cmd)
 {
 	t_cmd *temp;
+
 	while (cmd)
 	{
 		temp = cmd->next;

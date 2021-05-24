@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/24 14:31:13 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 17:43:15 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 	int		ret;
 	int		status;
 	char	**args;
-	t_cmd	*cmd_next; //pnext
-	int		fd_next; //fd
 
 	if (!cmd)
 	{
@@ -32,11 +30,8 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 								  NULL, -1));
 	else if (id != CHILD_PROCESS)
 	{
-		//if (cmd->file_to || cmd->file_from)
-		//{
-			close(cmd->file_to);
-			close(cmd->file_from);
-		//}
+		close(cmd->file_to);
+		close(cmd->file_from);
 		close(pipe_in);
 		close(std_out);
 		close(STDOUT_FILENO);
@@ -88,16 +83,11 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 		}
 		ret = ft_route_command(args[0], &args[1], args, shell_c);
 		free_neo(args);
-		free(cmd->str);
-		cmd_next = cmd->next;
-		fd_next = cmd->fd[0];
-		free(cmd);
 		if (ret != 127)
-			ft_recursiv_command(cmd_next, shell_c, fd_next, std_out);
-		else
-			free_all_cmd(cmd_next);
+			ft_recursiv_command(cmd->next, shell_c, cmd->fd[0], std_out);
+		free_all_cmd(cmd);
 		free_shell(shell_c);
-		exit(ret);
+		exit (ret);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/24 14:26:17 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 17:28:26 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 		ft_skip_spaces(str, &i);
 	}
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
-	//free_all_cmd(cmd);
+	//if (i == 127)
+		//free_all_cmd(cmd);
 	return (i);
 }
 
