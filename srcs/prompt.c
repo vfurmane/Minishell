@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/21 21:26:36 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/24 14:26:17 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int ft_init_args_tree(t_config *shell_c, char *const buffer)
 		ft_skip_spaces(str, &i);
 	}
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
-	free_all_cmd(cmd);
+	//free_all_cmd(cmd);
 	return (i);
 }
 
@@ -223,6 +223,7 @@ int ft_prompt(t_config *shell_c)
 	int				ret;
 	struct termios	termios_c;
 	t_icanon		icanon;
+	t_dlist		*history_backup;
 
 	signal(SIGINT, ft_sigint_prompt);
 	tcgetattr(0, &termios_c);
@@ -232,6 +233,7 @@ int ft_prompt(t_config *shell_c)
 	icanon.column = 0;
 	ft_display_prompt(shell_c->prompt);
 	ft_lstadd_front(&shell_c->history, ft_new_history_line());
+	history_backup = shell_c->history;
 	icanon.line = shell_c->history->content;
 	if (shell_c->history->next != NULL)
 		shell_c->history->next->previous = shell_c->history;
@@ -241,6 +243,7 @@ int ft_prompt(t_config *shell_c)
 	if (icanon.line[0] == '\0')
 		return (S_SIGIGN);
 	ft_write_pipe(ADD_HISTORY, icanon.line, NULL, shell_c->fd[1]);
+	shell_c->history = history_backup;
 	ret = ft_init_args_tree(shell_c, icanon.line);
 	return (ret);
 }

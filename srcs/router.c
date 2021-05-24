@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/24 11:29:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:42:43 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 			free_neo(args);
 			free_neo(line);
 			free_shell(shell_c);
-			exit(127);
+			return (127);
 		}
 	}
 	else
@@ -172,10 +172,9 @@ int ft_route_command(const char *command, char **args, char **line, t_config *sh
 				free_neo_content(args);
 				free_neo(line);
 				free_shell(shell_c);
-				exit(127); // replace with a return
+				return (127); // replace with a return
 			}
 			//free here
-			//free(command); // maybe need to
 			free_neo(args);
 			free_neo(line);
 			free_shell(shell_c);
