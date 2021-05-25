@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convert_env.c                                   :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/11 10:18:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:30:48 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_getenv(t_kvpair *envp_list, const char *name)
+char	*ft_getenv(t_kvpair *envp_list, const char *name)
 {
 	while (envp_list)
 	{
@@ -23,18 +23,18 @@ char *ft_getenv(t_kvpair *envp_list, const char *name)
 	return (0);
 }
 
-char *ft_replace_with_env(t_config *shell_c, const char *str, int *str_i)
+char	*ft_replace_with_env(t_config *shell_c, const char *str, int *str_i)
 {
-	int i;
-	char *env;
-	char *env_name;
+	int		i;
+	char	*env;
+	char	*env_name;
 
 	i = 0;
 	if (str[0] == '?')
 		i++;
 	else
-		while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0)) ||
-			str[i] == '_')
+		while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0))
+			|| str[i] == '_')
 			i++;
 	*str_i += i;
 	env_name = malloc(sizeof(*env) * (i + 1));
