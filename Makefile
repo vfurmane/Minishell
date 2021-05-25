@@ -6,13 +6,14 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/25 12:35:25 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/25 15:03:52 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR 	= srcs
 
-FILES		= cmd.c \
+FILES		= args_tree.c \
+			  cmd.c \
 			  env.c \
 			  exec.c \
 			  main.c \

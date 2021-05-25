@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 12:35:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/25 15:05:59 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct s_cmd_arg
 	char		*str;
 	char		quote;
 }				t_cmd_arg;
+
+int					ft_init_args_tree(t_config *shell_c, char *const buffer);
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 						int pipefd[2]);
