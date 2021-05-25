@@ -6,15 +6,15 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 10:33:11 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/21 12:18:55 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/25 12:44:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		**ft_free_neo(char **neo)
+static char	**ft_free_neo(char **neo)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (neo)
@@ -26,13 +26,13 @@ static char		**ft_free_neo(char **neo)
 	return (0);
 }
 
-char *ft_get_executable_path(t_config *shell_c, char *program)
+char	*ft_get_executable_path(t_config *shell_c, char *program)
 {
 	char		**path;
 	char		*pathfile;
 	int			i;
 	struct stat	file_stat;
-	
+
 	i = 0;
 	path = ft_split(ft_getenv(shell_c->envp_list, "PATH"), ':');
 	while (path[i])
@@ -42,7 +42,10 @@ char *ft_get_executable_path(t_config *shell_c, char *program)
 		{
 			ft_free_neo(path);
 			if (file_stat.st_mode & 040000)
-				exit(ft_stderr_message(pathfile, ": Is a directory", NULL, 126));
+			{
+				exit(ft_stderr_message(pathfile, ": Is a directory", NULL,
+						126));
+			}
 			return (pathfile);
 		}
 		free(pathfile);
@@ -52,9 +55,10 @@ char *ft_get_executable_path(t_config *shell_c, char *program)
 	return (NULL);
 }
 
-void add_slash(char **str)
+void	add_slash(char **str)
 {
-	char *prog;
+	char	*prog;
+
 	prog = malloc(sizeof(char) * (ft_strlen(*str) + 2));
 	if (!prog)
 		return ;
@@ -74,7 +78,7 @@ int	ft_execve(const char *filename, char *const argv[], char *const envp[])
 	return (ret);
 }
 
-int ft_exec(t_config *shell_c, char **command)
+int	ft_exec(t_config *shell_c, char **command)
 {
 	char	*pathfile;
 	char	*slash_command;
