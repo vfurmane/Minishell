@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/24 17:05:02 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/25 13:18:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_all_cmd(t_cmd *cmd)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	while (cmd)
 	{
@@ -25,9 +25,9 @@ void	free_all_cmd(t_cmd *cmd)
 	}
 }
 
-void free_neo(char **str)
+void	free_neo(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -35,16 +35,16 @@ void free_neo(char **str)
 	free(str);
 }
 
-void free_neo_content(char **str)
+void	free_neo_content(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 		free(str[i++]);
 }
 
-void		free_shell(t_config *shell_c)
+void	free_shell(t_config *shell_c)
 {
 	void		*temp;
 	int			i;
@@ -68,5 +68,4 @@ void		free_shell(t_config *shell_c)
 		free(shell_c->history);
 		shell_c->history = temp;
 	}
-	//free(shell_c->prompt); maybe yes?
 }
