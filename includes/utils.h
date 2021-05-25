@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:51:58 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:22:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct		s_next
+typedef struct s_next
 {
 	struct s_next	*next;
-}					t_next;
+}				t_next;
 
 size_t				ft_arrlen(void *str);
 void				*ft_bzero(void *str, size_t len);
@@ -38,7 +38,7 @@ char				**ft_split(char const *s, char c);
 char				*ft_static_itoa(int nbr);
 char				**ft_strarrdup(char **arr);
 char				*ft_strarrstr(const char **arr, const char *str,
-					int *index);
+						int *index);
 int					ft_strccmp(const char *str1, const char *str2, int chr);
 char				*ft_strcdup(const char *str, int chr);
 char				*ft_strchr(const char *str, int chr);
@@ -52,11 +52,9 @@ size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
 char				*ft_strndup(const char *str, int len);
 char				*ft_strnstr(const char *big,
-					const char *little, size_t len);
+						const char *little, size_t len);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strinstr_last(const char *str, const char *sep);
 int					ft_in_str_where(char *str, char c, int last);
-
-
 
 #endif
