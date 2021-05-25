@@ -6,11 +6,40 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/25 12:30:48 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:35:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_parse_envp(char **envp, t_config *shell_c)
+{
+	int			i;
+	int			j;
+	t_kvpair	*envp_elm;
+
+	i = 0;
+	shell_c->envp = ft_calloc(sizeof(*shell_c->envp), 1);
+	if (shell_c->envp == NULL)
+		return (-1);
+	shell_c->envp_list = NULL;
+	while (envp[i])
+	{
+		envp_elm = malloc(sizeof(*envp_elm));
+		envp_elm->next = NULL;
+		envp_elm->key = ft_strcdup(envp[i], '=');
+		j = 0;
+		while (envp[i][j] && envp[i][j] != '=')
+			j++;
+		if (envp[i][j] == '\0' || envp[i][j + 1] == '\0')
+			return (-1);
+		j++;
+		envp_elm->value = ft_strdup(&envp[i++][j]);
+		ft_lstadd_back(&shell_c->envp_list, envp_elm);
+	}
+	ft_update_env(shell_c);
+	return (0);
+}
 
 char	*ft_getenv(t_kvpair *envp_list, const char *name)
 {

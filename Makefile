@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/25 12:28:00 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/25 12:35:25 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ SRCS_DIR 	= srcs
 
 FILES		= cmd.c \
 			  env.c \
-			  envp.c \
 			  exec.c \
 			  main.c \
 			  prompt.c \
