@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:10:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 12:09:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:28:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_ctrl_ae(t_config *shell_c, t_icanon *icanon)
 	if (icanon->buffer[0] == 1)
 	{
 		tputs(tgoto(column_address, 0, shell_c->start_column), 1,
-				ft_putchar);
+			ft_putchar);
 		icanon->column = 0;
 	}
 	else if (icanon->buffer[0] == 5)
@@ -63,7 +63,7 @@ int	ft_ctrl_ku(t_config *shell_c, t_icanon *icanon)
 	if (icanon->buffer[0] == 11)
 	{
 		ft_bzero(icanon->line + icanon->column,
-				icanon->line_i - icanon->column);
+			icanon->line_i - icanon->column);
 		icanon->line_i = ft_strlen(icanon->line);
 		icanon->column = icanon->line_i;
 		tputs(tgoto(column_address, 0,

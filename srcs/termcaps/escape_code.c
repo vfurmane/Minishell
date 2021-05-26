@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:06 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 12:45:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:30:05 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	ft_escape_code(t_config *shell_c, t_icanon *icanon)
 		tputs(tgoto(cursor_right, 0, 0), 1, ft_putchar);
 		(icanon->column)++;
 	}
-	else if ((icanon->buffer[2] == 'A' && shell_c->history->next != NULL) ||
-			(icanon->buffer[2] == 'B' && shell_c->history->previous != NULL))
+	else if ((icanon->buffer[2] == 'A' && shell_c->history->next != NULL)
+		|| (icanon->buffer[2] == 'B' && shell_c->history->previous != NULL))
 		ft_navigate_history(shell_c, icanon);
 	else
 		tputs(bell, 1, ft_putchar);
