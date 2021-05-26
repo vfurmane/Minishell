@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 11:38:04 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 12:32:27 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ char				**ft_split_cmd(t_config *shell_c, const char *cmd);
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);
 int					ft_add_env(t_config *shell_c, const char *str);
+
+int					ft_add_history(t_config *shell_c, char *str);
 
 int					ft_update_shell(t_config *shell_c);
 

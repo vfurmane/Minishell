@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 17:24:00 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 12:30:23 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ static char	*ft_skip_cmd(const char *cmd, int *i)
 			(*i)++;
 		arg.backslash = 0;
 	}
-	(*i)++;
 	return ((char *)&cmd[*i]);
 }
 
