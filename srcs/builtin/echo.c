@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 14:26:42 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/09 11:47:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 13:30:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static int	ft_parse_echo_args(t_echo *echo_c, char **args)
 	return (i);
 }
 
-int			ft_echo(t_config *shell_c, char **args, int output_fd)
+int	ft_echo(t_config *shell_c, char **args, int output_fd)
 {
 	int		i;
 	t_echo	echo_c;
 
-	(void)shell_c; /* can't we use the variable instead of voiding it ? */
+	(void)shell_c;
 	i = ft_parse_echo_args(&echo_c, args);
 	while (args[i])
 	{

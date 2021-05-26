@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:09:05 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:48:01 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 13:34:09 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int ft_env(t_config *shell_c, char **args, int output_fd)
+int	ft_env(t_config *shell_c, char **args, int output_fd)
 {
 	int		i;
 	char	**environment;

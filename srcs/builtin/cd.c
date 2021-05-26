@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:32:16 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/11 09:56:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 13:30:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static int	ft_parse_new_dir(t_config *shell_c, char **args, char **new_dir)
 	return (0);
 }
 
-int			ft_cd(t_config *shell_c, char **args, int output_fd)
+int	ft_cd(t_config *shell_c, char **args, int output_fd)
 {
 	int		ret;
 	char	*new_dir;
 	char	*new_pwd;
 	char	*old_pwd;
 
-	(void)output_fd; /* ===== DELETE ===== */
+	(void)output_fd;
 	ret = ft_parse_new_dir(shell_c, args, &new_dir);
 	if (ret == -1)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:08:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:49:16 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 13:34:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ static int	ft_is_valid_identifier(const char *arg)
 	int	i;
 
 	i = 0;
-	while (arg[i] && arg[i] != '=' && (ft_isalpha(arg[i]) ||
-				(ft_isdigit(arg[i]) && i > 0) || arg[i] == '_'))
+	while (arg[i] && arg[i] != '=' && (ft_isalpha(arg[i])
+			|| (ft_isdigit(arg[i]) && i > 0) || arg[i] == '_'))
 		i++;
 	return ((arg[i] == '\0' || arg[i] == '=') && i > 0);
 }
 
-int			ft_export(t_config *shell_c, char **args, int output_fd)
+int	ft_export(t_config *shell_c, char **args, int output_fd)
 {
 	int	i;
-	
+
 	if (args[0] == NULL)
 		return (ft_print_exp_list(output_fd, shell_c->envp_list));
 	i = 0;
@@ -58,7 +58,7 @@ int			ft_export(t_config *shell_c, char **args, int output_fd)
 		if (!ft_is_valid_identifier(args[i]))
 		{
 			ft_stderr_message("export: `", args[i],
-					"': not a valid identifier", 1);
+				"': not a valid identifier", 1);
 		}
 		else
 			ft_write_pipe(ADD_ENV, args[i], NULL, shell_c->fd[1]);
