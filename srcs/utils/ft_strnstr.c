@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 17:21:09 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/09 11:58:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:18:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t i;
-	size_t j;
-	size_t little_len;
+	size_t	i;
+	size_t	j;
+	size_t	little_len;
 
 	i = 0;
 	little_len = ft_strlen(little);

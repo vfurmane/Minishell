@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:43:54 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/03/31 13:44:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:13:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strchr(const char *str, int chr)
 	while (str[i])
 	{
 		if (str[i] == (unsigned char)chr)
-			return ((char*)&str[i]);
+			return ((char *)&str[i]);
 		i++;
 	}
 	if ((unsigned char)chr == '\0')

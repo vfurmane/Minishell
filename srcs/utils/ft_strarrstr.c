@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 11:28:30 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/09 11:53:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:10:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strarrstr(const char **arr, const char *str, int *index)
 	while (arr[*index])
 	{
 		if (ft_strcmp(str, arr[*index]) == 0)
-			return (((char**)arr)[*index]);
+			return (((char **)arr)[*index]);
 		(*index)++;
 	}
 	*index = -1;

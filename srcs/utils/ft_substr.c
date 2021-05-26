@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:13:27 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/02 13:37:35 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:18:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	k = ft_strlen(&s[start]);
 	if (k > len)
 		k = len;
-	if ((result = malloc((k + 1) * sizeof(char))))
+	result = malloc((k + 1) * sizeof(char));
+	if (result != NULL)
 		ft_strlcpy(result, &s[start], k + 1);
 	return (result);
 }

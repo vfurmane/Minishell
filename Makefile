@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/26 12:32:12 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/26 13:48:39 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ FILES		= args_tree.c \
 			  put.c \
 			  read.c) \
 			  $(addprefix utils/, \
-			  div.c \
 			  ft_arrlen.c \
 			  ft_bzero.c \
 			  ft_calloc.c \

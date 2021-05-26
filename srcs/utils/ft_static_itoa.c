@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:15:19 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/28 16:18:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:09:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_count_digits(int nbr)
 	return (i);
 }
 
-char		*ft_static_itoa(int nbr)
+char	*ft_static_itoa(int nbr)
 {
 	int				i;
 	int				len;
@@ -53,4 +53,3 @@ char		*ft_static_itoa(int nbr)
 	str[len] = '\0';
 	return (str);
 }
-

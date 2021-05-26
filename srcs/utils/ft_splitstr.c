@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 21:33:08 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/03/30 21:38:09 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:08:42 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static char	*ft_strcdup(const char *str, char *sep)
 	str_len = 0;
 	while (str[str_len] && str[str_len] != sep)
 		str_len++;
-	if (!(new_str = malloc(sizeof(*new_str) * (str_len + 1))))
+	new_str = malloc(sizeof(*new_str) * (str_len + 1));
+	if (new_str == NULL)
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != sep)
@@ -54,7 +55,7 @@ static char	*ft_strcdup(const char *str, char *sep)
 	return (new_str);
 }
 
-char		**ft_splitstr(const char *str, char *sep)
+char	**ft_splitstr(const char *str, char *sep)
 {
 	int		i;
 	int		j;
@@ -62,7 +63,8 @@ char		**ft_splitstr(const char *str, char *sep)
 
 	i = 0;
 	j = 0;
-	if (!(arr = malloc((ft_count_words(str, sep) + 1) * sizeof(*arr))))
+	arr = malloc((ft_count_words(str, sep) + 1) * sizeof(*arr));
+	if (arr == NULL)
 		return (NULL);
 	while (str[i])
 	{

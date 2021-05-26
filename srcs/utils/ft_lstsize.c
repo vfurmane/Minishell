@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 13:10:20 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/18 13:11:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:02:29 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	ft_lstsize(void *lst)
 	if (lst == NULL)
 		return (0);
 	len = 1;
-	while ((lst = ((t_next*)lst)->next))
+	while (lst != NULL)
+	{
 		len++;
+		lst = ((t_next *)lst)->next;
+	}
 	return (len);
 }

@@ -6,15 +6,15 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 18:07:13 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/07 14:31:57 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:17:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (str)

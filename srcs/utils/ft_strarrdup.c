@@ -6,13 +6,13 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 14:12:42 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:13:29 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:09:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-char **ft_strarrdup(char **arr)
+char	**ft_strarrdup(char **arr)
 {
 	int		i;
 	char	**result;

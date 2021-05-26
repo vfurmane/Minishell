@@ -6,82 +6,55 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:31:58 by earnaud           #+#    #+#             */
-/*   Updated: 2021/04/02 10:46:44 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:07:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		**ft_free_neo(char **neo)
+static int	ft_count_words(const char *str, char sep)
 {
-	size_t i;
+	int	i;
+	int	count;
 
 	i = 0;
-	if (neo)
+	count = 0;
+	while (str[i])
 	{
-		while (neo[i])
-			free(neo[i++]);
-		free(neo);
-	}
-	return (0);
-}
-
-static size_t	ft_strllen(char const *s, size_t start, char c)
-{
-	size_t i;
-
-	i = 0;
-	while (s[start] && s[start] != c)
-	{
-		i++;
-		start++;
-	}
-	return (i);
-}
-
-static size_t	ft_nbrword(char const *s, char c)
-{
-	size_t i;
-	size_t result;
-
-	i = 0;
-	result = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
+		while (str[i] == sep)
 			i++;
-		if (s[i] != c && s[i])
-			result++;
-		while (s[i] != c && s[i])
+		if (str[i])
+			count++;
+		else
+			break ;
+		while (str[i] && str[i] != sep)
 			i++;
 	}
-	return (result);
+	return (count);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(const char *str, char sep)
 {
-	char	**result;
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	size_t	words;
+	int		i;
+	int		j;
+	char	**arr;
 
-	words = ft_nbrword(s, c);
 	i = 0;
 	j = 0;
-	k = 0;
-	if (!(result = malloc((words + 1) * sizeof(char *))))
-		return (ft_free_neo(result));
-	while (i < words)
+	arr = malloc((ft_count_words(str, sep) + 1) * sizeof(*arr));
+	if (arr == NULL)
+		return (NULL);
+	while (str[i])
 	{
-		k += j;
-		while (s[k] == c)
-			k++;
-		j = ft_strllen(s, k, c);
-		if (!(result[i] = ft_substr(s, k, j)))
-			return (ft_free_neo(result));
-		i++;
+		while (str[i] == sep)
+			i++;
+		if (str[i])
+			arr[j++] = ft_strcdup(&str[i], sep);
+		else
+			break ;
+		while (str[i] && str[i] != sep)
+			i++;
 	}
-	result[words] = 0;
-	return (result);
+	arr[j] = NULL;
+	return (arr);
 }

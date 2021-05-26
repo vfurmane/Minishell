@@ -6,20 +6,20 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 13:56:59 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/04/17 14:15:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 13:51:01 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-size_t ft_arrlen(void *arr)
+size_t	ft_arrlen(void *arr)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (arr)
 	{
-		while (((char**)arr)[i])
+		while (((char **)arr)[i])
 			i++;
 	}
 	return (i);
