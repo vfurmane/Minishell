@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/12 11:34:11 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/26 12:01:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_update_env(t_config *shell_c)
+int	ft_update_env(t_config *shell_c)
 {
 	int			i;
 	char		*envp_with_equal;
@@ -23,8 +23,8 @@ int		ft_update_env(t_config *shell_c)
 	while (shell_c->envp[i])
 		free(shell_c->envp[i++]);
 	free(shell_c->envp);
-	shell_c->envp = malloc(sizeof(*shell_c->envp) *
-			(ft_lstsize(shell_c->envp_list) + 1));
+	shell_c->envp = malloc(sizeof(*shell_c->envp)
+			* (ft_lstsize(shell_c->envp_list) + 1));
 	i = 0;
 	while (envp_elm)
 	{
@@ -55,7 +55,7 @@ void	*ft_del_env_elm(t_config *shell_c, t_kvpair *elm, t_kvpair *previous)
 	return (next);
 }
 
-int		ft_del_env(t_config *shell_c, char *str)
+int	ft_del_env(t_config *shell_c, char *str)
 {
 	t_kvpair	*previous;
 	t_kvpair	*envp_elm;
@@ -76,7 +76,7 @@ int		ft_del_env(t_config *shell_c, char *str)
 	return (0);
 }
 
-int		ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int equal_pos)
+int	ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int equal_pos)
 {
 	char		*new_key;
 	t_kvpair	*envp_elm;
@@ -85,8 +85,8 @@ int		ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int equal_pos)
 	new_key = ft_strcdup(str, '=');
 	while (envp_elm)
 	{
-		if (ft_strcmp(new_key, envp_elm->key) == 0 &&
-				str[equal_pos] == '=')
+		if (ft_strcmp(new_key, envp_elm->key) == 0
+			&&str[equal_pos] == '=')
 		{
 			free(envp_elm->value);
 			envp_elm->value = ft_strdup(&str[equal_pos + 1]);
@@ -100,7 +100,7 @@ int		ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int equal_pos)
 	return (0);
 }
 
-int		ft_add_env(t_config *shell_c, const char *str)
+int	ft_add_env(t_config *shell_c, const char *str)
 {
 	int			j;
 	t_kvpair	*envp_elm;
