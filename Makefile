@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/25 15:03:52 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/26 11:25:33 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ FILES		= args_tree.c \
 			  router.c \
 			  pars_files.c \
 			  pars_command.c \
+			  parsing_len.c \
+			  parsing_states.c \
+			  skip.c \
 			  split_args.c \
 			  update_env.c \
 			  update_shell.c \

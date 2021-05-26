@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 15:03:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:24:00 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,28 +102,6 @@ int	ft_in_str_where(char *str, char c, int last)
 		i++;
 	}
 	return (0);
-}
-
-static char	ft_set_quote(t_cmd_arg *arg, char chr)
-{
-	if (arg->quote != '\0' && arg->quote == chr)
-		arg->quote = '\0';
-	else if (arg->quote == '\0' && (chr == '"' || chr == '\''))
-		arg->quote = chr;
-	else
-	{
-		if (arg->str != NULL)
-			arg->str[arg->i] = chr;
-		arg->i++;
-	}
-	return (arg->quote);
-}
-
-static char	*ft_skip_spaces(const char *cmd, int *i)
-{
-	while (cmd[*i] == ' ')
-		(*i)++;
-	return ((char *)(&cmd[*i]));
 }
 
 static char	*ft_skip_cmd(const char *cmd, int *i)

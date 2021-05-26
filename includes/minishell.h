@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 15:05:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/26 11:38:04 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int					ft_parse_envp(char **envp, t_config *shell_c);
 char				*ft_replace_with_env(t_config *shell_c, const char *str,
 						int *str_i);
 char				*ft_getenv(t_kvpair *envp_list, const char *name);
-int					ft_parse_envp(char **envp, t_config *shell_c);
+int					ft_replace_dollar(t_config *shell_c, char **dest,
+						const char *dollar_str);
 
 int					ft_execve(const char *filename, char *const argv[],
 						char *const envp[]);
@@ -133,9 +134,10 @@ void				free_neo(char **str);
 void				free_neo_content(char **str);
 void				free_all_cmd(t_cmd *cmd);
 
-int					ft_insert_char(t_icanon *icanon);
-int					ft_delete_char(char *str, int column);
-int					ft_rewrite_line(t_icanon *icanon, int move_cursor);
+int					ft_arglen(t_config *shell_c, const char *cmd);
+
+int					ft_set_backslash(t_cmd_arg *arg, char chr, int *i);
+char				ft_set_quote(t_cmd_arg *arg, char chr);
 
 int					ft_display_prompt(char *prompt);
 int					ft_prompt(t_config *shell_c);
@@ -156,6 +158,9 @@ int					ft_write_pipe(const char *key, const char *value1,
 						const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 						t_config *shell_c);
+
+char				*ft_skip_spaces(const char *cmd, int *i);
+char				*ft_skip_cmd_arg(const char *cmd, int *i);
 
 char				**ft_split_cmd(t_config *shell_c, const char *cmd);
 
