@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 09:44:00 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:11:45 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	ft_search_and_execute_command(t_config *shell_c,
 				127));
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (ft_strcmp(".", command) == 0 || !ft_exec(shell_c, line))
+	if (command[0] == '\0' || ft_strcmp(".", command) == 0
+		|| !ft_exec(shell_c, line))
 		ft_stderr_message(command, ": command not found", NULL, 0);
 	free_neo_content(args);
 	free_neo(line);
