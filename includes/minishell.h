@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 12:32:27 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 11:40:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void				free_all_cmd(t_cmd *cmd);
 
 int					ft_arglen(t_config *shell_c, const char *cmd);
 
-int					ft_set_backslash(t_cmd_arg *arg, char chr, int *i);
+int					ft_set_backslash(t_cmd_arg *arg, const char *cmd, int *i);
 char				ft_set_quote(t_cmd_arg *arg, char chr);
 
 int					ft_display_prompt(char *prompt);

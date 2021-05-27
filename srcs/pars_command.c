@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:34:59 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/21 21:06:07 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/27 11:18:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,33 @@ int skip_quotes(const char *str, int *i)
 	}
 	if (str[*i] == '"' && !bslash)
 	{
+		bslash = 0;
 		(*i)++;
 		while (str[*i] != '"')
 		{
-			if (!str[*i])
-				return (ft_stderr_message("Error: ", "undeterminated quote", NULL, -1));
+			if (str[*i] == '\\')
+			{
+				bslash = 1;
+				(*i)++;
+			}
+			if (!str[*i] && !bslash)
+				return (ft_stderr_message("Error: ", "unterminated quote", NULL, -1));
 			(*i)++;
 		}
 	}
 	if (str[*i] == '\'' && !bslash)
 	{
+		bslash = 0;
 		(*i)++;
 		while (str[*i] != '\'')
 		{
-			if (!str[*i])
-				return (ft_stderr_message("Error: ", "undeterminated quote", NULL, -1));
+			if (str[*i] == '\\')
+			{
+				bslash = 1;
+				(*i)++;
+			}
+			if (!str[*i] && !bslash)
+				return (ft_stderr_message("Error: ", "unterminated quote", NULL, -1));
 			(*i)++;
 		}
 	}

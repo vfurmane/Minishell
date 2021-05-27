@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 11:21:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 10:24:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 11:57:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_route_argchr(t_config *shell_c, t_cmd_arg *arg, const char *cmd)
 	char	*env_variable;
 
 	i = 0;
-	if (arg->backslash && arg->quote == '\0')
+	if (arg->backslash)
 		(arg->i)++;
 	else if (cmd[0] == '\'' || cmd[0] == '"')
 		arg->quote = ft_set_quote(arg, cmd[0]);
@@ -41,7 +41,8 @@ int	ft_arglen(t_config *shell_c, const char *cmd)
 	ft_bzero(&arg, sizeof(arg));
 	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
-		if (!arg.backslash && cmd[i] == '\\' && arg.quote == '\0')
+		if (!arg.backslash && cmd[i] == '\\' && (arg.quote == '\0'
+				|| (cmd[i + 1] != '\0' && arg.quote == cmd[i + 1])))
 		{
 			arg.backslash = cmd[i++] == '\\';
 			continue ;

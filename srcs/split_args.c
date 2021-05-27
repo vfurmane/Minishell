@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 11:26:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 11:56:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
 	i = 0;
 	while (cmd[i] && (cmd[i] != ' ' || arg.quote != '\0'))
 	{
-		if (ft_set_backslash(&arg, cmd[i], &i))
+		if (ft_set_backslash(&arg, cmd, &i))
 			continue ;
 		if (arg.backslash)
 			arg.str[arg.i++] = cmd[i++];
