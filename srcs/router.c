@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 15:17:33 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:25:16 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static int	return_free(char **args, char **line, t_config *shell_c, int ret)
 {
 	if (ret == 127)
 		ft_stderr_message(line[0], ": No such file or directory", NULL,
-				127);
+			127);
 	if (ret == 126)
 		ft_stderr_message(line[0], ": Is a directory", NULL,
-				126);
-	free_neo_content(args); //maybe leaks here?
+			126);
+	free_neo_content(args);
 	free_neo(line);
 	free_shell(shell_c);
 	return (ret);

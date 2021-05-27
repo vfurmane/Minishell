@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 14:56:14 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:56:01 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,30 @@ t_separator	ft_set_separator(const char *str)
 		return (EOCMD);
 }
 
+static void	skip_quotes(char quote, const char *str, int *i)
+{
+	int	bslash;
+
+	bslash = 0;
+	while (str[++(*i)] && (str[*i] != quote || bslash))
+	{
+		bslash = 0;
+		if (str[*i] == '\\')
+			bslash = 1;
+	}
+}
+
 char	*ft_strinstr_quotes(const char *str, const char *sep)
 {
 	int	i;
-	int bslash;
 
 	i = 0;
-	bslash = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
-			while (str[++i] && (str[i] != '\"' || bslash))
-			{
-				bslash = 0;
-				if (str[i] == '\\')
-					bslash = 1;		
-				i = i + 0;
-			}
+			skip_quotes('\"', str, &i);
 		if (str[i] == '\'')
-			while (str[++i] && (str[i] != '\'' || bslash))
-			{
-				bslash = 0;
-				if (str[i] == '\\')
-					bslash = 1;
-				i = i + 0;
-			}
+			skip_quotes('\'', str, &i);
 		if (ft_strchr(sep, str[i]) != NULL)
 			return ((char *)&str[i]);
 		if (str[i])
@@ -138,35 +137,30 @@ static char	*ft_skip_cmd(const char *cmd, int *i)
 			(*i)++;
 		arg.backslash = 0;
 	}
-	if (cmd[*i] == ';')
+	if (cmd[*i] == ';' || cmd[*i] == '|')
 		(*i)++;
 	return ((char *)&cmd[*i]);
 }
 
-int	ft_init_args_tree(t_config *shell_c, char *const buffer)
+int	loop_cmd(t_config *shell_c, char *str, t_cmd **cmd)
 {
-	int		i;
-	char	*str;
-	t_cmd	*cmd;
-	int		bracket;
-	int		errorfile;
+	int i;
+	int error;
 
 	i = 0;
-	errorfile = 0;
-	bracket = 0;
-	cmd = NULL;
-	str = buffer;
+	error = 0;
 	while (str[i])
 	{
-		ft_cmdadd_back(&cmd, ft_new_cmd(shell_c, &str[i], &errorfile));
-		if (errorfile)
+		ft_cmdadd_back(cmd, ft_new_cmd(shell_c, &str[i],
+			&error));
+		if (error)
 		{
-			free_all_cmd(cmd);
-			return (errorfile);
+			free_all_cmd(*cmd);
+			return (error);
 		}
-		if (cmd == NULL)
+		if (*cmd == NULL)
 		{
-			free_all_cmd(cmd);
+			free_all_cmd(*cmd);
 			return (0);
 		}
 		if (str[i] == '\0')
@@ -174,10 +168,24 @@ int	ft_init_args_tree(t_config *shell_c, char *const buffer)
 		ft_skip_cmd(str, &i);
 		ft_skip_spaces(str, &i);
 	}
+	return (-1);
+}
+
+int	ft_init_args_tree(t_config *shell_c, char *const buffer)
+{
+	int		i;
+	int		ret;
+	char	*str;
+	t_cmd	*cmd;
+
+	i = 0;
+	cmd = NULL;
+	str = buffer;
+	ret = loop_cmd(shell_c, str, &cmd);
+	if (ret != -1)
+		return (ret);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
-	//if (i == 127)
-	//	free_all_cmd(cmd);
 	return (i);
 }

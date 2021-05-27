@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:31:40 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/21 16:41:13 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/27 15:25:33 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,6 @@ int		open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
 	return (0);
 }
 
-// char *ft_strdup_no_bslash(const char *str)
-// {
-// 	char *result;
-// 	t_cmd_arg arg;
-// 	int bslash;
-// 	int i;
-
-// 	i = 0;
-// 	bslash = 0;
-// 	result = malloc(sizeof(char) * ft_strlen(str));
-// 	if (!result)
-// 		return (NULL);
-// 	while (*str)
-// 	{
-// 		if (*str == '\\' && !bslash)
-// 			bslash = 1;
-// 		if (bslash)
-// 			result[i++] = *(++str);
-// 		else
-// 		{
-// 			bslash = 0;
-// 			result[i++] = *str;
-// 		}
-// 		str++;
-// 	}
-// 	return (result);
-// }
-
 char	*get_file_name_fix(t_config *shell_c, char *file_name)
 {
 	char *temp;
@@ -99,18 +71,6 @@ char	*get_file_name_fix(t_config *shell_c, char *file_name)
 	free(temp);
 	return (file_name_fix);
 }
-
-// char *fix_filename_quote(char *buffer, int *i)
-// {
-// 	char *result;
-// 	char *temp;
-
-// 	temp = ft_strndup(buffer + *i, where_to_cut(buffer + *i));
-// 	result = ft_cmd_argdup(shell_c, temp);
-// 	//result = ft_strdup_no_bslash(buffer);
-// 	free(temp);
-// 	return (result);
-// }
 
 int		pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i)
 {
