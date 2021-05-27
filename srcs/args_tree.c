@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 13:24:33 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:56:14 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,28 @@ t_separator	ft_set_separator(const char *str)
 char	*ft_strinstr_quotes(const char *str, const char *sep)
 {
 	int	i;
+	int bslash;
 
 	i = 0;
+	bslash = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
-			while (str[++i] && str[i] != '\"')
+			while (str[++i] && (str[i] != '\"' || bslash))
+			{
+				bslash = 0;
+				if (str[i] == '\\')
+					bslash = 1;		
 				i = i + 0;
+			}
 		if (str[i] == '\'')
-			while (str[++i] && str[i] != '\'')
+			while (str[++i] && (str[i] != '\'' || bslash))
+			{
+				bslash = 0;
+				if (str[i] == '\\')
+					bslash = 1;
 				i = i + 0;
+			}
 		if (ft_strchr(sep, str[i]) != NULL)
 			return ((char *)&str[i]);
 		if (str[i])
@@ -126,6 +138,8 @@ static char	*ft_skip_cmd(const char *cmd, int *i)
 			(*i)++;
 		arg.backslash = 0;
 	}
+	if (cmd[*i] == ';')
+		(*i)++;
 	return ((char *)&cmd[*i]);
 }
 

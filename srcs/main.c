@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 09:48:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 15:11:40 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_process_child_prompt(t_config *shell_c)
 	signal(SIGINT, SIG_DFL);
 	ret = ft_prompt(shell_c);
 	if (ret == -1)
-		return (1);
+		exit(127);
 	free_shell(shell_c);
 	exit(ret);
 	return (0);
