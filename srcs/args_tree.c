@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 09:50:32 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 13:24:33 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,7 @@ int	ft_init_args_tree(t_config *shell_c, char *const buffer)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
+	//if (i == 127)
+	//	free_all_cmd(cmd);
 	return (i);
 }
