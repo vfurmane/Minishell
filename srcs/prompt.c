@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:52 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 15:01:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 09:26:15 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_dlist	*ft_new_history_line(void)
 static void	ft_sigint_prompt(int code)
 {
 	if (code == SIGINT)
-		exit(S_SIGINT_PROMPT);
+	{
+		write(1, "\n", 1);
+		exit(1);
+	}
 }
 
 int	ft_prompt(t_config *shell_c)

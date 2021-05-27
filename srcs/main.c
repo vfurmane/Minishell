@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 13:35:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 09:27:09 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,13 @@ static int	ft_process_child_exit(t_config *shell_c)
 
 	wait(&status);
 	tcsetattr(0, 0, &shell_c->termios_backup);
-	if (WEXITSTATUS(status) != S_SIGINT_PROMPT
-		&& WEXITSTATUS(status) != S_SIGIGN)
+	if (WEXITSTATUS(status) != S_SIGIGN)
 		shell_c->exit_code = WEXITSTATUS(status);
 	if (shell_c->exit_code >= 134)
 		ft_stderr_message("got signal ",
 			ft_static_itoa(shell_c->exit_code - 128), NULL, 0);
 	ft_update_shell(shell_c);
-	if (WTERMSIG(status) == SIGINT
-		|| WEXITSTATUS(status) == S_SIGINT_PROMPT)
+	if (WTERMSIG(status) == SIGINT)
 		write(STDOUT_FILENO, "\n", 1);
 	else if (WTERMSIG(status) == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);
