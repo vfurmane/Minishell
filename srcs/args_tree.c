@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 09:50:32 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:56:14 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,28 @@ t_separator	ft_set_separator(const char *str)
 char	*ft_strinstr_quotes(const char *str, const char *sep)
 {
 	int	i;
+	int bslash;
 
 	i = 0;
+	bslash = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"')
-			while (str[++i] && str[i] != '\"')
+			while (str[++i] && (str[i] != '\"' || bslash))
+			{
+				bslash = 0;
+				if (str[i] == '\\')
+					bslash = 1;		
 				i = i + 0;
+			}
 		if (str[i] == '\'')
-			while (str[++i] && str[i] != '\'')
+			while (str[++i] && (str[i] != '\'' || bslash))
+			{
+				bslash = 0;
+				if (str[i] == '\\')
+					bslash = 1;
 				i = i + 0;
+			}
 		if (ft_strchr(sep, str[i]) != NULL)
 			return ((char *)&str[i]);
 		if (str[i])
@@ -126,6 +138,8 @@ static char	*ft_skip_cmd(const char *cmd, int *i)
 			(*i)++;
 		arg.backslash = 0;
 	}
+	if (cmd[*i] == ';')
+		(*i)++;
 	return ((char *)&cmd[*i]);
 }
 
@@ -163,5 +177,7 @@ int	ft_init_args_tree(t_config *shell_c, char *const buffer)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
+	//if (i == 127)
+	//	free_all_cmd(cmd);
 	return (i);
 }

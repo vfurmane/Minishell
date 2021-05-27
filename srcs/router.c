@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 14:11:45 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 15:17:33 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,33 @@ static int	ft_is_a_builtin(t_config *shell_c, const char *command, char **args,
 	return (1);
 }
 
+static int	return_free(char **args, char **line, t_config *shell_c, int ret)
+{
+	if (ret == 127)
+		ft_stderr_message(line[0], ": No such file or directory", NULL,
+				127);
+	if (ret == 126)
+		ft_stderr_message(line[0], ": Is a directory", NULL,
+				126);
+	free_neo_content(args); //maybe leaks here?
+	free_neo(line);
+	free_shell(shell_c);
+	return (ret);
+}
+
 static int	ft_search_and_execute_file(t_config *shell_c,
 		char **args, char **line)
 {
 	struct stat	file_stat;
 
 	if (stat(line[0], &file_stat) == -1)
-		exit(127);
+		exit(return_free(args, line, shell_c, 127));
 	if (file_stat.st_mode & 040000)
-		exit(ft_stderr_message(line[0], ": Is a directory", NULL,
-				126));
+		exit(return_free(args, line, shell_c, 126));
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	ft_execve(line[0], line, shell_c->envp);
-	free_neo(args);
-	free_neo(line);
-	free_shell(shell_c);
+	return_free(args, line, shell_c, 0);
 	return (127);
 }
 
