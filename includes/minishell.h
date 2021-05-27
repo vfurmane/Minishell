@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 11:40:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/27 13:35:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_config
 
 typedef struct s_icanon
 {
+	int				start_column;
 	int				column;
 	int				line_i;
 	char			*line;

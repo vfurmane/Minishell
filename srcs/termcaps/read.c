@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 09:59:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 14:29:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/27 13:47:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_read_icanon(t_config *shell_c, t_icanon *icanon)
 
 	ret = 1;
 	shell_c->start_column = ft_strlen(shell_c->prompt);
+	icanon->start_column = shell_c->start_column;
+	icanon->column = 0;
 	while (ret > 0 && icanon->line_i < ARG_MAX)
 	{
 		ft_bzero(icanon->buffer, 4);
