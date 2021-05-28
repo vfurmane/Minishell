@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/25 13:18:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 11:05:29 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ void	free_neo_content(char **str)
 	i = 0;
 	while (str[i])
 		free(str[i++]);
+}
+
+void	free_neocont_neo_shell(char **args, char **line, t_config *shell_c)
+{
+	free_neo_content(args);
+	free_neo(line);
+	free_shell(shell_c);
 }
 
 void	free_shell(t_config *shell_c)

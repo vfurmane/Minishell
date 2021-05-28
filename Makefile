@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/26 13:48:39 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/28 10:58:54 by earnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES		= args_tree.c \
 			  update_history.c \
 			  update_shell.c \
 			  free.c \
+			  cmd_util.c \
 			  $(addprefix builtin/, \
 			  cd.c \
 			  echo.c \
