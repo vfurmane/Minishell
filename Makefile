@@ -6,7 +6,7 @@
 #    By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/06 14:15:36 by earnaud           #+#    #+#              #
-#    Updated: 2021/05/26 13:48:39 by vfurmane         ###   ########.fr        #
+#    Updated: 2021/05/28 09:14:38 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ OBJS		= $(SRCS:.c=.o)
 NAME		= minishell
 CC			= clang
 CFLAGS		= -g -Wall -Wextra -Werror
-LIBS		= -lncurses
+LIBS		= -ltermcap
 INCLUDES	= -Iincludes
 
 %.o:		%.c
