@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 13:35:22 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 08:58:59 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,13 @@ char				*ft_cmd_argdup(t_config *shell_c, const char *cmd);
 int					ft_stderr_message(const char *str1, const char *str2,
 						const char *str3, int ret);
 
-int					ft_route_command(const char *command, char **args,
-						char **line, t_config *shell_c);
 int					ft_route_file_to(const char *file_name, t_config *shell_c,
 						int happen);
 int					ft_write_pipe(const char *key, const char *value1,
 						const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 						t_config *shell_c);
+int					ft_route_command(t_config *shell_c, char **argv);
 
 char				*ft_skip_spaces(const char *cmd, int *i);
 char				*ft_skip_cmd_arg(const char *cmd, int *i);
