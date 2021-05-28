@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:12:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 13:51:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 09:08:40 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_insert_char(t_icanon *icanon)
 
 	buffer_i = 0;
 	while (icanon->buffer[buffer_i]
-		&& icanon->column + icanon->start_column < columns - 1)
+		&& icanon->start_column + icanon->line_i < columns - 1)
 	{
 		i = ft_strlen(&icanon->line[icanon->column]) + 1;
 		while (--i >= 0)
