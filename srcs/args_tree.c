@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 11:39:06 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 17:19:56 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	skip_quotes(char quote, const char *str, int *i)
+static void	skip_quotes2(char quote, const char *str, int *i)
 {
 	int	bslash;
 
@@ -33,9 +33,9 @@ char	*ft_strinstr_quotes(const char *str, const char *sep)
 	while (str[i])
 	{
 		if (str[i] == '\"')
-			skip_quotes('\"', str, &i);
+			skip_quotes2('\"', str, &i);
 		if (str[i] == '\'')
-			skip_quotes('\'', str, &i);
+			skip_quotes2('\'', str, &i);
 		if (ft_strchr(sep, str[i]) != NULL)
 			return ((char *)&str[i]);
 		if (str[i])
@@ -98,8 +98,12 @@ int	ft_init_args_tree(t_config *shell_c, char *const buffer)
 	int		ret;
 	char	*str;
 	t_cmd	*cmd;
+	int		pipe_fshell[3];
 
 	i = 0;
+	pipe_fshell[0] = STDIN_FILENO;
+	pipe_fshell[1] = dup(STDOUT_FILENO);
+	pipe_fshell[2] = 0;
 	cmd = NULL;
 	str = buffer;
 	ret = loop_cmd(shell_c, str, &cmd);
@@ -107,6 +111,6 @@ int	ft_init_args_tree(t_config *shell_c, char *const buffer)
 		return (ret);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	i = ft_recursiv_command(cmd, shell_c, STDIN_FILENO, dup(STDOUT_FILENO));
+	i = ft_recursiv_command(cmd, shell_c, pipe_fshell);
 	return (i);
 }
