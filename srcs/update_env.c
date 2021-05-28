@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:12:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 12:01:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 12:16:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,16 @@ int	ft_check_duplicate_env(t_kvpair *envp_list, const char *str, int equal_pos)
 		if (ft_strcmp(new_key, envp_elm->key) == 0
 			&&str[equal_pos] == '=')
 		{
+			free(new_key);
 			free(envp_elm->value);
 			envp_elm->value = ft_strdup(&str[equal_pos + 1]);
 			return (1);
 		}
 		else if (ft_strcmp(new_key, envp_elm->key) == 0)
+		{
+			free(new_key);
 			return (1);
+		}
 		envp_elm = envp_elm->next;
 	}
 	free(new_key);
