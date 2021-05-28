@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 13:42:36 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/25 12:22:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 09:41:09 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_next
 }				t_next;
 
 size_t				ft_arrlen(void *str);
+int					ft_atoi(const char *str);
 void				*ft_bzero(void *str, size_t len);
 void				*ft_calloc(size_t len, size_t size);
 int					ft_isalpha(int chr);

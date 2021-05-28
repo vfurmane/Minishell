@@ -6,13 +6,25 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/27 15:11:40 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 09:41:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_init_shell(t_config *shell_c, char **envp)
+static int	ft_increment_shlvl(t_config *shell_c)
+{
+	int		shlvl_nbr;
+	char	*shlvl;
+
+	shlvl_nbr = ft_atoi(ft_getenv(shell_c->envp_list, "SHLVL"));
+	shlvl = ft_strjoin("SHLVL=", ft_static_itoa(shlvl_nbr + 1));
+	ft_add_env(shell_c, shlvl);
+	free(shlvl);
+	return (0);
+}
+
+static int	ft_init_shell(t_config *shell_c, char **envp)
 {
 	if (__APPLE__)
 	{
@@ -30,6 +42,7 @@ int	ft_init_shell(t_config *shell_c, char **envp)
 	if (ft_parse_envp(envp, shell_c) == -1)
 		return (ft_stderr_message("the environment variables could not"
 				"be parsed", NULL, NULL, -1));
+	ft_increment_shlvl(shell_c);
 	shell_c->quit = 0;
 	shell_c->prompt = "$ ";
 	shell_c->history = NULL;
