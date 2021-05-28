@@ -6,11 +6,27 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 09:12:00 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 12:05:51 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	where_to_cut(char *const buffer)
+{
+	int	i;
+
+	i = 0;
+	if (!buffer)
+		return (0);
+	while (buffer[i])
+	{
+		if (ft_strchr(";| ", buffer[i]))
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
 int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int pipe_in, int std_out)
 {

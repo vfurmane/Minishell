@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 11:41:43 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 12:05:39 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ void				ft_cmdadd_back(t_cmd **acmd, t_cmd *new);
 char				*ft_skip_cmd(const char *cmd, int *i);
 t_cmd				*ft_new_cmd(t_config *shell_c, char *const buffer, int *error);
 char				*ft_strinstr_quotes(const char *str, const char *sep);
+int					where_to_cut(char *const buffer);
+
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);

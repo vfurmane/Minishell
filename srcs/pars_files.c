@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:31:40 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/27 15:25:33 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 12:10:07 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int error_file(char *file_name, char *file_name_fix)
+static int	error_file(char *file_name, char *file_name_fix)
 {
 	ft_stderr_message(file_name, ": ", strerror(errno), 0);
 	free(file_name);
@@ -20,23 +20,7 @@ static int error_file(char *file_name, char *file_name_fix)
 	return (-1);
 }
 
-int where_to_cut(char *const buffer)
-{
-	int i;
-
-	i = 0;
-	if (!buffer)
-		return (0);
-	while (buffer[i])
-	{
-		if (ft_strchr(";| ", buffer[i]))
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-int		open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
+int	open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
 {
 	if (cmd->from_to == BRACKET_FROM)
 	{
@@ -63,28 +47,29 @@ int		open_file(t_cmd *cmd, char *file_name_fix, char *file_name, int happen)
 
 char	*get_file_name_fix(t_config *shell_c, char *file_name)
 {
-	char *temp;
-	char *file_name_fix;
+	char	*temp;
+	char	*file_name_fix;
 
-	temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/"); //check if null
-	file_name_fix = ft_strjoin(temp, file_name);				  //check if null
+	temp = ft_strjoin(ft_getenv(shell_c->envp_list, "PWD"), "/");
+	if (!temp)
+		return (NULL);
+	file_name_fix = ft_strjoin(temp, file_name);
+	if (!file_name_fix)
+		return (NULL);
 	free(temp);
 	return (file_name_fix);
 }
 
-int		pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i)
+static void	set_cmd_file(t_cmd *cmd, int *i, char *const buffer, int *happen)
 {
-	int happen;
-	char *file_name[2];
-
-	happen = 0;
+	*happen = 0;
 	if (buffer[*i] == '<')
 		cmd->from_to = BRACKET_FROM;
 	else if (buffer[*i] == '>')
 		cmd->from_to = BRACKET_TO;
 	if (buffer[*i + 1] == '>')
 	{
-		happen = 1;
+		*happen = 1;
 		(*i)++;
 	}
 	(*i)++;
@@ -94,8 +79,17 @@ int		pars_files(char *const buffer, t_config *shell_c , t_cmd *cmd, int *i)
 		close(cmd->file_to);
 	while (buffer[*i] == ' ')
 		(*i)++;
-	if(ft_strchr(";|><", buffer[*i]) || !buffer[*i])
-		return(ft_stderr_message("syntax error near unexpected token", "`>'", NULL, -1));
+}
+
+int	pars_files(char *const buffer, t_config *shell_c, t_cmd *cmd, int *i)
+{
+	int		happen;
+	char	*file_name[2];
+
+	set_cmd_file(cmd, i, buffer, &happen);
+	if (ft_strchr(";|><", buffer[*i]) || !buffer[*i])
+		return (ft_stderr_message("syntax error near unexpected token",
+				"`>'", NULL, -1));
 	file_name[0] = ft_cmd_argdup(shell_c, buffer + *i);
 	if (file_name[0][0] != '/' || file_name[0][0] != '~')
 		file_name[1] = get_file_name_fix(shell_c, file_name[0]);
