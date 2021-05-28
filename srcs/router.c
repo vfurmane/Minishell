@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 09:13:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 11:46:42 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,16 @@ static int	ft_search_and_execute_file(t_config *shell_c, char **argv)
 static int	ft_search_and_execute_command(t_config *shell_c, char **argv)
 {
 	if (ft_getenv(shell_c->envp_list, "PATH") == NULL)
+	{
+		free_neo(argv);
+		free_shell(shell_c);
 		exit(ft_stderr_message(argv[0], ": No such file or directory", NULL,
-				127));
+				   127));
+	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (argv[0][0] == '\0' || ft_strcmp(".", argv[0]) == 0
-		|| !ft_exec(shell_c, argv))
+	if (argv[0][0] == '\0' || ft_strcmp(".", argv[0]) == 0 ||
+		!ft_exec(shell_c, argv))
 		ft_stderr_message(argv[0], ": command not found", NULL, 0);
 	free_neo(argv);
 	free_shell(shell_c);

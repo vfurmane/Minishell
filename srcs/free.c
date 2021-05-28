@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/25 13:18:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 11:35:19 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all_cmd(t_cmd *cmd)
+int		free_all_cmd(t_cmd *cmd)
 {
 	t_cmd	*temp;
 
@@ -23,6 +23,7 @@ void	free_all_cmd(t_cmd *cmd)
 		free(cmd);
 		cmd = temp;
 	}
+	return (0);
 }
 
 void	free_neo(char **str)
@@ -42,6 +43,13 @@ void	free_neo_content(char **str)
 	i = 0;
 	while (str[i])
 		free(str[i++]);
+}
+
+void	free_neocont_neo_shell(char **args, char **line, t_config *shell_c)
+{
+	free_neo_content(args);
+	free_neo(line);
+	free_shell(shell_c);
 }
 
 void	free_shell(t_config *shell_c)

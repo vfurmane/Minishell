@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 08:58:59 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 11:41:43 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ int					ft_exec(t_config *shell_c, char **command);
 void				free_shell(t_config *shell_c);
 void				free_neo(char **str);
 void				free_neo_content(char **str);
-void				free_all_cmd(t_cmd *cmd);
+int					free_all_cmd(t_cmd *cmd);
+void				free_neocont_neo_shell(char **args, char **line, t_config *shell_c);
 
 int					ft_arglen(t_config *shell_c, const char *cmd);
 
@@ -163,6 +164,11 @@ char				*ft_skip_spaces(const char *cmd, int *i);
 char				*ft_skip_cmd_arg(const char *cmd, int *i);
 
 char				**ft_split_cmd(t_config *shell_c, const char *cmd);
+t_cmd				*ft_cmdlast(t_cmd *cmd);
+void				ft_cmdadd_back(t_cmd **acmd, t_cmd *new);
+char				*ft_skip_cmd(const char *cmd, int *i);
+t_cmd				*ft_new_cmd(t_config *shell_c, char *const buffer, int *error);
+char				*ft_strinstr_quotes(const char *str, const char *sep);
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);
