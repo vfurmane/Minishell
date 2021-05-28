@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 16:49:20 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/26 11:19:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:30:25 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_parse_envp(char **envp, t_config *shell_c)
 
 	i = 0;
 	shell_c->envp = ft_calloc(sizeof(*shell_c->envp), 1);
-	if (shell_c->envp == NULL)
-		return (-1);
 	shell_c->envp_list = NULL;
 	while (envp[i])
 	{
 		envp_elm = malloc(sizeof(*envp_elm));
+		if (shell_c->envp == NULL || envp_elm == NULL)
+			return (-1);
 		envp_elm->next = NULL;
 		envp_elm->key = ft_strcdup(envp[i], '=');
 		j = 0;
@@ -50,34 +50,6 @@ char	*ft_getenv(t_kvpair *envp_list, const char *name)
 		envp_list = envp_list->next;
 	}
 	return (0);
-}
-
-char	*ft_replace_with_env(t_config *shell_c, const char *str, int *str_i)
-{
-	int		i;
-	char	*env;
-	char	*env_name;
-
-	i = 0;
-	if (str[0] == '?')
-		i++;
-	else
-		while (ft_isalpha(str[i]) || (ft_isdigit(str[i] && i > 0))
-			|| str[i] == '_')
-			i++;
-	*str_i += i;
-	env_name = malloc(sizeof(*env) * (i + 1));
-	if (env_name == NULL)
-		return (NULL);
-	ft_strlcpy(env_name, str, i + 1);
-	if (ft_strcmp(env_name, "?") == 0)
-		env = ft_static_itoa(shell_c->exit_code);
-	else
-		env = ft_getenv(shell_c->envp_list, env_name);
-	free(env_name);
-	if (env == NULL)
-		env = "";
-	return (env);
 }
 
 static int	ft_get_var_name(char **env_name, const char *dollar_str)

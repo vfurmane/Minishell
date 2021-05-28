@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 10:07:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:32:42 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	ft_increment_shlvl(t_config *shell_c)
 
 	shlvl_nbr = ft_atoi(ft_getenv(shell_c->envp_list, "SHLVL"));
 	shlvl = ft_strjoin("SHLVL=", ft_static_itoa(shlvl_nbr + 1));
+	if (shlvl == NULL)
+		return (-1);
 	ft_add_env(shell_c, shlvl);
 	free(shlvl);
 	return (0);
@@ -37,12 +39,14 @@ static int	ft_init_shell(t_config *shell_c, char **envp)
 			"Aborting...\033[0m\n");
 		return (-1);
 	}
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		return (ft_stderr_message(strerror(errno), NULL, NULL, -1));
 	if (ft_parse_envp(envp, shell_c) == -1)
-		return (ft_stderr_message("the environment variables could not"
+		return (ft_stderr_message("the environment variables could not "
 				"be parsed", NULL, NULL, -1));
-	ft_increment_shlvl(shell_c);
+	if (ft_increment_shlvl(shell_c) == -1)
+		return (-1);
 	shell_c->quit = 0;
 	shell_c->prompt = "$ ";
 	shell_c->history = NULL;
@@ -54,8 +58,8 @@ static int	ft_process_child_exit(t_config *shell_c)
 {
 	int	status;
 
-	wait(&status);
-	tcsetattr(0, 0, &shell_c->termios_backup);
+	if (wait(&status) == -1 || tcsetattr(0, 0, &shell_c->termios_backup))
+		return (ft_stderr_message(strerror(errno), NULL, NULL, -1));
 	if (WEXITSTATUS(status) != S_SIGIGN)
 		shell_c->exit_code = WEXITSTATUS(status);
 	if (shell_c->exit_code >= 134)
@@ -95,8 +99,9 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (!shell_c.quit)
 	{
-		tcgetattr(0, &shell_c.termios_backup);
-		pipe(shell_c.fd);
+		if (tcgetattr(0, &shell_c.termios_backup) == -1
+			|| pipe(shell_c.fd) == -1)
+			return (ft_stderr_message(strerror(errno), NULL, NULL, 1));
 		id = fork();
 		if (id == -1)
 			return (ft_stderr_message("could not fork: ", strerror(errno),

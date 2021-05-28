@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:14:23 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/26 12:31:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 15:31:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_read_whole_fd(int fd)
 
 	ret = 1;
 	str = ft_calloc(sizeof(*str), 1);
+	if (str == NULL)
+		return (NULL);
 	while (ret > 0)
 	{
 		ret = read(fd, buffer, BUFSIZ);
@@ -102,7 +104,8 @@ int	ft_update_shell(t_config *shell_c)
 	int		ret;
 	char	*str;
 
-	write(shell_c->fd[1], "\0", 1);
+	if (write(shell_c->fd[1], "\0", 1) == -1)
+		return (-1);
 	str = ft_read_whole_fd(shell_c->fd[0]);
 	if (str == NULL)
 		return (-1);
