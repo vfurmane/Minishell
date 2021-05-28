@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 12:05:39 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 17:17:54 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,7 @@ int					ft_init_args_tree(t_config *shell_c, char *const buffer);
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 						int pipefd[2]);
-int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c,
-						int pipe_in, int std_out);
+int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c,int *pipe_fshell);
 
 int					ft_parse_envp(char **envp, t_config *shell_c);
 char				*ft_replace_with_env(t_config *shell_c, const char *str,
@@ -147,6 +146,8 @@ char				*ft_fix_openfiles(t_config *shell_c, char *const buffer,
 						t_cmd *cmd, int *error);
 int					pars_files(char *const buffer, t_config *shell_c,
 						t_cmd *cmd, int *i);
+char				*buffer_fix(char *const buffer);
+
 char				*ft_cmd_argdup(t_config *shell_c, const char *cmd);
 
 int					ft_stderr_message(const char *str1, const char *str2,
@@ -161,6 +162,7 @@ int					ft_route_file_from(const char *file_name,
 int					ft_route_command(t_config *shell_c, char **argv);
 
 char				*ft_skip_spaces(const char *cmd, int *i);
+int					skip_quotes(const char *str, int *i);
 char				*ft_skip_cmd_arg(const char *cmd, int *i);
 
 char				**ft_split_cmd(t_config *shell_c, const char *cmd);
