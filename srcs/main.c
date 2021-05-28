@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:09:18 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 09:41:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2021/05/28 10:07:26 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ static int	ft_process_child_exit(t_config *shell_c)
 		ft_stderr_message("got signal ",
 			ft_static_itoa(shell_c->exit_code - 128), NULL, 0);
 	ft_update_shell(shell_c);
-	if (WTERMSIG(status) == SIGINT)
-		write(STDOUT_FILENO, "\n", 1);
-	else if (WTERMSIG(status) == SIGQUIT)
+	if (WTERMSIG(status) == SIGINT || WEXITSTATUS(status) == 128 + SIGINT)
+		write(1, "\n", 1);
+	else if (WTERMSIG(status) == SIGQUIT
+		|| WEXITSTATUS(status) == 128 + SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);
 	return (0);
 }
