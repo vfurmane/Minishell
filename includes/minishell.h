@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 11:09:03 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 11:35:12 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int					ft_exec(t_config *shell_c, char **command);
 void				free_shell(t_config *shell_c);
 void				free_neo(char **str);
 void				free_neo_content(char **str);
-void				free_all_cmd(t_cmd *cmd);
+int					free_all_cmd(t_cmd *cmd);
 void				free_neocont_neo_shell(char **args, char **line, t_config *shell_c);
 
 int					ft_arglen(t_config *shell_c, const char *cmd);

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:59:35 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 11:09:23 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/28 11:39:06 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	loop_cmd(t_config *shell_c, char *str, t_cmd **cmd)
 			return (error);
 		}
 		if (*cmd == NULL)
-		{
-			free_all_cmd(*cmd);
-			return (0);
-		}
+			return (free_all_cmd(*cmd));
+		if (!ft_cmdlast(*cmd)->str[0])
+			return (free_all_cmd(*cmd) * ft_stderr_message(
+					"syntax error near unexpected token ", "`;'", NULL, 0));
 		if (str[i] == '\0')
 			break ;
 		ft_skip_cmd(str, &i);
