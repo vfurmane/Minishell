@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 11:46:42 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 20:11:47 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int	ft_is_a_builtin(t_config *shell_c, char **argv, int *ret)
 	if (builtin_id == -1)
 		return (0);
 	*ret = (funcs[builtin_id])(shell_c, &argv[1], STDOUT_FILENO);
+	free_neo(argv);
+	free_shell(shell_c);
 	return (1);
 }
 
@@ -40,7 +42,8 @@ static int	return_free(t_config *shell_c, char **argv, int ret)
 	return (ret);
 }
 
-static int	ft_search_and_execute_file(t_config *shell_c, char **argv)
+static int	ft_search_and_execute_file(t_config *shell_c,
+			char **argv, t_cmd *cmd)
 {
 	struct stat	file_stat;
 
@@ -51,11 +54,12 @@ static int	ft_search_and_execute_file(t_config *shell_c, char **argv)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	ft_execve(argv[0], argv, shell_c->envp);
+	free_all_cmd(cmd);
 	return_free(shell_c, argv, 0);
 	return (127);
 }
 
-static int	ft_search_and_execute_command(t_config *shell_c, char **argv)
+static int	ft_search_and_execute_command(t_config *shell_c, char **argv, t_cmd *cmd)
 {
 	if (ft_getenv(shell_c->envp_list, "PATH") == NULL)
 	{
@@ -70,11 +74,12 @@ static int	ft_search_and_execute_command(t_config *shell_c, char **argv)
 		!ft_exec(shell_c, argv))
 		ft_stderr_message(argv[0], ": command not found", NULL, 0);
 	free_neo(argv);
+	free_all_cmd(cmd);
 	free_shell(shell_c);
 	return (127);
 }
 
-int	ft_route_command(t_config *shell_c, char **argv)
+int	ft_route_command(t_config *shell_c, char **argv, t_cmd *cmd)
 {
 	int			ret;
 	int			id;
@@ -92,9 +97,9 @@ int	ft_route_command(t_config *shell_c, char **argv)
 		if (ft_is_a_builtin(shell_c, argv, &ret))
 			exit(ret);
 		else if (ft_strchr(argv[0], '/'))
-			exit(ft_search_and_execute_file(shell_c, argv));
+			exit(ft_search_and_execute_file(shell_c, argv, cmd));
 		else
-			exit(ft_search_and_execute_command(shell_c, argv));
+			exit(ft_search_and_execute_command(shell_c, argv, cmd));
 	}
 	if (WIFSIGNALED(status))
 		ret += 128 + WTERMSIG(status);

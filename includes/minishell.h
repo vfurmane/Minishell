@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 17:17:54 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 20:15:54 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,8 @@ int					ft_write_pipe(const char *key, const char *value1,
 						const char *value2, int pipefd);
 int					ft_route_file_from(const char *file_name,
 						t_config *shell_c);
-int					ft_route_command(t_config *shell_c, char **argv);
+int					ft_route_command(t_config *shell_c, char **argv,
+					t_cmd *cmd);
 
 char				*ft_skip_spaces(const char *cmd, int *i);
 int					skip_quotes(const char *str, int *i);

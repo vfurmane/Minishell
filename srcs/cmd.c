@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/28 19:24:33 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 20:07:13 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
 		cmd_next = cmd->next;
 		count[3] = cmd->fd[0];
 		free(cmd);
-		count[2] = ft_route_command(shell_c, args);
+		count[2] = ft_route_command(shell_c, args, cmd_next);
 		free_neo(args);
 		pipe_fshell[0] = count[3];
 		pipe_fshell[2] = 1;
