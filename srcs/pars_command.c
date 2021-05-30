@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:34:59 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/28 15:32:23 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 22:36:51 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	buffer_fix_loop(char *const buffer, char *str, int *count)
 			while (buffer[count[0]] && !ft_strchr(" <>|;", buffer[count[0]]))
 				count[0]++;
 		}
-		str[count[1]++] = buffer[count[0]++];
+		if (!ft_strchr(";|", buffer[count[0]]))
+			str[count[1]++] = buffer[count[0]++];
 	}
 	return (1);
 }

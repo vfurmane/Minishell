@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:52:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/30 20:11:47 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 23:02:46 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int	ft_search_and_execute_file(t_config *shell_c,
 	return (127);
 }
 
-static int	ft_search_and_execute_command(t_config *shell_c, char **argv, t_cmd *cmd)
+static int	ft_search_and_execute_command(t_config *shell_c,
+			char **argv, t_cmd *cmd)
 {
 	if (ft_getenv(shell_c->envp_list, "PATH") == NULL)
 	{

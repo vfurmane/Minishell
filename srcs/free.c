@@ -6,13 +6,13 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 14:56:49 by earnaud           #+#    #+#             */
-/*   Updated: 2021/05/28 11:35:19 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 23:02:23 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		free_all_cmd(t_cmd *cmd)
+int	free_all_cmd(t_cmd *cmd)
 {
 	t_cmd	*temp;
 

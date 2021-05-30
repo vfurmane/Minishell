@@ -6,56 +6,11 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 18:42:16 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/30 20:07:13 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 23:29:47 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	where_to_cut(char *const buffer)
-{
-	int	i;
-
-	i = 0;
-	if (!buffer)
-		return (0);
-	while (buffer[i])
-	{
-		if (ft_strchr(";| ", buffer[i]))
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-void	switch_case_pipe_to(t_cmd *cmd, int std_out)
-{
-	if (cmd->separator == PIPE)
-	{
-		pipe(cmd->fd);
-		if (cmd->from_to == BRACKET_TO)
-		{
-			dup2(cmd->file_to, STDOUT_FILENO);
-			close(cmd->file_to);
-			close(cmd->fd[1]);
-		}
-		else
-		{
-			dup2(cmd->fd[1], STDOUT_FILENO);
-			close(cmd->fd[1]);
-		}
-	}
-	else
-	{
-		if (cmd->file_to)
-		{
-			dup2(cmd->file_to, STDOUT_FILENO);
-			close(cmd->file_to);
-		}
-		else
-			dup2(std_out, STDOUT_FILENO);
-	}
-}
 
 void	switch_case_dup(t_cmd *cmd, int pipe_in, int std_out)
 {
@@ -75,7 +30,8 @@ void	switch_case_dup(t_cmd *cmd, int pipe_in, int std_out)
 
 int	main_process(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
 {
-	int ret;
+	int	ret;
+
 	switch_case_dup(cmd, pipe_fshell[0], pipe_fshell[1]);
 	close(cmd->file_to);
 	close(cmd->file_from);
@@ -89,12 +45,8 @@ int	main_process(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
 	return (WEXITSTATUS(ret));
 }
 
-int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
+int	first_setup(t_cmd *cmd, t_config *shell_c, int *pipe_fshell, int count[0])
 {
-	int		count[4];
-	char	**args;
-	t_cmd	*cmd_next;
-
 	if (!cmd)
 	{
 		if (pipe_fshell[3])
@@ -105,19 +57,41 @@ int ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
 	count[0] = fork();
 	if (count[0] == -1)
 		return (ft_stderr_message("could not fork: ", strerror(errno),
-								  NULL, -1));
+				  NULL, -1));
 	else if (count[0] != CHILD_PROCESS)
-		return (main_process(cmd, shell_c, pipe_fshell));
+		 return (main_process(cmd, shell_c, pipe_fshell));
+	return (-42);
+}
+
+t_cmd	*set_next_value(t_cmd *cmd, int *pipe_fshell,
+			int *count)
+{
+	t_cmd	*cmd_next;
+
+	switch_case_dup(cmd, pipe_fshell[0], pipe_fshell[1]);
+	free(cmd->str);
+	cmd_next = cmd->next;
+	count[3] = cmd->fd[0];
+	free(cmd);
+	return (cmd_next);
+}
+
+int	ft_recursiv_command(t_cmd *cmd, t_config *shell_c, int *pipe_fshell)
+{
+	int		count[4];
+	char	**args;
+	t_cmd	*cmd_next;
+	int		ret;
+
+	ret = first_setup(cmd, shell_c, pipe_fshell, count);
+	if (ret != -42)
+		return (ret);
 	args = ft_split_cmd(shell_c, cmd->str);
 	if (args == NULL)
 		return (-1);
 	if (args[0] != NULL)
 	{
-		switch_case_dup(cmd, pipe_fshell[0], pipe_fshell[1]);
-		free(cmd->str);
-		cmd_next = cmd->next;
-		count[3] = cmd->fd[0];
-		free(cmd);
+		cmd_next = set_next_value(cmd, pipe_fshell, count);
 		count[2] = ft_route_command(shell_c, args, cmd_next);
 		free_neo(args);
 		pipe_fshell[0] = count[3];

@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:20:33 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/30 20:15:54 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/30 23:30:12 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ int					ft_init_args_tree(t_config *shell_c, char *const buffer);
 
 int					ft_handle_command(t_cmd *cmd, t_config *shell_c,
 						int pipefd[2]);
-int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c,int *pipe_fshell);
+int					ft_recursiv_command(t_cmd *cmd, t_config *shell_c,
+						int *pipe_fshell);
 
 int					ft_parse_envp(char **envp, t_config *shell_c);
 char				*ft_replace_with_env(t_config *shell_c, const char *str,
@@ -133,7 +134,8 @@ void				free_shell(t_config *shell_c);
 void				free_neo(char **str);
 void				free_neo_content(char **str);
 int					free_all_cmd(t_cmd *cmd);
-void				free_neocont_neo_shell(char **args, char **line, t_config *shell_c);
+void				free_neocont_neo_shell(char **args, char **line,
+						t_config *shell_c);
 
 int					ft_arglen(t_config *shell_c, const char *cmd);
 
@@ -160,7 +162,8 @@ int					ft_write_pipe(const char *key, const char *value1,
 int					ft_route_file_from(const char *file_name,
 						t_config *shell_c);
 int					ft_route_command(t_config *shell_c, char **argv,
-					t_cmd *cmd);
+						t_cmd *cmd);
+void				switch_case_pipe_to(t_cmd *cmd, int std_out);
 
 char				*ft_skip_spaces(const char *cmd, int *i);
 int					skip_quotes(const char *str, int *i);
@@ -170,10 +173,10 @@ char				**ft_split_cmd(t_config *shell_c, const char *cmd);
 t_cmd				*ft_cmdlast(t_cmd *cmd);
 void				ft_cmdadd_back(t_cmd **acmd, t_cmd *new);
 char				*ft_skip_cmd(const char *cmd, int *i);
-t_cmd				*ft_new_cmd(t_config *shell_c, char *const buffer, int *error);
+t_cmd				*ft_new_cmd(t_config *shell_c, char *const buffer,
+						int *error);
 char				*ft_strinstr_quotes(const char *str, const char *sep);
 int					where_to_cut(char *const buffer);
-
 
 int					ft_update_env(t_config *shell_c);
 int					ft_del_env(t_config *shell_c, char *str);
