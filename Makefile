@@ -84,7 +84,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(SRCS:.c=.o)
 NAME		= minishell
 CC			= clang
-CFLAGS		= -g -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 LIBS		= -ltermcap
 INCLUDES	= -Iincludes
 
