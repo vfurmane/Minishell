@@ -6,7 +6,7 @@
 /*   By: earnaud <earnaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 09:38:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2021/05/30 20:58:58 by earnaud          ###   ########.fr       */
+/*   Updated: 2021/05/31 10:46:08 by earnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_cmd_argdup(t_config *shell_c, const char *cmd)
 	if (arg.str == NULL)
 		return (NULL);
 	i = 0;
-	while (cmd[i] && ((cmd[i] != ' ' && cmd[i] != '|') || arg.quote != '\0'))
+	while (cmd[i] && (!ft_strchr(" |;", cmd[i]) || arg.quote != '\0'))
 	{
 		if (ft_set_backslash(&arg, cmd, &i))
 			continue ;
